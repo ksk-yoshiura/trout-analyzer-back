@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 services:
   app:
     build: .
@@ -9,18 +9,20 @@ services:
     depends_on:
       - db
     command: ['./start.sh']
+
   db:
     image: mysql:8.0.21
     ports:
-      - "3306:3306"
+      - "13306:3306"
     volumes:
-      - go_mysql_data:/var/lib/mysql
-      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-    command: --default-authentication-plugin=mysql_native_password
+      # 初期データを投入するSQLが格納されているdir
+      - ./db/mysql_init:/docker-entrypoint-initdb.d
+      # 永続化するときにマウントするdir
+      - ./db/mysql_data:/var/lib/mysql
+      - ./db/mysql_conf/:/etc/mysql/conf.d
     environment:
       MYSQL_USER: 'webuser'
       MYSQL_PASSWORD: 'webpass'
       MYSQL_ROOT_PASSWORD: 'pass'
-      MYSQL_DATABASE: 'go_mysql8_development'
-volumes:
-  go_mysql_data:
+      MYSQL_DATABASE: 'trout_analyzer'
+      TZ: 'Asia/Tokyo'
