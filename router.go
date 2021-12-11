@@ -14,12 +14,18 @@ type User struct {
   Email string `json:"email"`
 }
 
+/**
+  ユーザ一覧取得
+*/
 func getUsers(c echo.Context) error {
   users := []User{}
   database.DB.Find(&users)
   return c.JSON(http.StatusOK, users)
 }
 
+/** 
+  ユーザ取得
+*/
 func getUser(c echo.Context) error {
   user := User{}
   if err := c.Bind(&user); err != nil {
@@ -60,9 +66,9 @@ func newRouter() *echo.Echo {
   // defer sqlDB.Close()
 
   e.GET("/users", getUsers)
-  e.GET("/users/:id", getUser)
-  e.PUT("/users/:id", updateUser)
-  e.POST("/users", createUser)
-  e.DELETE("/users/:id", deleteUser)
+  e.GET("/user/:id", getUser)
+  e.PUT("/user/:id", updateUser)
+  e.POST("/user", createUser)
+  e.DELETE("/user/:id", deleteUser)
 	return e
 }
