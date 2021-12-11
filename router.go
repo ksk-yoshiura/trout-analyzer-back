@@ -35,6 +35,9 @@ func getUser(c echo.Context) error {
   return c.JSON(http.StatusOK, user)
 }
 
+/** 
+  ユーザ更新
+*/
 func updateUser(c echo.Context) error {
   user := User{}
   if err := c.Bind(&user); err != nil {
@@ -44,6 +47,9 @@ func updateUser(c echo.Context) error {
   return c.JSON(http.StatusOK, user)
 }
 
+/** 
+  ユーザ作成
+*/
 func createUser(c echo.Context) error {
   user := User{}
   if err := c.Bind(&user); err != nil {
@@ -53,12 +59,18 @@ func createUser(c echo.Context) error {
   return c.JSON(http.StatusCreated, user)
 }
 
+/** 
+  ユーザ削除
+*/
 func deleteUser(c echo.Context) error {
   id := c.Param("id")
   database.DB.Delete(&User{}, id)
   return c.NoContent(http.StatusNoContent)
 }
 
+/** 
+  ルート定義
+*/
 func newRouter() *echo.Echo {
   e := echo.New()
   database.Connect()
