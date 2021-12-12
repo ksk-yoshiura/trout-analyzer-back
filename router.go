@@ -9,9 +9,17 @@ import (
 )
 
 type User struct {
-	Id    int    `json:"id"`
-	Name  string `json:"name"`
-	Email string `json:"email"`
+	Id        int    `json:"id"`
+	Name      string `json:"name"`
+	Email     string `json:"email"`
+	Password  string `json:"password"`
+	Nickname  string `json:"nickname"`
+	FirstName string `json:"first_name"`
+	LasttName string `json:"last_name"`
+	DeleteFlg string `json:"delete_flg"`
+	Group_id  int    `json:"group_id"`
+	CreatedAt string `json:"created_at"`
+	UpdatedAt string `json:"updated_at"`
 }
 
 /**
