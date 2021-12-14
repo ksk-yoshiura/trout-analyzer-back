@@ -3,6 +3,8 @@ package controllers
 import (
 	"net/http"
 
+	"trout-analyzer-back/models"
+
 	"github.com/labstack/echo"
 )
 
@@ -18,11 +20,13 @@ func NewUsersController() *UsersController {
   ユーザ一覧取得
 */
 func (uc *UsersController) Index(c echo.Context) error {
+	u := models.User{}
+	result := u.GetUsers()
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		"OK",
+		result,
 	))
 }
 
