@@ -14,8 +14,6 @@ import (
 func newRouter() *echo.Echo {
 	e := echo.New()
 	database.Connect()
-	// sqlDB, _ := database.DB.DB()
-	// defer sqlDB.Close()
 
 	usersController := controllers.NewUsersController()
 
