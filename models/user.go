@@ -3,12 +3,19 @@ package models
 import (
 	"trout-analyzer-back/database"
 
-	"gorm.io/gorm"
+	"time"
 )
 
+// Model
+type Model struct {
+	ID        uint `gorm:"primary_key" json:"id"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt *time.Time `sql:"index" json:"-"`
+}
+
 type User struct {
-	gorm.Model
-	Id        int    `json:"id"`
+	Model
 	Name      string `json:"name"`
 	Email     string `json:"email"`
 	Password  string `json:"password"`
@@ -17,26 +24,24 @@ type User struct {
 	LasttName string `json:"last_name"`
 	DeleteFlg string `json:"delete_flg"`
 	Group_id  int    `json:"group_id"`
-	CreatedAt string `json:"created_at"`
-	UpdatedAt string `json:"updated_at"`
 }
 
 var users []User
 
 /** ユーザー一覧取得 */
 func (u *User) GetUsers() (err error) {
-	db := database.GetDB()
+	db := database.GetDBConn()
 	return db.Find(&users).Error
 }
 
-/** ユーザー作成 */
-func (u *User) Create() (err error) {
-	db := database.GetDB()
-	return db.Create(u).Error
-}
+// /** ユーザー作成 */
+// func (u *User) Create() (err error) {
+// 	db := database.GetDB()
+// 	return db.Create(u).Error
+// }
 
-/** ユーザー取得 */
-func (u *User) FindByID(id uint) (err error) {
-	db := database.GetDB()
-	return db.Where("id = ?", id).First(u).Error
-}
+// /** ユーザー取得 */
+// func (u *User) FindByID(id uint) (err error) {
+// 	db := database.GetDB()
+// 	return db.Where("id = ?", id).First(u).Error
+// }
