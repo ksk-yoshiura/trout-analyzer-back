@@ -16,6 +16,7 @@ CREATE TABLE users (
   `group_id` tinyint(4) DEFAULT 1,
   `created_at` Datetime DEFAULT NULL,
   `updated_at` Datetime DEFAULT NULL,
+  `deleted_at` Datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -33,6 +34,7 @@ CREATE TABLE lures (
   `delete_flg` tinyint(4) DEFAULT 0,
   `created_at` Datetime DEFAULT NULL,
   `updated_at` Datetime DEFAULT NULL,
+  `deleted_at` Datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -47,6 +49,7 @@ CREATE TABLE lure_types (
   `delete_flg` tinyint(4) DEFAULT 0,
   `created_at` Datetime DEFAULT NULL,
   `updated_at` Datetime DEFAULT NULL,
+  `deleted_at` Datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -67,6 +70,7 @@ CREATE TABLE hit_patterns (
   `delete_flg` tinyint(4) DEFAULT 0,
   `created_at` Datetime DEFAULT NULL,
   `updated_at` Datetime DEFAULT NULL,
+  `deleted_at` Datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -83,6 +87,7 @@ CREATE TABLE tackles (
   `delete_flg` tinyint(4) DEFAULT 0,
   `created_at` Datetime DEFAULT NULL,
   `updated_at` Datetime DEFAULT NULL,
+  `deleted_at` Datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -100,6 +105,7 @@ CREATE TABLE rods (
   `delete_flg` tinyint(4) DEFAULT 0,
   `created_at` Datetime DEFAULT NULL,
   `updated_at` Datetime DEFAULT NULL,
+  `deleted_at` Datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -116,6 +122,7 @@ CREATE TABLE reels (
   `delete_flg` tinyint(4) DEFAULT 0,
   `created_at` Datetime DEFAULT NULL,
   `updated_at` Datetime DEFAULT NULL,
+  `deleted_at` Datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -133,5 +140,6 @@ CREATE TABLE line_on_reel (
   `delete_flg` tinyint(4) DEFAULT 0,
   `created_at` Datetime DEFAULT NULL,
   `updated_at` Datetime DEFAULT NULL,
+  `deleted_at` Datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
