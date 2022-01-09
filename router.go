@@ -13,14 +13,10 @@ import (
 */
 func newRouter() *echo.Echo {
 	e := echo.New()
-	database.Connect()
+	database.GetDBConfig()
 
 	usersController := controllers.NewUsersController()
 
 	e.GET("/users", usersController.Index)
-	// e.GET("/user/:id", getUser)
-	// e.PUT("/user/:id", updateUser)
-	// e.POST("/user", createUser)
-	// e.DELETE("/user/:id", deleteUser)
 	return e
 }
