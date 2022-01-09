@@ -1,37 +1,40 @@
 package database
 
 import (
-	"fmt"
 	"os"
 
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/joho/godotenv"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 )
 
 // DBを使い回すことで、DBへのConnectとCloseを毎回しないようにする
 var DB *gorm.DB
 
-func Connect() {
+// GetDB returns database connection
+func GetDBConn() *gorm.DB {
+	db, err := gorm.Open(GetDBConfig())
+	if err != nil {
+		panic(err)
+	}
+
+	db.LogMode(true)
+	return db
+}
+
+func GetDBConfig() (string, string) {
 	err := godotenv.Load()
 	if err != nil {
 		panic(err.Error())
 	}
 
+	DBMS := "mysql"
 	user := os.Getenv("DB_USER")
 	password := os.Getenv("DB_PASSWORD")
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")
 	database_name := os.Getenv("DB_DATABASE_NAME")
 
-	dsn := user + ":" + password + "@tcp(" + host + ":" + port + ")/" + database_name + "?charset=utf8mb4&parseTime=true"
-	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-}
-
-// GetDB returns database connection
-func GetDB() *gorm.DB {
-	return DB
+	CONNECT := user + ":" + password + "@tcp(" + host + ":" + port + ")/" + database_name + "?charset=utf8mb4&parseTime=true"
+	return DBMS, CONNECT
 }
