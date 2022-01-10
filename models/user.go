@@ -3,19 +3,11 @@ package models
 import (
 	"trout-analyzer-back/database"
 
-	"time"
+	"github.com/jinzhu/gorm"
 )
 
-// Model
-type Model struct {
-	ID        uint `gorm:"primary_key" json:"id"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt *time.Time `sql:"index" json:"-"`
-}
-
 type User struct {
-	Model
+	gorm.Model
 	Name      string `json:"name"`
 	Email     string `json:"email"`
 	Password  string `json:"password"`
