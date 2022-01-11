@@ -11,7 +11,7 @@ type User struct {
 	Password  string `json:"password"`
 	Nickname  string `json:"nickname"`
 	FirstName string `json:"first_name"`
-	LasttName string `json:"last_name"`
+	LastName  string `json:"last_name"`
 	DeleteFlg string `json:"delete_flg"`
 	Group_id  int    `json:"group_id"`
 }
