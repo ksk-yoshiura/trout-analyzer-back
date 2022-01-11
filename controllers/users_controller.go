@@ -49,17 +49,23 @@ func (uc *UsersController) GetUser(c echo.Context) error {
 	))
 }
 
-// /**
-//   ユーザ更新
-// */
-// func updateUser(c echo.Context) error {
-// 	user := User{}
-// 	if err := c.Bind(&user); err != nil {
-// 		return err
-// 	}
-// 	database.DB.Save(&user)
-// 	return c.JSON(http.StatusOK, user)
-// }
+/**
+  ユーザ更新
+*/
+func (uc *UsersController) UpdateUser(c echo.Context) error {
+	db := database.GetDBConn()
+	user := models.User{}
+	uid := c.Param("id")
+	db.First(&user, uid)
+	user.Name = c.FormValue("name")
+	db.Save(&user)
+
+	return c.JSON(http.StatusOK, newResponse(
+		http.StatusOK,
+		http.StatusText(http.StatusOK),
+		user,
+	))
+}
 
 // /**
 //   ユーザ作成
