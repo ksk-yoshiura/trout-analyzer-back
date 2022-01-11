@@ -6,6 +6,8 @@ import (
 	"trout-analyzer-back/models"
 
 	"github.com/labstack/echo"
+
+	"trout-analyzer-back/database"
 )
 
 // UsersController controller for Users request
@@ -20,13 +22,14 @@ func NewUsersController() *UsersController {
   ユーザ一覧取得
 */
 func (uc *UsersController) Index(c echo.Context) error {
+	db := database.GetDBConn()
 	u := models.User{}
-	result := u.GetUsers()
+	db.Find(&u)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		result,
+		u,
 	))
 }
 
