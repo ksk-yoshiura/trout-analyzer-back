@@ -21,7 +21,7 @@ func NewUsersController() *UsersController {
 /**
   ユーザ一覧取得
 */
-func (uc *UsersController) Index(c echo.Context) error {
+func (uc *UsersController) GetAllUsers(c echo.Context) error {
 	db := database.GetDBConn()
 	u := models.User{}
 	db.Find(&u)
