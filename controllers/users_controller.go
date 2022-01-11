@@ -33,17 +33,21 @@ func (uc *UsersController) GetAllUsers(c echo.Context) error {
 	))
 }
 
-// /**
-//   ユーザ取得
-// */
-// func getUser(c echo.Context) error {
-// 	user := User{}
-// 	if err := c.Bind(&user); err != nil {
-// 		return err
-// 	}
-// 	database.DB.Take(&user)
-// 	return c.JSON(http.StatusOK, user)
-// }
+/**
+  ユーザ取得
+*/
+func (uc *UsersController) GetUser(c echo.Context) error {
+	db := database.GetDBConn()
+	user := models.User{}
+	uid := c.Param("id")
+	db.First(&user, uid)
+
+	return c.JSON(http.StatusOK, newResponse(
+		http.StatusOK,
+		http.StatusText(http.StatusOK),
+		user,
+	))
+}
 
 // /**
 //   ユーザ更新

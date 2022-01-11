@@ -18,5 +18,6 @@ func newRouter() *echo.Echo {
 	usersController := controllers.NewUsersController()
 
 	e.GET("/users", usersController.GetAllUsers)
+	e.GET("/users/:id", usersController.GetUser)
 	return e
 }
