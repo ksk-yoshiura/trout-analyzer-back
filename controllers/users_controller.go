@@ -58,9 +58,25 @@ func (uc *UsersController) UpdateUser(c echo.Context) error {
 	user := models.User{}
 	uid, _ := strconv.Atoi(c.Param("id"))
 	db.First(&user, uid)
-	user.Name = c.FormValue("name")
-	// TODO:Updateより適切か判断しかねるので一旦保留
-	db.Save(&user)
+	name := c.FormValue("name")
+	email := c.FormValue("email")
+	password := c.FormValue("password")
+	nickname := c.FormValue("nickname")
+	firstname := c.FormValue("first_name")
+	lastname := c.FormValue("last_name")
+	deleteflg := c.FormValue("delete_flg")
+	groupid, _ := strconv.Atoi(c.FormValue("group_id"))
+
+	db.Model(&user).Updates(models.User{
+		Name:      name,
+		Email:     email,
+		Password:  password,
+		Nickname:  nickname,
+		FirstName: firstname,
+		LastName:  lastname,
+		DeleteFlg: deleteflg,
+		GroupId:   groupid,
+	})
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
