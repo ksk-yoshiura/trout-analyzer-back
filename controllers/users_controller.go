@@ -23,13 +23,13 @@ func NewUsersController() *UsersController {
 */
 func (uc *UsersController) GetAllUsers(c echo.Context) error {
 	db := database.GetDBConn()
-	u := models.User{}
-	db.Find(&u)
+	users := []models.User{}
+	db.Find(&users)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		u,
+		users,
 	))
 }
 
