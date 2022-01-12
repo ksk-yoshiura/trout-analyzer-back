@@ -58,7 +58,8 @@ func (uc *UsersController) UpdateUser(c echo.Context) error {
 	uid := c.Param("id")
 	db.First(&user, uid)
 	user.Name = c.FormValue("name")
-	db.Update(&user)
+	// TODO:Updateより適切か判断しかねるので一旦保留
+	db.Save(&user)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
