@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 
 	"trout-analyzer-back/models"
 
@@ -39,7 +40,7 @@ func (uc *UsersController) GetAllUsers(c echo.Context) error {
 func (uc *UsersController) GetUser(c echo.Context) error {
 	db := database.GetDBConn()
 	user := models.User{}
-	uid := c.Param("id")
+	uid, _ := strconv.Atoi(c.Param("id"))
 	db.First(&user, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
@@ -55,7 +56,7 @@ func (uc *UsersController) GetUser(c echo.Context) error {
 func (uc *UsersController) UpdateUser(c echo.Context) error {
 	db := database.GetDBConn()
 	user := models.User{}
-	uid := c.Param("id")
+	uid, _ := strconv.Atoi(c.Param("id"))
 	db.First(&user, uid)
 	user.Name = c.FormValue("name")
 	// TODO:Updateより適切か判断しかねるので一旦保留
