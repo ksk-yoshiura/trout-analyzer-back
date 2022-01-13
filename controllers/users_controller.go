@@ -106,11 +106,19 @@ func (uc *UsersController) CreateUser(c echo.Context) error {
 	))
 }
 
-// /**
-//   ユーザ削除
-// */
-// func deleteUser(c echo.Context) error {
-// 	id := c.Param("id")
-// 	database.DB.Delete(&User{}, id)
-// 	return c.NoContent(http.StatusNoContent)
-// }
+/**
+  ユーザ削除
+*/
+func (uc *UsersController) DeleteUser(c echo.Context) error {
+	db := database.GetDBConn()
+	user := models.User{}
+	uid, _ := strconv.Atoi(c.Param("id"))
+	db.First(&user, uid)
+	result := db.Delete(&user)
+
+	return c.JSON(http.StatusOK, newResponse(
+		http.StatusOK,
+		http.StatusText(http.StatusOK),
+		result,
+	))
+}
