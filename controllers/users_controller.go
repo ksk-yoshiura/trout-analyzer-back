@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -98,7 +97,6 @@ func (uc *UsersController) CreateUser(c echo.Context) error {
 
 	result := db.Create(&user).Error
 
-	fmt.Println(result)
 	return c.JSON(http.StatusCreated, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
