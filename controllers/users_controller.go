@@ -56,7 +56,12 @@ func (uc *UsersController) GetUser(c echo.Context) error {
 func (uc *UsersController) UpdateUser(c echo.Context) error {
 	db := database.GetDBConn()
 	user := models.User{}
-	uid, _ := strconv.Atoi(c.Param("id"))
+
+	uid, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
 	db.First(&user, uid)
 	name := c.FormValue("name")
 	email := c.FormValue("email")
@@ -110,7 +115,11 @@ func (uc *UsersController) CreateUser(c echo.Context) error {
 func (uc *UsersController) DeleteUser(c echo.Context) error {
 	db := database.GetDBConn()
 	user := models.User{}
-	uid, _ := strconv.Atoi(c.Param("id"))
+	uid, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
 	db.First(&user, uid)
 	result := db.Delete(&user)
 
