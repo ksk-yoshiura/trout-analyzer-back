@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -64,7 +65,7 @@ func (uc *UsersController) UpdateUser(c echo.Context) error {
 	nickname := c.FormValue("nickname")
 	firstname := c.FormValue("first_name")
 	lastname := c.FormValue("last_name")
-	deleteflg := c.FormValue("delete_flg")
+	deleteflg, _ := strconv.Atoi(c.FormValue("delete_flg"))
 	groupid, _ := strconv.Atoi(c.FormValue("group_id"))
 
 	db.Model(&user).Updates(models.User{
@@ -85,21 +86,25 @@ func (uc *UsersController) UpdateUser(c echo.Context) error {
 	))
 }
 
-// /**
-//   ユーザ作成
-// */
-// func createUser(c echo.Context) error {
-// 	user := User{}
-// 	if err := c.Bind(&user); err != nil {
-// 		return err
-// 	}
-// 	database.DB.Create(&user)
-// 	return c.JSON(http.StatusCreated, newResponse(
-// 		http.StatusOK,
-// 		http.StatusText(http.StatusOK),
-// 		"OK",
-// 	))
-// }
+/**
+  ユーザ作成
+*/
+func (uc *UsersController) CreateUser(c echo.Context) error {
+	db := database.GetDBConn()
+	user := models.User{}
+	if err := c.Bind(&user); err != nil {
+		return err
+	}
+
+	result := db.Create(&user).Error
+
+	fmt.Println(result)
+	return c.JSON(http.StatusCreated, newResponse(
+		http.StatusOK,
+		http.StatusText(http.StatusOK),
+		result,
+	))
+}
 
 // /**
 //   ユーザ削除
