@@ -9,12 +9,13 @@ import (
 
 type Lure struct {
 	gorm.Model
-	Name       string `json:"name"`
-	DeleteFlg  int    `json:"delete_flg"`
-	LureTypeId int    `json:"lure_type_id"`
-	UserId     int    `json:"user_id"`
-	Weight     string `json:"weight"`
-	Color      string `json:"color"`
+	Name        string `json:"name"`
+	UserId      int    `json:"user_id"`
+	LureTypeId  int    `json:"lure_type_id"`
+	CompanyName string `json:"company_name"`
+	Weight      string `json:"weight"`
+	Color       string `json:"color"`
+	DeleteFlg   int    `json:"delete_flg"`
 }
 
 func LureValidate(lure Lure) error {

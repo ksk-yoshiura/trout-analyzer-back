@@ -64,19 +64,21 @@ func (uc *LuresController) UpdateLure(c echo.Context) error {
 
 	db.First(&lure, uid)
 	name := c.FormValue("name")
-	deleteflg, _ := strconv.Atoi(c.FormValue("delete_flg"))
+	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
 	lure_type_id, _ := strconv.Atoi(c.FormValue("lure_type_id"))
+	company_name := c.FormValue("company_name")
 	color := c.FormValue("color")
 	weight := c.FormValue("weight")
-	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
+	deleteflg, _ := strconv.Atoi(c.FormValue("delete_flg"))
 
 	db.Model(&lure).Updates(models.Lure{
-		Name:       name,
-		DeleteFlg:  deleteflg,
-		LureTypeId: lure_type_id,
-		Color:      color,
-		Weight:     weight,
-		UserId:     user_id,
+		Name:        name,
+		UserId:      user_id,
+		LureTypeId:  lure_type_id,
+		CompanyName: company_name,
+		Color:       color,
+		Weight:      weight,
+		DeleteFlg:   deleteflg,
 	})
 
 	return c.JSON(http.StatusOK, newResponse(
