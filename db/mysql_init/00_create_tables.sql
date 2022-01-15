@@ -31,6 +31,7 @@ CREATE TABLE lures (
   `user_id` int(255) DEFAULT NULL,
   `color` VARCHAR(255) DEFAULT NULL,
   `weight` int(255) DEFAULT NULL,
+  `company_name` VARCHAR(255) DEFAULT NULL,
   `delete_flg` tinyint(4) DEFAULT 0,
   `created_at` Datetime DEFAULT NULL,
   `updated_at` Datetime DEFAULT NULL,
@@ -45,7 +46,6 @@ DROP TABLE IF EXISTS lure_types;
 CREATE TABLE lure_types (
   `id` INT NOT NULL AUTO_INCREMENT,
   `type_name` VARCHAR(255) DEFAULT NULL,
-  `company_name` VARCHAR(255) DEFAULT NULL,
   `delete_flg` tinyint(4) DEFAULT 0,
   `created_at` Datetime DEFAULT NULL,
   `updated_at` Datetime DEFAULT NULL,
@@ -118,6 +118,7 @@ CREATE TABLE reels (
   `user_id` int(255) DEFAULT NULL,
   `name` VARCHAR(255) DEFAULT NULL,
   `type_number` int(255) DEFAULT NULL,
+  `gear` VARCHAR(255) DEFAULT NULL,
   `company_name` VARCHAR(255) DEFAULT NULL,
   `delete_flg` tinyint(4) DEFAULT 0,
   `created_at` Datetime DEFAULT NULL,
@@ -137,6 +138,21 @@ CREATE TABLE line_on_reel (
   `line_type` tinyint(4) DEFAULT 0,
   `thickness` tinyint(4) DEFAULT 0,
   `company_name` VARCHAR(255) DEFAULT NULL,
+  `delete_flg` tinyint(4) DEFAULT 0,
+  `created_at` Datetime DEFAULT NULL,
+  `updated_at` Datetime DEFAULT NULL,
+  `deleted_at` Datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- フィールドテーブル --
+
+DROP TABLE IF EXISTS fields;
+
+CREATE TABLE fields (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) DEFAULT NULL,
+  `address` VARCHAR(255) DEFAULT NULL,
   `delete_flg` tinyint(4) DEFAULT 0,
   `created_at` Datetime DEFAULT NULL,
   `updated_at` Datetime DEFAULT NULL,
