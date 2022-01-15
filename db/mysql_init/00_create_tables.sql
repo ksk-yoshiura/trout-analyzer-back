@@ -99,7 +99,7 @@ CREATE TABLE rods (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` int(255) DEFAULT NULL,
   `name` VARCHAR(255) DEFAULT NULL,
-  `hardness` tinyint(4) DEFAULT 0,
+  `hardness` VARCHAR(255) DEFAULT 0,
   `length` int(255) DEFAULT 0,
   `company_name` VARCHAR(255) DEFAULT NULL,
   `delete_flg` tinyint(4) DEFAULT 0,
