@@ -11,7 +11,7 @@ type FishingLine struct {
 	gorm.Model
 	Name        string `json:"name"`
 	UserId      int    `json:"user_id"`
-	LineType    int    `json:"line_type"`
+	LineTypeId  int    `json:"line_type_id"`
 	Thickness   int    `json:"thickness"`
 	CompanyName string `json:"company_name"`
 	DeleteFlg   int    `json:"delete_flg"`
