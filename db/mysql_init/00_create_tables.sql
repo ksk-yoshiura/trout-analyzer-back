@@ -135,7 +135,7 @@ CREATE TABLE fishing_lines (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` int(255) DEFAULT NULL,
   `name` VARCHAR(255) DEFAULT NULL,
-  `line_type` tinyint(4) DEFAULT 0,
+  `line_type_id` tinyint(4) DEFAULT 0,
   `thickness` tinyint(4) DEFAULT 0,
   `company_name` VARCHAR(255) DEFAULT NULL,
   `delete_flg` tinyint(4) DEFAULT 0,
