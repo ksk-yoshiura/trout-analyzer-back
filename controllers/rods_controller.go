@@ -24,13 +24,13 @@ func NewRodsController() *RodsController {
 */
 func (uc *RodsController) GetAllRods(c echo.Context) error {
 	db := database.GetDBConn()
-	Rods := []models.Rod{}
-	db.Find(&Rods)
+	rods := []models.Rod{}
+	db.Find(&rods)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		Rods,
+		rods,
 	))
 }
 
