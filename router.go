@@ -15,7 +15,7 @@ func newRouter() *echo.Echo {
 	e := echo.New()
 	database.GetDBConfig()
 
-	// ユーザコントローラ
+	// ユーザコントローラー
 	usersController := controllers.NewUsersController()
 
 	e.GET("/users", usersController.GetAllUsers)
@@ -24,7 +24,7 @@ func newRouter() *echo.Echo {
 	e.POST("/users", usersController.CreateUser)
 	e.POST("/users/:id", usersController.DeleteUser)
 
-	// ルアーコントローラ
+	// ルアーコントローラー
 	luresController := controllers.NewLuresController()
 
 	e.GET("/lures", luresController.GetAllLures)
@@ -33,7 +33,7 @@ func newRouter() *echo.Echo {
 	e.POST("/lures", luresController.CreateLure)
 	e.POST("/lures/:id", luresController.DeleteLure)
 
-	// ロッドコントローラ
+	// ロッドコントローラー
 	rodsController := controllers.NewRodsController()
 
 	e.GET("/rods", rodsController.GetAllRods)
@@ -42,7 +42,7 @@ func newRouter() *echo.Echo {
 	e.POST("/rods", rodsController.CreateRod)
 	e.POST("/rods/:id", rodsController.DeleteRod)
 
-	// リールコントローラ
+	// リールコントローラー
 	reelsController := controllers.NewReelsController()
 
 	e.GET("/reels", reelsController.GetAllReels)
@@ -51,7 +51,7 @@ func newRouter() *echo.Echo {
 	e.POST("/reels", reelsController.CreateReel)
 	e.POST("/reels/:id", reelsController.DeleteReel)
 
-	// タックルコントローラ
+	// タックルコントローラー
 	tacklesController := controllers.NewTacklesController()
 
 	e.GET("/tackles", tacklesController.GetAllTackles)
@@ -60,7 +60,7 @@ func newRouter() *echo.Echo {
 	e.POST("/tackles", tacklesController.CreateTackle)
 	e.POST("/tackles/:id", tacklesController.DeleteTackle)
 
-	// フィールドコントローラ
+	// フィールドコントローラー
 	fieldsController := controllers.NewFieldsController()
 
 	e.GET("/fields", fieldsController.GetAllFields)
@@ -69,7 +69,7 @@ func newRouter() *echo.Echo {
 	e.POST("/fields", fieldsController.CreateField)
 	e.POST("/fields/:id", fieldsController.DeleteField)
 
-	// ラインコントローラ
+	// ラインコントローラー
 	fishingLinesController := controllers.NewFishingLinesController()
 
 	e.GET("/lines", fishingLinesController.GetAllFishingLines)
