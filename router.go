@@ -15,6 +15,7 @@ func newRouter() *echo.Echo {
 	e := echo.New()
 	database.GetDBConfig()
 
+	// ユーザコントローラ
 	usersController := controllers.NewUsersController()
 
 	e.GET("/users", usersController.GetAllUsers)
@@ -22,5 +23,14 @@ func newRouter() *echo.Echo {
 	e.PUT("/users/:id", usersController.UpdateUser)
 	e.POST("/users", usersController.CreateUser)
 	e.POST("/users/:id", usersController.DeleteUser)
+
+	// ルアーコントローラ
+	luresController := controllers.NewLuresController()
+
+	e.GET("/lures", luresController.GetAllLures)
+	e.GET("/lures/:id", luresController.GetLure)
+	e.PUT("/lures/:id", luresController.UpdateLure)
+	e.POST("/lures", luresController.CreateLure)
+	e.POST("/lures/:id", luresController.DeleteLure)
 	return e
 }
