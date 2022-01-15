@@ -151,6 +151,7 @@ DROP TABLE IF EXISTS fields;
 
 CREATE TABLE fields (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` int(255) DEFAULT NULL,
   `name` VARCHAR(255) DEFAULT NULL,
   `address` VARCHAR(255) DEFAULT NULL,
   `delete_flg` tinyint(4) DEFAULT 0,
