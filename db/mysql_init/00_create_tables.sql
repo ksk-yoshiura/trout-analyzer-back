@@ -129,9 +129,9 @@ CREATE TABLE reels (
 
 -- ラインテーブル --
 
-DROP TABLE IF EXISTS line_on_reel;
+DROP TABLE IF EXISTS fishing_lines;
 
-CREATE TABLE line_on_reel (
+CREATE TABLE fishing_lines (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` int(255) DEFAULT NULL,
   `name` VARCHAR(255) DEFAULT NULL,
