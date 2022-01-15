@@ -59,5 +59,14 @@ func newRouter() *echo.Echo {
 	e.PUT("/tackles/:id", tacklesController.UpdateTackle)
 	e.POST("/tackles", tacklesController.CreateTackle)
 	e.POST("/tackles/:id", tacklesController.DeleteTackle)
+
+	// フィールドコントローラ
+	fieldsController := controllers.NewFieldsController()
+
+	e.GET("/fields", fieldsController.GetAllFields)
+	e.GET("/fields/:id", fieldsController.GetField)
+	e.PUT("/fields/:id", fieldsController.UpdateField)
+	e.POST("/fields", fieldsController.CreateField)
+	e.POST("/fields/:id", fieldsController.DeleteField)
 	return e
 }
