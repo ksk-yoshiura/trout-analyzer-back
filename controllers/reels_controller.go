@@ -24,13 +24,13 @@ func NewReelsController() *ReelsController {
 */
 func (uc *ReelsController) GetAllReels(c echo.Context) error {
 	db := database.GetDBConn()
-	Reels := []models.Reel{}
-	db.Find(&Reels)
+	reels := []models.Reel{}
+	db.Find(&reels)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		Reels,
+		reels,
 	))
 }
 
