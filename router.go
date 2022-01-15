@@ -72,10 +72,10 @@ func newRouter() *echo.Echo {
 	// ラインコントローラ
 	fishingLinesController := controllers.NewFishingLinesController()
 
-	e.GET("/fishingLines", fishingLinesController.GetAllFishingLines)
-	e.GET("/fishingLines/:id", fishingLinesController.GetFishingLine)
-	e.PUT("/fishingLines/:id", fishingLinesController.UpdateFishingLine)
-	e.POST("/fishingLines", fishingLinesController.CreateFishingLine)
-	e.POST("/fishingLines/:id", fishingLinesController.DeleteFishingLine)
+	e.GET("/lines", fishingLinesController.GetAllFishingLines)
+	e.GET("/lines/:id", fishingLinesController.GetFishingLine)
+	e.PUT("/lines/:id", fishingLinesController.UpdateFishingLine)
+	e.POST("/lines", fishingLinesController.CreateFishingLine)
+	e.POST("/lines/:id", fishingLinesController.DeleteFishingLine)
 	return e
 }
