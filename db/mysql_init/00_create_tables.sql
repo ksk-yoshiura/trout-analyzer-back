@@ -50,6 +50,34 @@ CREATE TABLE lure_types (
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+-- ヒットパターン各条件テーブル --
+
+DROP TABLE IF EXISTS pattern_conditions;
+
+CREATE TABLE pattern_conditions (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type_num`  int(255) DEFAULT NULL,
+  `type_name` VARCHAR(255) DEFAULT NULL,
+  `created_at` Datetime DEFAULT NULL,
+  `updated_at` Datetime DEFAULT NULL,
+  `deleted_at` Datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ツール各条件テーブル --
+
+DROP TABLE IF EXISTS tool_conditions;
+
+CREATE TABLE tool_conditions (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `type_num`  int(255) DEFAULT NULL,
+  `type_name` VARCHAR(255) DEFAULT NULL,
+  `created_at` Datetime DEFAULT NULL,
+  `updated_at` Datetime DEFAULT NULL,
+  `deleted_at` Datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 -- ヒットパターンテーブル --
 
 DROP TABLE IF EXISTS hit_patterns;
