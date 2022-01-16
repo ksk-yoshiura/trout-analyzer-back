@@ -12,7 +12,7 @@ type Reel struct {
 	Name        string `json:"name"`
 	UserId      int    `json:"user_id"`
 	CompanyName string `json:"company_name"`
-	TypeNumber  string `json:"type_number"`
+	TypeNumber  int    `json:"type_number"`
 	Gear        string `json:"gear"`
 	DeleteFlg   int    `json:"delete_flg"`
 }
