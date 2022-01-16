@@ -65,7 +65,7 @@ func (uc *ReelsController) UpdateReel(c echo.Context) error {
 	db.First(&reel, uid)
 	name := c.FormValue("name")
 	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
-	type_number := c.FormValue("type_number")
+	type_number, _ := strconv.Atoi(c.FormValue("type_number"))
 	gear := c.FormValue("gear")
 	company_name := c.FormValue("company_name")
 	deleteflg, _ := strconv.Atoi(c.FormValue("delete_flg"))
