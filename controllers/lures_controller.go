@@ -69,7 +69,6 @@ func (uc *LuresController) UpdateLure(c echo.Context) error {
 	company_name := c.FormValue("company_name")
 	color := c.FormValue("color")
 	weight := c.FormValue("weight")
-	deleteflg, _ := strconv.Atoi(c.FormValue("delete_flg"))
 
 	db.Model(&lure).Updates(models.Lure{
 		Name:        name,
@@ -78,7 +77,6 @@ func (uc *LuresController) UpdateLure(c echo.Context) error {
 		CompanyName: company_name,
 		Color:       color,
 		Weight:      weight,
-		DeleteFlg:   deleteflg,
 	})
 
 	return c.JSON(http.StatusOK, newResponse(

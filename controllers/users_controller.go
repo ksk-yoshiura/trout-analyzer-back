@@ -69,7 +69,6 @@ func (uc *UsersController) UpdateUser(c echo.Context) error {
 	nickname := c.FormValue("nickname")
 	firstname := c.FormValue("first_name")
 	lastname := c.FormValue("last_name")
-	deleteflg, _ := strconv.Atoi(c.FormValue("delete_flg"))
 	groupid, _ := strconv.Atoi(c.FormValue("group_id"))
 
 	db.Model(&user).Updates(models.User{
@@ -79,7 +78,6 @@ func (uc *UsersController) UpdateUser(c echo.Context) error {
 		Nickname:  nickname,
 		FirstName: firstname,
 		LastName:  lastname,
-		DeleteFlg: deleteflg,
 		GroupId:   groupid,
 	})
 

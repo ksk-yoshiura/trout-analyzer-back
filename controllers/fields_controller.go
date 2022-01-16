@@ -66,13 +66,11 @@ func (uc *FieldsController) UpdateField(c echo.Context) error {
 	name := c.FormValue("name")
 	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
 	address := c.FormValue("address")
-	deleteflg, _ := strconv.Atoi(c.FormValue("delete_flg"))
 
 	db.Model(&field).Updates(models.Field{
-		Name:      name,
-		UserId:    user_id,
-		Address:   address,
-		DeleteFlg: deleteflg,
+		Name:    name,
+		UserId:  user_id,
+		Address: address,
 	})
 
 	return c.JSON(http.StatusOK, newResponse(

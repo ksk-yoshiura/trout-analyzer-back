@@ -67,14 +67,12 @@ func (uc *TacklesController) UpdateTackle(c echo.Context) error {
 	rod_id, _ := strconv.Atoi(c.FormValue("rod_id"))
 	reel_id, _ := strconv.Atoi(c.FormValue("reel_id"))
 	line_id, _ := strconv.Atoi(c.FormValue("line_id"))
-	deleteflg, _ := strconv.Atoi(c.FormValue("delete_flg"))
 
 	db.Model(&tackle).Updates(models.Tackle{
-		UserId:    user_id,
-		RodId:     rod_id,
-		ReelId:    reel_id,
-		LineId:    line_id,
-		DeleteFlg: deleteflg,
+		UserId: user_id,
+		RodId:  rod_id,
+		ReelId: reel_id,
+		LineId: line_id,
 	})
 
 	return c.JSON(http.StatusOK, newResponse(

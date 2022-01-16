@@ -68,7 +68,6 @@ func (uc *RodsController) UpdateRod(c echo.Context) error {
 	hardness_id, _ := strconv.Atoi(c.FormValue("hardness_id"))
 	length := c.FormValue("length")
 	company_name := c.FormValue("company_name")
-	deleteflg, _ := strconv.Atoi(c.FormValue("delete_flg"))
 
 	db.Model(&rod).Updates(models.Rod{
 		Name:        name,
@@ -76,7 +75,6 @@ func (uc *RodsController) UpdateRod(c echo.Context) error {
 		HardnessId:  hardness_id,
 		Length:      length,
 		CompanyName: company_name,
-		DeleteFlg:   deleteflg,
 	})
 
 	return c.JSON(http.StatusOK, newResponse(

@@ -15,7 +15,6 @@ type Lure struct {
 	CompanyName string `json:"company_name"`
 	Weight      string `json:"weight"`
 	Color       string `json:"color"`
-	DeleteFlg   int    `json:"delete_flg"`
 }
 
 func LureValidate(lure Lure) error {

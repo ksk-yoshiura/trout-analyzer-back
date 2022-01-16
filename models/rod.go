@@ -14,7 +14,6 @@ type Rod struct {
 	CompanyName string `json:"company_name"`
 	Length      string `json:"length"`
 	HardnessId  int    `json:"hardness_id"`
-	DeleteFlg   int    `json:"delete_flg"`
 }
 
 func RodValidate(rod Rod) error {

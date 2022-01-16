@@ -68,7 +68,6 @@ func (uc *ReelsController) UpdateReel(c echo.Context) error {
 	type_number, _ := strconv.Atoi(c.FormValue("type_number"))
 	gear := c.FormValue("gear")
 	company_name := c.FormValue("company_name")
-	deleteflg, _ := strconv.Atoi(c.FormValue("delete_flg"))
 
 	db.Model(&reel).Updates(models.Reel{
 		Name:        name,
@@ -76,7 +75,6 @@ func (uc *ReelsController) UpdateReel(c echo.Context) error {
 		TypeNumber:  type_number,
 		Gear:        gear,
 		CompanyName: company_name,
-		DeleteFlg:   deleteflg,
 	})
 
 	return c.JSON(http.StatusOK, newResponse(

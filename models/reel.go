@@ -14,7 +14,6 @@ type Reel struct {
 	CompanyName string `json:"company_name"`
 	TypeNumber  int    `json:"type_number"`
 	Gear        string `json:"gear"`
-	DeleteFlg   int    `json:"delete_flg"`
 }
 
 func ReelValidate(reel Reel) error {

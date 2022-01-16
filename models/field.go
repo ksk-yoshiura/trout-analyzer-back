@@ -9,10 +9,9 @@ import (
 
 type Field struct {
 	gorm.Model
-	Name      string `json:"name"`
-	UserId    int    `json:"user_id"`
-	Address   string `json:"address"`
-	DeleteFlg int    `json:"delete_flg"`
+	Name    string `json:"name"`
+	UserId  int    `json:"user_id"`
+	Address string `json:"address"`
 }
 
 func FieldValidate(field Field) error {

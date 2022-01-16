@@ -9,11 +9,10 @@ import (
 
 type Tackle struct {
 	gorm.Model
-	UserId    int `json:"user_id"`
-	RodId     int `json:"rod_id"`
-	ReelId    int `json:"reel_id"`
-	LineId    int `json:"liner_id"`
-	DeleteFlg int `json:"delete_flg"`
+	UserId int `json:"user_id"`
+	RodId  int `json:"rod_id"`
+	ReelId int `json:"reel_id"`
+	LineId int `json:"liner_id"`
 }
 
 func TackleValidate(tackle Tackle) error {

@@ -68,7 +68,6 @@ func (uc *FishingLinesController) UpdateFishingLine(c echo.Context) error {
 	line_type_id, _ := strconv.Atoi(c.FormValue("line_type_id"))
 	thickness, _ := strconv.Atoi(c.FormValue("thickness"))
 	company_name := c.FormValue("company_name")
-	deleteflg, _ := strconv.Atoi(c.FormValue("delete_flg"))
 
 	db.Model(&fishing_line).Updates(models.FishingLine{
 		Name:        name,
@@ -76,7 +75,6 @@ func (uc *FishingLinesController) UpdateFishingLine(c echo.Context) error {
 		LineTypeId:  line_type_id,
 		Thickness:   thickness,
 		CompanyName: company_name,
-		DeleteFlg:   deleteflg,
 	})
 
 	return c.JSON(http.StatusOK, newResponse(
