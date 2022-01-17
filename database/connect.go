@@ -8,7 +8,6 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// DBを使い回すことで、DBへのConnectとCloseを毎回しないようにする
 var DB *gorm.DB
 
 // GetDB returns database connection
