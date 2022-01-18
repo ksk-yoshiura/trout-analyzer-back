@@ -1,7 +1,9 @@
 package models
 
 import (
+	"fmt"
 	"regexp"
+	"trout-analyzer-back/database"
 
 	"github.com/jinzhu/gorm"
 	"github.com/wcl48/valval"
@@ -27,4 +29,11 @@ func UserValidate(user User) error {
 	})
 
 	return Validator.Validate(user)
+}
+
+func FindUsers(users []User) []User {
+	db := database.GetDBConn()
+	db.Find(&users)
+	return users
+
 }
