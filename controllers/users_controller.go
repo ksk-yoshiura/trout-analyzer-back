@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -26,7 +25,6 @@ func NewUsersController() *UsersController {
 func (uc *UsersController) GetAllUsers(c echo.Context) error {
 	users := []models.User{}
 	result := models.FindUsers(users)
-	fmt.Println(result)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
