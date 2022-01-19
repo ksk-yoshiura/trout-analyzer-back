@@ -52,7 +52,6 @@ func (uc *UsersController) Show(c echo.Context) error {
   ユーザ更新
 */
 func (uc *UsersController) Update(c echo.Context) error {
-
 	user := models.User{}
 	uid, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
