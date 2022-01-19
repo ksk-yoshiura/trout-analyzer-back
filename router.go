@@ -18,7 +18,7 @@ func newRouter() *echo.Echo {
 	// ユーザコントローラー
 	usersController := controllers.NewUsersController()
 
-	e.GET("/users", usersController.GetAllUsers)
+	e.GET("/users", usersController.Index)
 	e.GET("/users/:id", usersController.GetUser)
 	e.PUT("/users/:id", usersController.UpdateUser)
 	e.POST("/users", usersController.CreateUser)

@@ -22,9 +22,9 @@ func NewUsersController() *UsersController {
 /**
   ユーザ一覧取得
 */
-func (uc *UsersController) GetAllUsers(c echo.Context) error {
+func (uc *UsersController) Index(c echo.Context) error {
 	users := []models.User{}
-	result := models.FindUsers(users)
+	result := models.GetAllUsers(users)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,

@@ -30,9 +30,11 @@ func UserValidate(user User) error {
 	return Validator.Validate(user)
 }
 
-func FindUsers(users []User) []User {
+/**
+  ユーザ一覧取得
+*/
+func GetAllUsers(users []User) []User {
 	db := database.GetDBConn()
 	db.Find(&users)
 	return users
-
 }
