@@ -51,38 +51,20 @@ func (uc *UsersController) Show(c echo.Context) error {
 /**
   ユーザ更新
 */
-func (uc *UsersController) UpdateUser(c echo.Context) error {
-	db := database.GetDBConn()
-	user := models.User{}
+func (uc *UsersController) Update(c echo.Context) error {
 
+	user := models.User{}
 	uid, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	db.First(&user, uid)
-	name := c.FormValue("name")
-	email := c.FormValue("email")
-	password := c.FormValue("password")
-	nickname := c.FormValue("nickname")
-	firstname := c.FormValue("first_name")
-	lastname := c.FormValue("last_name")
-	groupid, _ := strconv.Atoi(c.FormValue("group_id"))
-
-	db.Model(&user).Updates(models.User{
-		Name:      name,
-		Email:     email,
-		Password:  password,
-		Nickname:  nickname,
-		FirstName: firstname,
-		LastName:  lastname,
-		GroupId:   groupid,
-	})
+	result := models.UpdateUser(user, uid, c)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		user,
+		result,
 	))
 }
 
