@@ -22,7 +22,7 @@ func newRouter() *echo.Echo {
 	e.GET("/users/:id", usersController.Show)
 	e.PUT("/users/:id", usersController.Update)
 	e.POST("/users", usersController.Create)
-	e.POST("/users/:id", usersController.DeleteUser)
+	e.POST("/users/:id", usersController.Delete)
 
 	// ルアーコントローラー
 	luresController := controllers.NewLuresController()

@@ -7,8 +7,6 @@ import (
 	"trout-analyzer-back/models"
 
 	"github.com/labstack/echo"
-
-	"trout-analyzer-back/database"
 )
 
 // UsersController controller for Users request
@@ -88,16 +86,14 @@ func (uc *UsersController) Create(c echo.Context) error {
 /**
   ユーザ削除
 */
-func (uc *UsersController) DeleteUser(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *UsersController) Delete(c echo.Context) error {
 	user := models.User{}
 	uid, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	db.First(&user, uid)
-	result := db.Delete(&user)
+	result := models.DeleteUser(user, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,

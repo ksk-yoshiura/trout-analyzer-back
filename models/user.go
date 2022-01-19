@@ -86,3 +86,14 @@ func CreateUser(user User) error {
 	result := db.Create(&user).Error
 	return result
 }
+
+/**
+  ユーザ削除
+*/
+func DeleteUser(user User, uid int) error {
+	db := database.GetDBConn()
+	db.First(&user, uid)
+	result := db.Delete(&user).Error
+	return result
+
+}
