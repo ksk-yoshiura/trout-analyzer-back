@@ -36,16 +36,15 @@ func (uc *UsersController) Index(c echo.Context) error {
 /**
   ユーザ取得
 */
-func (uc *UsersController) GetUser(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *UsersController) Show(c echo.Context) error {
 	user := models.User{}
 	uid, _ := strconv.Atoi(c.Param("id"))
-	db.First(&user, uid)
+	result := models.GetUser(user, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		user,
+		result,
 	))
 }
 

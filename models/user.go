@@ -38,3 +38,12 @@ func GetAllUsers(users []User) []User {
 	db.Find(&users)
 	return users
 }
+
+/**
+  ユーザ取得
+*/
+func GetUser(user User, uid int) User {
+	db := database.GetDBConn()
+	db.First(&user, uid)
+	return user
+}
