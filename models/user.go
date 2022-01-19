@@ -74,6 +74,15 @@ func UpdateUser(user User, uid int, c echo.Context) error {
 		LastName:  lastname,
 		GroupId:   groupid,
 	}).Error
-	return result
 
+	return result
+}
+
+/**
+  ユーザ作成
+*/
+func CreateUser(user User) error {
+	db := database.GetDBConn()
+	result := db.Create(&user).Error
+	return result
 }

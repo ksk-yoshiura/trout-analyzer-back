@@ -71,14 +71,13 @@ func (uc *UsersController) Update(c echo.Context) error {
 /**
   ユーザ作成
 */
-func (uc *UsersController) CreateUser(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *UsersController) Create(c echo.Context) error {
 	user := models.User{}
 	if err := c.Bind(&user); err != nil {
 		return err
 	}
 
-	result := db.Create(&user).Error
+	result := models.CreateUser(user)
 
 	return c.JSON(http.StatusCreated, newResponse(
 		http.StatusOK,
