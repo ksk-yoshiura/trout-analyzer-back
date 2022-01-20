@@ -70,14 +70,13 @@ func (uc *FishingLinesController) Update(c echo.Context) error {
 /**
   ライン作成
 */
-func (uc *FishingLinesController) CreateFishingLine(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *FishingLinesController) Create(c echo.Context) error {
 	fishing_line := models.FishingLine{}
 	if err := c.Bind(&fishing_line); err != nil {
 		return err
 	}
 
-	result := db.Create(&fishing_line).Error
+	result := models.CreateLine(fishing_line)
 
 	return c.JSON(http.StatusCreated, newResponse(
 		http.StatusOK,
