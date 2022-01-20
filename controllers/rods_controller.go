@@ -22,15 +22,14 @@ func NewRodsController() *RodsController {
 /**
   ロッド一覧取得
 */
-func (uc *RodsController) GetAllRods(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *RodsController) Index(c echo.Context) error {
 	rods := []models.Rod{}
-	db.Find(&rods)
+	result := models.GetAllRods(rods)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		rods,
+		result,
 	))
 }
 
