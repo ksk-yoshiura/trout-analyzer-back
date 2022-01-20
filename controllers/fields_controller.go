@@ -7,8 +7,6 @@ import (
 	"trout-analyzer-back/models"
 
 	"github.com/labstack/echo"
-
-	"trout-analyzer-back/database"
 )
 
 // FieldsController controller for Fields request
@@ -89,16 +87,14 @@ func (uc *FieldsController) Create(c echo.Context) error {
 /**
   フィールド削除
 */
-func (uc *FieldsController) DeleteField(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *FieldsController) Delete(c echo.Context) error {
 	field := models.Field{}
 	uid, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	db.First(&field, uid)
-	result := db.Delete(&field)
+	result := models.DeleteField(field, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
