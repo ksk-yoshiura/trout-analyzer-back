@@ -54,7 +54,7 @@ func newRouter() *echo.Echo {
 	// タックルコントローラー
 	tacklesController := controllers.NewTacklesController()
 
-	e.GET("/tackles", tacklesController.GetAllTackles)
+	e.GET("/tackles", tacklesController.Index)
 	e.GET("/tackles/:id", tacklesController.GetTackle)
 	e.PUT("/tackles/:id", tacklesController.UpdateTackle)
 	e.POST("/tackles", tacklesController.CreateTackle)

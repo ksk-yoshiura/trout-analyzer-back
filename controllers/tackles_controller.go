@@ -22,15 +22,14 @@ func NewTacklesController() *TacklesController {
 /**
   タックル一覧取得
 */
-func (uc *TacklesController) GetAllTackles(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *TacklesController) Index(c echo.Context) error {
 	tackles := []models.Tackle{}
-	db.Find(&tackles)
+	result := models.GetAllTackles(tackles)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		tackles,
+		result,
 	))
 }
 
