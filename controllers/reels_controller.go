@@ -51,34 +51,19 @@ func (uc *ReelsController) Show(c echo.Context) error {
 /**
   リール更新
 */
-func (uc *ReelsController) UpdateReel(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *ReelsController) Update(c echo.Context) error {
 	reel := models.Reel{}
-
-	uid, err := strconv.Atoi(c.Param("id"))
+	reel_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	db.First(&reel, uid)
-	name := c.FormValue("name")
-	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
-	type_number, _ := strconv.Atoi(c.FormValue("type_number"))
-	gear := c.FormValue("gear")
-	company_name := c.FormValue("company_name")
-
-	db.Model(&reel).Updates(models.Reel{
-		Name:        name,
-		UserId:      user_id,
-		TypeNumber:  type_number,
-		Gear:        gear,
-		CompanyName: company_name,
-	})
+	result := models.UpdateReel(reel, reel_id, c)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		reel,
+		result,
 	))
 }
 
