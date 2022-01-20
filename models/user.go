@@ -61,8 +61,8 @@ func UpdateUser(user User, uid int, c echo.Context) error {
 	email := c.FormValue("email")
 	password := c.FormValue("password")
 	nickname := c.FormValue("nickname")
-	firstname := c.FormValue("first_name")
-	lastname := c.FormValue("last_name")
+	first_name := c.FormValue("first_name")
+	last_name := c.FormValue("last_name")
 	groupid, _ := strconv.Atoi(c.FormValue("group_id"))
 
 	result := db.Model(&user).Updates(User{
@@ -70,8 +70,8 @@ func UpdateUser(user User, uid int, c echo.Context) error {
 		Email:     email,
 		Password:  password,
 		Nickname:  nickname,
-		FirstName: firstname,
-		LastName:  lastname,
+		FirstName: first_name,
+		LastName:  last_name,
 		GroupId:   groupid,
 	}).Error
 
