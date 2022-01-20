@@ -70,14 +70,13 @@ func (uc *ReelsController) Update(c echo.Context) error {
 /**
   リール作成
 */
-func (uc *ReelsController) CreateReel(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *ReelsController) Create(c echo.Context) error {
 	reel := models.Reel{}
 	if err := c.Bind(&reel); err != nil {
 		return err
 	}
 
-	result := db.Create(&reel).Error
+	result := models.CreateReel(reel)
 
 	return c.JSON(http.StatusCreated, newResponse(
 		http.StatusOK,
