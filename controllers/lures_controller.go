@@ -71,14 +71,13 @@ func (uc *LuresController) Update(c echo.Context) error {
 /**
   ルアー作成
 */
-func (uc *LuresController) CreateLure(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *LuresController) Create(c echo.Context) error {
 	lure := models.Lure{}
 	if err := c.Bind(&lure); err != nil {
 		return err
 	}
 
-	result := db.Create(&lure).Error
+	result := models.CreateLure(lure)
 
 	return c.JSON(http.StatusCreated, newResponse(
 		http.StatusOK,
