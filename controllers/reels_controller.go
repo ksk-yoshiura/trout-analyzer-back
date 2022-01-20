@@ -36,16 +36,15 @@ func (uc *ReelsController) Index(c echo.Context) error {
 /**
   リール取得
 */
-func (uc *ReelsController) GetReel(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *ReelsController) Show(c echo.Context) error {
 	reel := models.Reel{}
-	uid, _ := strconv.Atoi(c.Param("id"))
-	db.First(&reel, uid)
+	reel_id, _ := strconv.Atoi(c.Param("id"))
+	result := models.GetReel(reel, reel_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		reel,
+		result,
 	))
 }
 
