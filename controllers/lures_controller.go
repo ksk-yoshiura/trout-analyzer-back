@@ -22,15 +22,14 @@ func NewLuresController() *LuresController {
 /**
   ルアー一覧取得
 */
-func (uc *LuresController) GetAllLures(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *LuresController) Index(c echo.Context) error {
 	lures := []models.Lure{}
-	db.Find(&lures)
+	result := models.GetAllLures(lures)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		lures,
+		result,
 	))
 }
 

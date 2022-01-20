@@ -27,7 +27,7 @@ func newRouter() *echo.Echo {
 	// ルアーコントローラー
 	luresController := controllers.NewLuresController()
 
-	e.GET("/lures", luresController.GetAllLures)
+	e.GET("/lures", luresController.Index)
 	e.GET("/lures/:id", luresController.GetLure)
 	e.PUT("/lures/:id", luresController.UpdateLure)
 	e.POST("/lures", luresController.CreateLure)
