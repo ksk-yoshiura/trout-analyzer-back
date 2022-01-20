@@ -36,16 +36,15 @@ func (uc *FieldsController) Index(c echo.Context) error {
 /**
   フィールド取得
 */
-func (uc *FieldsController) GetField(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *FieldsController) Show(c echo.Context) error {
 	field := models.Field{}
 	uid, _ := strconv.Atoi(c.Param("id"))
-	db.First(&field, uid)
+	result := models.GetField(field, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		field,
+		result,
 	))
 }
 

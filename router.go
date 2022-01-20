@@ -64,7 +64,7 @@ func newRouter() *echo.Echo {
 	fieldsController := controllers.NewFieldsController()
 
 	e.GET("/fields", fieldsController.Index)
-	e.GET("/fields/:id", fieldsController.GetField)
+	e.GET("/fields/:id", fieldsController.Show)
 	e.PUT("/fields/:id", fieldsController.UpdateField)
 	e.POST("/fields", fieldsController.CreateField)
 	e.POST("/fields/:id", fieldsController.DeleteField)
