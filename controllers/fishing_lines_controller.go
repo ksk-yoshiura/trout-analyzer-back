@@ -51,34 +51,19 @@ func (uc *FishingLinesController) Show(c echo.Context) error {
 /**
   ライン更新
 */
-func (uc *FishingLinesController) UpdateFishingLine(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *FishingLinesController) Update(c echo.Context) error {
 	fishing_line := models.FishingLine{}
-
-	uid, err := strconv.Atoi(c.Param("id"))
+	line_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	db.First(&fishing_line, uid)
-	name := c.FormValue("name")
-	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
-	line_type_id, _ := strconv.Atoi(c.FormValue("line_type_id"))
-	thickness, _ := strconv.Atoi(c.FormValue("thickness"))
-	company_name := c.FormValue("company_name")
-
-	db.Model(&fishing_line).Updates(models.FishingLine{
-		Name:        name,
-		UserId:      user_id,
-		LineTypeId:  line_type_id,
-		Thickness:   thickness,
-		CompanyName: company_name,
-	})
+	result := models.UpdateLine(fishing_line, line_id, c)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		fishing_line,
+		result,
 	))
 }
 
