@@ -71,14 +71,13 @@ func (uc *FieldsController) Update(c echo.Context) error {
 /**
   フィールド作成
 */
-func (uc *FieldsController) CreateField(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *FieldsController) Create(c echo.Context) error {
 	field := models.Field{}
 	if err := c.Bind(&field); err != nil {
 		return err
 	}
 
-	result := db.Create(&field).Error
+	result := models.CreateField(field)
 
 	return c.JSON(http.StatusCreated, newResponse(
 		http.StatusOK,

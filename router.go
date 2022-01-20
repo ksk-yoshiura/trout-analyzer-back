@@ -66,7 +66,7 @@ func newRouter() *echo.Echo {
 	e.GET("/fields", fieldsController.Index)
 	e.GET("/fields/:id", fieldsController.Show)
 	e.PUT("/fields/:id", fieldsController.Update)
-	e.POST("/fields", fieldsController.CreateField)
+	e.POST("/fields", fieldsController.Create)
 	e.POST("/fields/:id", fieldsController.DeleteField)
 
 	// ラインコントローラー
