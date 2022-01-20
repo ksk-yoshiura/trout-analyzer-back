@@ -51,7 +51,7 @@ func (uc *LuresController) Show(c echo.Context) error {
 /**
   ルアー更新
 */
-func (uc *LuresController) UpdateLure(c echo.Context) error {
+func (uc *LuresController) Update(c echo.Context) error {
 	lure := models.Lure{}
 
 	lure_id, err := strconv.Atoi(c.Param("id"))

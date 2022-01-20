@@ -29,7 +29,7 @@ func newRouter() *echo.Echo {
 
 	e.GET("/lures", luresController.Index)
 	e.GET("/lures/:id", luresController.Show)
-	e.PUT("/lures/:id", luresController.UpdateLure)
+	e.PUT("/lures/:id", luresController.Update)
 	e.POST("/lures", luresController.CreateLure)
 	e.POST("/lures/:id", luresController.DeleteLure)
 
