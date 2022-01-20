@@ -36,16 +36,15 @@ func (uc *FishingLinesController) Index(c echo.Context) error {
 /**
   ライン取得
 */
-func (uc *FishingLinesController) GetFishingLine(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *FishingLinesController) Show(c echo.Context) error {
 	fishing_line := models.FishingLine{}
-	uid, _ := strconv.Atoi(c.Param("id"))
-	db.First(&fishing_line, uid)
+	line_id, _ := strconv.Atoi(c.Param("id"))
+	result := models.GetLine(fishing_line, line_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		fishing_line,
+		result,
 	))
 }
 
