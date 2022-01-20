@@ -72,7 +72,7 @@ func newRouter() *echo.Echo {
 	// ラインコントローラー
 	fishingLinesController := controllers.NewFishingLinesController()
 
-	e.GET("/lines", fishingLinesController.GetAllFishingLines)
+	e.GET("/lines", fishingLinesController.Index)
 	e.GET("/lines/:id", fishingLinesController.GetFishingLine)
 	e.PUT("/lines/:id", fishingLinesController.UpdateFishingLine)
 	e.POST("/lines", fishingLinesController.CreateFishingLine)

@@ -22,15 +22,14 @@ func NewFishingLinesController() *FishingLinesController {
 /**
   ライン一覧取得
 */
-func (uc *FishingLinesController) GetAllFishingLines(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *FishingLinesController) Index(c echo.Context) error {
 	fishing_lines := []models.FishingLine{}
-	db.Find(&fishing_lines)
+	result := models.GetAllLines(fishing_lines)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		fishing_lines,
+		result,
 	))
 }
 
