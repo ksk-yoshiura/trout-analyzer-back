@@ -40,19 +40,19 @@ func GetAllFields(fields []Field) []Field {
 /**
   フィールド取得
 */
-func GetField(field Field, uid int) Field {
+func GetField(field Field, field_id int) Field {
 	db := database.GetDBConn()
-	db.First(&field, uid)
+	db.First(&field, field_id)
 	return field
 }
 
 /**
   フィールド更新
 */
-func UpdateField(field Field, uid int, c echo.Context) error {
+func UpdateField(field Field, field_id int, c echo.Context) error {
 	db := database.GetDBConn()
 
-	db.First(&field, uid)
+	db.First(&field, field_id)
 	name := c.FormValue("name")
 	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
 	address := c.FormValue("address")
@@ -78,9 +78,9 @@ func CreateField(field Field) error {
 /**
   フィールド削除
 */
-func DeleteField(field Field, uid int) error {
+func DeleteField(field Field, field_id int) error {
 	db := database.GetDBConn()
-	db.First(&field, uid)
+	db.First(&field, field_id)
 	result := db.Delete(&field).Error
 	return result
 

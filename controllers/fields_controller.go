@@ -36,8 +36,8 @@ func (uc *FieldsController) Index(c echo.Context) error {
 */
 func (uc *FieldsController) Show(c echo.Context) error {
 	field := models.Field{}
-	uid, _ := strconv.Atoi(c.Param("id"))
-	result := models.GetField(field, uid)
+	field_id, _ := strconv.Atoi(c.Param("id"))
+	result := models.GetField(field, field_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
@@ -52,12 +52,12 @@ func (uc *FieldsController) Show(c echo.Context) error {
 func (uc *FieldsController) Update(c echo.Context) error {
 	field := models.Field{}
 
-	uid, err := strconv.Atoi(c.Param("id"))
+	field_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	result := models.UpdateField(field, uid, c)
+	result := models.UpdateField(field, field_id, c)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
@@ -89,12 +89,12 @@ func (uc *FieldsController) Create(c echo.Context) error {
 */
 func (uc *FieldsController) Delete(c echo.Context) error {
 	field := models.Field{}
-	uid, err := strconv.Atoi(c.Param("id"))
+	field_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	result := models.DeleteField(field, uid)
+	result := models.DeleteField(field, field_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
