@@ -36,16 +36,15 @@ func (uc *LuresController) Index(c echo.Context) error {
 /**
   ルアー取得
 */
-func (uc *LuresController) GetLure(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *LuresController) Show(c echo.Context) error {
 	lure := models.Lure{}
-	uid, _ := strconv.Atoi(c.Param("id"))
-	db.First(&lure, uid)
+	lure_id, _ := strconv.Atoi(c.Param("id"))
+	result := models.GetLure(lure, lure_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		lure,
+		result,
 	))
 }
 
