@@ -76,7 +76,7 @@ func newRouter() *echo.Echo {
 	e.GET("/lines/:id", fishingLinesController.Show)
 	e.PUT("/lines/:id", fishingLinesController.Update)
 	e.POST("/lines", fishingLinesController.Create)
-	e.POST("/lines/:id", fishingLinesController.DeleteFishingLine)
+	e.POST("/lines/:id", fishingLinesController.Delete)
 
 	// ヒットパターンコントローラー
 	hitPatternsController := controllers.NewHitPatternsController()
