@@ -71,14 +71,13 @@ func (uc *RodsController) Update(c echo.Context) error {
 /**
   ロッド作成
 */
-func (uc *RodsController) CreateRod(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *RodsController) Create(c echo.Context) error {
 	rod := models.Rod{}
 	if err := c.Bind(&rod); err != nil {
 		return err
 	}
 
-	result := db.Create(&rod).Error
+	result := models.CreateRod(rod)
 
 	return c.JSON(http.StatusCreated, newResponse(
 		http.StatusOK,
