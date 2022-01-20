@@ -52,35 +52,19 @@ func (uc *LuresController) Show(c echo.Context) error {
   ルアー更新
 */
 func (uc *LuresController) UpdateLure(c echo.Context) error {
-	db := database.GetDBConn()
 	lure := models.Lure{}
 
-	uid, err := strconv.Atoi(c.Param("id"))
+	lure_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	db.First(&lure, uid)
-	name := c.FormValue("name")
-	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
-	lure_type_id, _ := strconv.Atoi(c.FormValue("lure_type_id"))
-	company_name := c.FormValue("company_name")
-	color := c.FormValue("color")
-	weight := c.FormValue("weight")
-
-	db.Model(&lure).Updates(models.Lure{
-		Name:        name,
-		UserId:      user_id,
-		LureTypeId:  lure_type_id,
-		CompanyName: company_name,
-		Color:       color,
-		Weight:      weight,
-	})
+	result := models.UpdateLure(lure, lure_id, c)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		lure,
+		result,
 	))
 }
 
