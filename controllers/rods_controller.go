@@ -36,16 +36,15 @@ func (uc *RodsController) Index(c echo.Context) error {
 /**
   ロッド取得
 */
-func (uc *RodsController) GetRod(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *RodsController) Show(c echo.Context) error {
 	rod := models.Rod{}
-	uid, _ := strconv.Atoi(c.Param("id"))
-	db.First(&rod, uid)
+	rod_id, _ := strconv.Atoi(c.Param("id"))
+	result := models.GetRod(rod, rod_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		rod,
+		result,
 	))
 }
 

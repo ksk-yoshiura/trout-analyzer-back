@@ -37,7 +37,7 @@ func newRouter() *echo.Echo {
 	rodsController := controllers.NewRodsController()
 
 	e.GET("/rods", rodsController.Index)
-	e.GET("/rods/:id", rodsController.GetRod)
+	e.GET("/rods/:id", rodsController.Show)
 	e.PUT("/rods/:id", rodsController.UpdateRod)
 	e.POST("/rods", rodsController.CreateRod)
 	e.POST("/rods/:id", rodsController.DeleteRod)
