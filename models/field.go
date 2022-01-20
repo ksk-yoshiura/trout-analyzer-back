@@ -62,7 +62,6 @@ func UpdateField(field Field, field_id int, c echo.Context) error {
 		UserId:  user_id,
 		Address: address,
 	}).Error
-
 	return result
 }
 
@@ -83,5 +82,4 @@ func DeleteField(field Field, field_id int) error {
 	db.First(&field, field_id)
 	result := db.Delete(&field).Error
 	return result
-
 }
