@@ -22,15 +22,14 @@ func NewFieldsController() *FieldsController {
 /**
   フィールド一覧取得
 */
-func (uc *FieldsController) GetAllFields(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *FieldsController) Index(c echo.Context) error {
 	fields := []models.Field{}
-	db.Find(&fields)
+	result := models.GetAllFields(fields)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		fields,
+		result,
 	))
 }
 

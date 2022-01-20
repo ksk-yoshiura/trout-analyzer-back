@@ -2,8 +2,11 @@ package models
 
 import (
 	"regexp"
+	"strconv"
+	"trout-analyzer-back/database"
 
 	"github.com/jinzhu/gorm"
+	"github.com/labstack/echo"
 	"github.com/wcl48/valval"
 )
 
@@ -23,4 +26,62 @@ func FieldValidate(field Field) error {
 	})
 
 	return Validator.Validate(field)
+}
+
+/**
+  フィールド一覧取得
+*/
+func GetAllFields(fields []Field) []Field {
+	db := database.GetDBConn()
+	db.Find(&fields)
+	return fields
+}
+
+/**
+  フィールド取得
+*/
+func GetField(field Field, uid int) Field {
+	db := database.GetDBConn()
+	db.First(&field, uid)
+	return field
+}
+
+/**
+  フィールド更新
+*/
+func UpdateField(field Field, uid int, c echo.Context) error {
+	db := database.GetDBConn()
+
+	db.First(&field, uid)
+	name := c.FormValue("name")
+	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
+	address := c.FormValue("address")
+
+	result := db.Model(&field).Updates(Field{
+		Name:    name,
+		UserId:  user_id,
+		Address: address,
+	}).Error
+
+	return result
+}
+
+/**
+  フィールド作成
+*/
+func CreateField(field Field) error {
+	db := database.GetDBConn()
+	result := db.Create(&field).Error
+	return result
+}
+
+/**
+  フィールド削除
+*/
+func DeleteField(field Field, uid int) error {
+	db := database.GetDBConn()
+	db.First(&field, uid)
+	result := db.Delete(&field).Error
+	return result
+
 }

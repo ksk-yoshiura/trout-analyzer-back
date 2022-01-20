@@ -63,7 +63,7 @@ func newRouter() *echo.Echo {
 	// フィールドコントローラー
 	fieldsController := controllers.NewFieldsController()
 
-	e.GET("/fields", fieldsController.GetAllFields)
+	e.GET("/fields", fieldsController.Index)
 	e.GET("/fields/:id", fieldsController.GetField)
 	e.PUT("/fields/:id", fieldsController.UpdateField)
 	e.POST("/fields", fieldsController.CreateField)
