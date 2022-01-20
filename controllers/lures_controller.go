@@ -7,8 +7,6 @@ import (
 	"trout-analyzer-back/models"
 
 	"github.com/labstack/echo"
-
-	"trout-analyzer-back/database"
 )
 
 // LuresController controller for Lures request
@@ -89,16 +87,14 @@ func (uc *LuresController) Create(c echo.Context) error {
 /**
   ルアー削除
 */
-func (uc *LuresController) DeleteLure(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *LuresController) Delete(c echo.Context) error {
 	lure := models.Lure{}
-	uid, err := strconv.Atoi(c.Param("id"))
+	lure_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	db.First(&lure, uid)
-	result := db.Delete(&lure)
+	result := models.DeleteLure(lure, lure_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
