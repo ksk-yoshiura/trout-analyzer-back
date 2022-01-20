@@ -22,15 +22,14 @@ func NewReelsController() *ReelsController {
 /**
   リール一覧取得
 */
-func (uc *ReelsController) GetAllReels(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *ReelsController) Index(c echo.Context) error {
 	reels := []models.Reel{}
-	db.Find(&reels)
+	result := models.GetAllReels(reels)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		reels,
+		result,
 	))
 }
 

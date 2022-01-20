@@ -45,7 +45,7 @@ func newRouter() *echo.Echo {
 	// リールコントローラー
 	reelsController := controllers.NewReelsController()
 
-	e.GET("/reels", reelsController.GetAllReels)
+	e.GET("/reels", reelsController.Index)
 	e.GET("/reels/:id", reelsController.GetReel)
 	e.PUT("/reels/:id", reelsController.UpdateReel)
 	e.POST("/reels", reelsController.CreateReel)
