@@ -40,7 +40,7 @@ func newRouter() *echo.Echo {
 	e.GET("/rods/:id", rodsController.Show)
 	e.PUT("/rods/:id", rodsController.Update)
 	e.POST("/rods", rodsController.Create)
-	e.POST("/rods/:id", rodsController.DeleteRod)
+	e.POST("/rods/:id", rodsController.Delete)
 
 	// リールコントローラー
 	reelsController := controllers.NewReelsController()
