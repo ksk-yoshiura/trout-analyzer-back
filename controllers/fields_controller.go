@@ -51,8 +51,7 @@ func (uc *FieldsController) Show(c echo.Context) error {
 /**
   フィールド更新
 */
-func (uc *FieldsController) UpdateField(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *FieldsController) Update(c echo.Context) error {
 	field := models.Field{}
 
 	uid, err := strconv.Atoi(c.Param("id"))
@@ -60,21 +59,12 @@ func (uc *FieldsController) UpdateField(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
-	db.First(&field, uid)
-	name := c.FormValue("name")
-	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
-	address := c.FormValue("address")
-
-	db.Model(&field).Updates(models.Field{
-		Name:    name,
-		UserId:  user_id,
-		Address: address,
-	})
+	result := models.UpdateField(field, uid, c)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		field,
+		result,
 	))
 }
 
