@@ -51,34 +51,20 @@ func (uc *RodsController) Show(c echo.Context) error {
 /**
   ロッド更新
 */
-func (uc *RodsController) UpdateRod(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *RodsController) Update(c echo.Context) error {
 	rod := models.Rod{}
 
-	uid, err := strconv.Atoi(c.Param("id"))
+	rod_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	db.First(&rod, uid)
-	name := c.FormValue("name")
-	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
-	hardness_id, _ := strconv.Atoi(c.FormValue("hardness_id"))
-	length := c.FormValue("length")
-	company_name := c.FormValue("company_name")
-
-	db.Model(&rod).Updates(models.Rod{
-		Name:        name,
-		UserId:      user_id,
-		HardnessId:  hardness_id,
-		Length:      length,
-		CompanyName: company_name,
-	})
+	result := models.UpdateRod(rod, rod_id, c)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		rod,
+		result,
 	))
 }
 
