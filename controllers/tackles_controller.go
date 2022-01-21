@@ -36,16 +36,15 @@ func (uc *TacklesController) Index(c echo.Context) error {
 /**
   タックル取得
 */
-func (uc *TacklesController) GetTackle(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *TacklesController) Show(c echo.Context) error {
 	tackle := models.Tackle{}
-	uid, _ := strconv.Atoi(c.Param("id"))
-	db.First(&tackle, uid)
+	tackle_id, _ := strconv.Atoi(c.Param("id"))
+	result := models.GetTackle(tackle, tackle_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		tackle,
+		result,
 	))
 }
 

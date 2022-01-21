@@ -55,7 +55,7 @@ func newRouter() *echo.Echo {
 	tacklesController := controllers.NewTacklesController()
 
 	e.GET("/tackles", tacklesController.Index)
-	e.GET("/tackles/:id", tacklesController.GetTackle)
+	e.GET("/tackles/:id", tacklesController.Show)
 	e.PUT("/tackles/:id", tacklesController.UpdateTackle)
 	e.POST("/tackles", tacklesController.CreateTackle)
 	e.POST("/tackles/:id", tacklesController.DeleteTackle)
