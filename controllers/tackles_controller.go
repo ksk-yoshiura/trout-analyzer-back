@@ -51,7 +51,7 @@ func (uc *TacklesController) Show(c echo.Context) error {
 /**
   タックル更新
 */
-func (uc *TacklesController) UpdateTackle(c echo.Context) error {
+func (uc *TacklesController) Update(c echo.Context) error {
 	tackle := models.Tackle{}
 
 	tackle_id, err := strconv.Atoi(c.Param("id"))
