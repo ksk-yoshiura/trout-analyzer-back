@@ -7,8 +7,6 @@ import (
 	"trout-analyzer-back/models"
 
 	"github.com/labstack/echo"
-
-	"trout-analyzer-back/database"
 )
 
 // HitPatternsController controller for HitPatterns request
@@ -89,16 +87,14 @@ func (uc *HitPatternsController) Create(c echo.Context) error {
 /**
   ヒットパターン削除
 */
-func (uc *HitPatternsController) DeleteHitPattern(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *HitPatternsController) Delete(c echo.Context) error {
 	hit_pattern := models.HitPattern{}
-	uid, err := strconv.Atoi(c.Param("id"))
+	hit_pattern_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	db.First(&hit_pattern, uid)
-	result := db.Delete(&hit_pattern)
+	result := models.DeleteHitPattern(hit_pattern, hit_pattern_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
