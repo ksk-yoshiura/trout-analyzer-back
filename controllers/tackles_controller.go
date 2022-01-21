@@ -7,8 +7,6 @@ import (
 	"trout-analyzer-back/models"
 
 	"github.com/labstack/echo"
-
-	"trout-analyzer-back/database"
 )
 
 // TacklesController controller for Tackles request
@@ -88,16 +86,14 @@ func (uc *TacklesController) Create(c echo.Context) error {
 /**
   タックル削除
 */
-func (uc *TacklesController) DeleteTackle(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *TacklesController) Delete(c echo.Context) error {
 	tackle := models.Tackle{}
-	uid, err := strconv.Atoi(c.Param("id"))
+	tackle_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	db.First(&tackle, uid)
-	result := db.Delete(&tackle)
+	result := models.DeleteTackle(tackle, tackle_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
