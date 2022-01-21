@@ -53,7 +53,6 @@ func (uc *TacklesController) Show(c echo.Context) error {
 */
 func (uc *TacklesController) Update(c echo.Context) error {
 	tackle := models.Tackle{}
-
 	tackle_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
@@ -71,14 +70,13 @@ func (uc *TacklesController) Update(c echo.Context) error {
 /**
   タックル作成
 */
-func (uc *TacklesController) CreateTackle(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *TacklesController) Create(c echo.Context) error {
 	tackle := models.Tackle{}
 	if err := c.Bind(&tackle); err != nil {
 		return err
 	}
 
-	result := db.Create(&tackle).Error
+	result := models.CreateTackle(tackle)
 
 	return c.JSON(http.StatusCreated, newResponse(
 		http.StatusOK,
