@@ -71,14 +71,13 @@ func (uc *HitPatternsController) Update(c echo.Context) error {
 /**
   ヒットパターン作成
 */
-func (uc *HitPatternsController) CreateHitPattern(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *HitPatternsController) Create(c echo.Context) error {
 	hit_pattern := models.HitPattern{}
 	if err := c.Bind(&hit_pattern); err != nil {
 		return err
 	}
 
-	result := db.Create(&hit_pattern).Error
+	result := models.CreateHitPattern(hit_pattern)
 
 	return c.JSON(http.StatusCreated, newResponse(
 		http.StatusOK,
