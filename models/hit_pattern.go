@@ -45,7 +45,7 @@ func GetAllHitPatterns(hit_patterns []HitPattern) []HitPattern {
 /**
   ヒットパターン取得
 */
-func GetHitPattern(hit_pattern Tackle, hit_pattern_id int) Tackle {
+func GetHitPattern(hit_pattern HitPattern, hit_pattern_id int) HitPattern {
 	db := database.GetDBConn()
 	db.First(&hit_pattern, hit_pattern_id)
 	return hit_pattern
