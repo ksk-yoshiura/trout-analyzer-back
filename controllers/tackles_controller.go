@@ -52,31 +52,19 @@ func (uc *TacklesController) Show(c echo.Context) error {
   タックル更新
 */
 func (uc *TacklesController) UpdateTackle(c echo.Context) error {
-	db := database.GetDBConn()
 	tackle := models.Tackle{}
 
-	uid, err := strconv.Atoi(c.Param("id"))
+	tackle_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	db.First(&tackle, uid)
-	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
-	rod_id, _ := strconv.Atoi(c.FormValue("rod_id"))
-	reel_id, _ := strconv.Atoi(c.FormValue("reel_id"))
-	line_id, _ := strconv.Atoi(c.FormValue("line_id"))
-
-	db.Model(&tackle).Updates(models.Tackle{
-		UserId: user_id,
-		RodId:  rod_id,
-		ReelId: reel_id,
-		LineId: line_id,
-	})
+	result := models.UpdateTackle(tackle, tackle_id, c)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		tackle,
+		result,
 	))
 }
 
