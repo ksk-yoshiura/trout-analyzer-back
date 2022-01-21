@@ -36,16 +36,15 @@ func (uc *HitPatternsController) Index(c echo.Context) error {
 /**
   ヒットパターン取得
 */
-func (uc *HitPatternsController) GetHitPattern(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *HitPatternsController) Show(c echo.Context) error {
 	hit_pattern := models.HitPattern{}
-	uid, _ := strconv.Atoi(c.Param("id"))
-	db.First(&hit_pattern, uid)
+	hit_pattern_id, _ := strconv.Atoi(c.Param("id"))
+	result := models.GetHitPattern(hit_pattern, hit_pattern_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		hit_pattern,
+		result,
 	))
 }
 
