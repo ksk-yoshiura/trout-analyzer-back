@@ -83,7 +83,7 @@ func newRouter() *echo.Echo {
 
 	e.GET("/patterns", hitPatternsController.Index)
 	e.GET("/patterns/:id", hitPatternsController.Show)
-	e.PUT("/patterns/:id", hitPatternsController.UpdateHitPattern)
+	e.PUT("/patterns/:id", hitPatternsController.Update)
 	e.POST("/patterns", hitPatternsController.CreateHitPattern)
 	e.POST("/patterns/:id", hitPatternsController.DeleteHitPattern)
 	return e

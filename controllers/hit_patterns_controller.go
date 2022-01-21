@@ -51,40 +51,20 @@ func (uc *HitPatternsController) Show(c echo.Context) error {
 /**
   ヒットパターン更新
 */
-func (uc *HitPatternsController) UpdateHitPattern(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *HitPatternsController) Update(c echo.Context) error {
 	hit_pattern := models.HitPattern{}
 
-	uid, err := strconv.Atoi(c.Param("id"))
+	hit_pattern_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	db.First(&hit_pattern, uid)
-	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
-	lure_id, _ := strconv.Atoi(c.FormValue("lure_id"))
-	tackle_id, _ := strconv.Atoi(c.FormValue("tackle_id"))
-	speed, _ := strconv.Atoi(c.FormValue("speed"))
-	depth, _ := strconv.Atoi(c.FormValue("depth"))
-	weather, _ := strconv.Atoi(c.FormValue("weather"))
-	result, _ := strconv.Atoi(c.FormValue("result"))
-	field_id, _ := strconv.Atoi(c.FormValue("field_id"))
-
-	db.Model(&hit_pattern).Updates(models.HitPattern{
-		UserId:   user_id,
-		LureId:   lure_id,
-		TackleId: tackle_id,
-		Speed:    speed,
-		Depth:    depth,
-		Weather:  weather,
-		Result:   result,
-		FieldId:  field_id,
-	})
+	result := models.UpdateHitPattern(hit_pattern, hit_pattern_id, c)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		hit_pattern,
+		result,
 	))
 }
 
