@@ -81,7 +81,7 @@ func newRouter() *echo.Echo {
 	// ヒットパターンコントローラー
 	hitPatternsController := controllers.NewHitPatternsController()
 
-	e.GET("/patterns", hitPatternsController.GetAllHitPatterns)
+	e.GET("/patterns", hitPatternsController.Index)
 	e.GET("/patterns/:id", hitPatternsController.GetHitPattern)
 	e.PUT("/patterns/:id", hitPatternsController.UpdateHitPattern)
 	e.POST("/patterns", hitPatternsController.CreateHitPattern)

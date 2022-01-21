@@ -18,7 +18,7 @@ type HitPattern struct {
 	Speed    int `json:"speed"`
 	Depth    int `json:"depth"`
 	Weather  int `json:"weather"`
-	Result   int `json:"result_id"`
+	Result   int `json:"result"`
 	FieldId  int `json:"field_id"`
 }
 
@@ -64,7 +64,7 @@ func UpdateHitPattern(hit_pattern HitPattern, hit_pattern_id int, c echo.Context
 	speed, _ := strconv.Atoi(c.FormValue("speed"))
 	depth, _ := strconv.Atoi(c.FormValue("depth"))
 	weather, _ := strconv.Atoi(c.FormValue("weather"))
-	result_id, _ := strconv.Atoi(c.FormValue("result_id"))
+	result_id, _ := strconv.Atoi(c.FormValue("result"))
 	field_id, _ := strconv.Atoi(c.FormValue("field_id"))
 
 	result := db.Model(&hit_pattern).Updates(HitPattern{

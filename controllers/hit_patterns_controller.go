@@ -22,15 +22,14 @@ func NewHitPatternsController() *HitPatternsController {
 /**
   ヒットパターン一覧取得
 */
-func (uc *HitPatternsController) GetAllHitPatterns(c echo.Context) error {
-	db := database.GetDBConn()
+func (uc *HitPatternsController) Index(c echo.Context) error {
 	hit_patterns := []models.HitPattern{}
-	db.Find(&hit_patterns)
+	result := models.GetAllHitPatterns(hit_patterns)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		hit_patterns,
+		result,
 	))
 }
 
