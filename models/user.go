@@ -12,7 +12,6 @@ import (
 
 type User struct {
 	gorm.Model
-	Name      string `json:"name"`
 	Email     string `json:"email"`
 	Password  string `json:"password"`
 	Nickname  string `json:"nickname"`
@@ -57,7 +56,6 @@ func UpdateUser(user User, uid int, c echo.Context) error {
 	db := database.GetDBConn()
 
 	db.First(&user, uid)
-	name := c.FormValue("name")
 	email := c.FormValue("email")
 	password := c.FormValue("password")
 	nickname := c.FormValue("nickname")
@@ -66,7 +64,6 @@ func UpdateUser(user User, uid int, c echo.Context) error {
 	groupid, _ := strconv.Atoi(c.FormValue("group_id"))
 
 	result := db.Model(&user).Updates(User{
-		Name:      name,
 		Email:     email,
 		Password:  password,
 		Nickname:  nickname,
@@ -95,5 +92,4 @@ func DeleteUser(user User, uid int) error {
 	db.First(&user, uid)
 	result := db.Delete(&user).Error
 	return result
-
 }
