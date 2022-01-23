@@ -2,7 +2,8 @@ package main
 
 import (
 	"github.com/labstack/echo"
-	// "github.com/labstack/echo/middleware"
+	"github.com/labstack/echo/middleware"
+
 	// "github.com/x-color/simple-webapp/handler"
 	"trout-analyzer-back/controllers"
 )
@@ -12,6 +13,9 @@ import (
 */
 func newRouter() *echo.Echo {
 	e := echo.New()
+
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
 
 	// ユーザコントローラー
 	usersController := controllers.NewUsersController()
