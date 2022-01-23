@@ -5,7 +5,6 @@ import (
 	// "github.com/labstack/echo/middleware"
 	// "github.com/x-color/simple-webapp/handler"
 	"trout-analyzer-back/controllers"
-	"trout-analyzer-back/database"
 )
 
 /**
@@ -13,7 +12,6 @@ import (
 */
 func newRouter() *echo.Echo {
 	e := echo.New()
-	database.GetDBConfig()
 
 	// ユーザコントローラー
 	usersController := controllers.NewUsersController()
