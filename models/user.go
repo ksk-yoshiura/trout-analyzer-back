@@ -32,6 +32,15 @@ func UserValidate(user User) error {
 }
 
 /**
+  ログイン時ユーザを検索
+*/
+func FindUser(user User) User {
+	db := database.GetDBConn()
+	db.Where(user).First(&user)
+	return user
+}
+
+/**
   ユーザ一覧取得
 */
 func GetAllUsers(users []User) []User {
