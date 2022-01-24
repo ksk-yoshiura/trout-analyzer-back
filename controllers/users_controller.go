@@ -36,7 +36,7 @@ func (uc *UsersController) Index(c echo.Context) error {
 */
 func (uc *UsersController) Show(c echo.Context) error {
 	user := models.User{}
-	uid, _ := strconv.Atoi(c.Param("id"))
+	uid := userIDFromToken(c)
 	result := models.GetUser(user, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
