@@ -25,6 +25,9 @@ var Config = middleware.JWTConfig{
 	SigningKey: signingKey,
 }
 
+/**
+ * サインアップ
+ */
 func Signup(c echo.Context) error {
 	user := models.User{}
 	if err := c.Bind(user); err != nil {
@@ -51,6 +54,9 @@ func Signup(c echo.Context) error {
 	return c.JSON(http.StatusCreated, user)
 }
 
+/**
+ * ログイン
+ */
 func Login(c echo.Context) error {
 	u := models.User{}
 	if err := c.Bind(&u); err != nil {
@@ -84,6 +90,9 @@ func Login(c echo.Context) error {
 	})
 }
 
+/**
+ * トークンからユーザID取得
+ */
 func userIDFromToken(c echo.Context) int {
 	user := c.Get("user").(*jwt.Token)
 	claims := user.Claims.(*jwtCustomClaims)
