@@ -6,7 +6,6 @@ import (
 
 	// "github.com/x-color/simple-webapp/handler"
 	"trout-analyzer-back/controllers"
-	"trout-analyzer-back/handler"
 )
 
 /**
@@ -18,16 +17,16 @@ func newRouter() *echo.Echo {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	e.POST("/signup", handler.Signup) // POST /signup
-	e.POST("/login", handler.Login)   // POST /login
+	e.POST("/signup", controllers.Signup) // POST /signup
+	e.POST("/login", controllers.Login)   // POST /login
 
 	api := e.Group("/api")
-	api.Use(middleware.JWTWithConfig(handler.Config)) // /api 下はJWTの認証が必要
+	api.Use(middleware.JWTWithConfig(controllers.Config)) // /api 下はJWTの認証が必要
 	// ユーザコントローラー
 	usersController := controllers.NewUsersController()
 
 	api.GET("/users", usersController.Index)
-	api.GET("/users/:id", usersController.Show)
+	api.GET("/user", usersController.Show)
 	api.PUT("/users/:id", usersController.Update)
 	api.POST("/users", usersController.Create)
 	api.POST("/users/:id", usersController.Delete)
