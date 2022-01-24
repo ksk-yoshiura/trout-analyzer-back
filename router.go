@@ -6,6 +6,7 @@ import (
 
 	// "github.com/x-color/simple-webapp/handler"
 	"trout-analyzer-back/controllers"
+	"trout-analyzer-back/handler"
 )
 
 /**
@@ -17,76 +18,81 @@ func newRouter() *echo.Echo {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
+	e.POST("/signup", handler.Signup) // POST /signup
+	e.POST("/login", handler.Login)   // POST /login
+
+	api := e.Group("/api")
+	api.Use(middleware.JWTWithConfig(handler.Config)) // /api 下はJWTの認証が必要
 	// ユーザコントローラー
 	usersController := controllers.NewUsersController()
 
-	e.GET("/users", usersController.Index)
-	e.GET("/users/:id", usersController.Show)
-	e.PUT("/users/:id", usersController.Update)
-	e.POST("/users", usersController.Create)
-	e.POST("/users/:id", usersController.Delete)
+	api.GET("/users", usersController.Index)
+	api.GET("/users/:id", usersController.Show)
+	api.PUT("/users/:id", usersController.Update)
+	api.POST("/users", usersController.Create)
+	api.POST("/users/:id", usersController.Delete)
 
 	// ルアーコントローラー
 	luresController := controllers.NewLuresController()
 
-	e.GET("/lures", luresController.Index)
-	e.GET("/lures/:id", luresController.Show)
-	e.PUT("/lures/:id", luresController.Update)
-	e.POST("/lures", luresController.Create)
-	e.POST("/lures/:id", luresController.Delete)
+	api.GET("/lures", luresController.Index)
+	api.GET("/lures/:id", luresController.Show)
+	api.PUT("/lures/:id", luresController.Update)
+	api.POST("/lures", luresController.Create)
+	api.POST("/lures/:id", luresController.Delete)
 
 	// ロッドコントローラー
 	rodsController := controllers.NewRodsController()
 
-	e.GET("/rods", rodsController.Index)
-	e.GET("/rods/:id", rodsController.Show)
-	e.PUT("/rods/:id", rodsController.Update)
-	e.POST("/rods", rodsController.Create)
-	e.POST("/rods/:id", rodsController.Delete)
+	api.GET("/rods", rodsController.Index)
+	api.GET("/rods/:id", rodsController.Show)
+	api.PUT("/rods/:id", rodsController.Update)
+	api.POST("/rods", rodsController.Create)
+	api.POST("/rods/:id", rodsController.Delete)
 
 	// リールコントローラー
 	reelsController := controllers.NewReelsController()
 
-	e.GET("/reels", reelsController.Index)
-	e.GET("/reels/:id", reelsController.Show)
-	e.PUT("/reels/:id", reelsController.Update)
-	e.POST("/reels", reelsController.Create)
-	e.POST("/reels/:id", reelsController.Delete)
+	api.GET("/reels", reelsController.Index)
+	api.GET("/reels/:id", reelsController.Show)
+	api.PUT("/reels/:id", reelsController.Update)
+	api.POST("/reels", reelsController.Create)
+	api.POST("/reels/:id", reelsController.Delete)
 
 	// タックルコントローラー
 	tacklesController := controllers.NewTacklesController()
 
-	e.GET("/tackles", tacklesController.Index)
-	e.GET("/tackles/:id", tacklesController.Show)
-	e.PUT("/tackles/:id", tacklesController.Update)
-	e.POST("/tackles", tacklesController.Create)
-	e.POST("/tackles/:id", tacklesController.Delete)
+	api.GET("/tackles", tacklesController.Index)
+	api.GET("/tackles/:id", tacklesController.Show)
+	api.PUT("/tackles/:id", tacklesController.Update)
+	api.POST("/tackles", tacklesController.Create)
+	api.POST("/tackles/:id", tacklesController.Delete)
 
 	// フィールドコントローラー
 	fieldsController := controllers.NewFieldsController()
 
-	e.GET("/fields", fieldsController.Index)
-	e.GET("/fields/:id", fieldsController.Show)
-	e.PUT("/fields/:id", fieldsController.Update)
-	e.POST("/fields", fieldsController.Create)
-	e.POST("/fields/:id", fieldsController.Delete)
+	api.GET("/fields", fieldsController.Index)
+	api.GET("/fields/:id", fieldsController.Show)
+	api.PUT("/fields/:id", fieldsController.Update)
+	api.POST("/fields", fieldsController.Create)
+	api.POST("/fields/:id", fieldsController.Delete)
 
 	// ラインコントローラー
 	fishingLinesController := controllers.NewFishingLinesController()
 
-	e.GET("/lines", fishingLinesController.Index)
-	e.GET("/lines/:id", fishingLinesController.Show)
-	e.PUT("/lines/:id", fishingLinesController.Update)
-	e.POST("/lines", fishingLinesController.Create)
-	e.POST("/lines/:id", fishingLinesController.Delete)
+	api.GET("/lines", fishingLinesController.Index)
+	api.GET("/lines/:id", fishingLinesController.Show)
+	api.PUT("/lines/:id", fishingLinesController.Update)
+	api.POST("/lines", fishingLinesController.Create)
+	api.POST("/lines/:id", fishingLinesController.Delete)
 
 	// ヒットパターンコントローラー
 	hitPatternsController := controllers.NewHitPatternsController()
 
-	e.GET("/patterns", hitPatternsController.Index)
-	e.GET("/patterns/:id", hitPatternsController.Show)
-	e.PUT("/patterns/:id", hitPatternsController.Update)
-	e.POST("/patterns", hitPatternsController.Create)
-	e.POST("/patterns/:id", hitPatternsController.Delete)
+	api.GET("/patterns", hitPatternsController.Index)
+	api.GET("/patterns/:id", hitPatternsController.Show)
+	api.PUT("/patterns/:id", hitPatternsController.Update)
+	api.POST("/patterns", hitPatternsController.Create)
+	api.POST("/patterns/:id", hitPatternsController.Delete)
 	return e
 }
