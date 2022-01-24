@@ -17,11 +17,14 @@ func newRouter() *echo.Echo {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	e.POST("/signup", controllers.Signup) // POST /signup
-	e.POST("/login", controllers.Login)   // POST /login
+	// サインアップ
+	e.POST("/signup", controllers.Signup)
+	// ログイン
+	e.POST("/login", controllers.Login)
 
+	// /api 下はJWTの認証が必要
 	api := e.Group("/api")
-	api.Use(middleware.JWTWithConfig(controllers.Config)) // /api 下はJWTの認証が必要
+	api.Use(middleware.JWTWithConfig(controllers.Config))
 	// ユーザコントローラー
 	usersController := controllers.NewUsersController()
 
