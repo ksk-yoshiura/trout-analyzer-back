@@ -51,10 +51,7 @@ func (uc *UsersController) Show(c echo.Context) error {
 */
 func (uc *UsersController) Update(c echo.Context) error {
 	user := models.User{}
-	uid, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
-		return echo.ErrNotFound
-	}
+	uid := userIDFromToken(c)
 
 	result := models.UpdateUser(user, uid, c)
 

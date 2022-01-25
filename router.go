@@ -30,7 +30,7 @@ func newRouter() *echo.Echo {
 
 	api.GET("/users", usersController.Index)
 	api.GET("/user", usersController.Show)
-	api.PUT("/users/:id", usersController.Update)
+	api.PUT("/user", usersController.Update)
 	api.POST("/users", usersController.Create)
 	api.POST("/users/:id", usersController.Delete)
 
