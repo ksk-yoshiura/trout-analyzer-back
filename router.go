@@ -31,7 +31,7 @@ func newRouter() *echo.Echo {
 	api.GET("/users", usersController.Index)
 	api.GET("/user", usersController.Show)
 	api.PUT("/user", usersController.Update)
-	api.POST("/users", usersController.Create)
+	api.POST("/user", usersController.Create)
 	api.POST("/users/:id", usersController.Delete)
 
 	// ルアーコントローラー
