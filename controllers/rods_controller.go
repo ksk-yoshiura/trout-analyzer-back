@@ -36,7 +36,11 @@ func (uc *RodsController) Index(c echo.Context) error {
 */
 func (uc *RodsController) Show(c echo.Context) error {
 	rod := models.Rod{}
-	rod_id, _ := strconv.Atoi(c.Param("id"))
+	rod_id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
 	result := models.GetRod(rod, rod_id)
 
 	return c.JSON(http.StatusOK, newResponse(
