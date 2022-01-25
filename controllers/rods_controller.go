@@ -55,13 +55,18 @@ func (uc *RodsController) Show(c echo.Context) error {
 */
 func (uc *RodsController) Update(c echo.Context) error {
 	rod := models.Rod{}
+	if err := c.Bind(&rod); err != nil {
+		return err
+	}
 
 	rod_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	result := models.UpdateRod(rod, rod_id, c)
+	uid := userIDFromToken(c)
+
+	result := models.UpdateRod(rod, rod_id, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
@@ -78,6 +83,9 @@ func (uc *RodsController) Create(c echo.Context) error {
 	if err := c.Bind(&rod); err != nil {
 		return err
 	}
+
+	uid := userIDFromToken(c)
+	rod.UserId = uid
 
 	result := models.CreateRod(rod)
 
