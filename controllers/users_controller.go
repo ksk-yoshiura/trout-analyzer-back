@@ -51,9 +51,12 @@ func (uc *UsersController) Show(c echo.Context) error {
 */
 func (uc *UsersController) Update(c echo.Context) error {
 	user := models.User{}
+	if err := c.Bind(&user); err != nil {
+		return err
+	}
 	uid := userIDFromToken(c)
 
-	result := models.UpdateUser(user, uid, c)
+	result := models.UpdateUser(user, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,

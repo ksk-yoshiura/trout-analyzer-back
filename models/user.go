@@ -2,11 +2,9 @@ package models
 
 import (
 	"regexp"
-	"strconv"
 	"trout-analyzer-back/database"
 
 	"github.com/jinzhu/gorm"
-	"github.com/labstack/echo"
 	"github.com/wcl48/valval"
 )
 
@@ -61,24 +59,18 @@ func GetUser(user User, uid int) User {
 /**
   ユーザ更新
 */
-func UpdateUser(user User, uid int, c echo.Context) error {
+func UpdateUser(u User, uid int) error {
+	var user User
 	db := database.GetDBConn()
-
 	db.First(&user, uid)
-	email := c.FormValue("email")
-	password := c.FormValue("password")
-	nickname := c.FormValue("nickname")
-	first_name := c.FormValue("first_name")
-	last_name := c.FormValue("last_name")
-	groupid, _ := strconv.Atoi(c.FormValue("group_id"))
 
 	result := db.Model(&user).Updates(User{
-		Email:     email,
-		Password:  password,
-		Nickname:  nickname,
-		FirstName: first_name,
-		LastName:  last_name,
-		GroupId:   groupid,
+		Email:     u.Email,
+		Password:  u.Password,
+		Nickname:  u.Nickname,
+		FirstName: u.FirstName,
+		LastName:  u.LastName,
+		GroupId:   u.GroupId,
 	}).Error
 
 	return result
