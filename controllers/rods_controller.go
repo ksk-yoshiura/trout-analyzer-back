@@ -45,9 +45,11 @@ func (uc *RodsController) Show(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
 	// データ取得
 	rod := models.Rod{}
-	result := models.GetRod(rod, rod_id)
+	result := models.GetRod(rod, rod_id, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,

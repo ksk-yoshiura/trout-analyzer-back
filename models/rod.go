@@ -41,9 +41,10 @@ func GetAllRods(rods []Rod, uid int) []Rod {
 /**
   ロッド取得
 */
-func GetRod(rod Rod, rod_id int) Rod {
+func GetRod(rod Rod, rod_id int, uid int) Rod {
 	db := database.GetDBConn()
-	db.First(&rod, rod_id)
+	// ログインユーザは自分のロッドしか見れない
+	db.Where("user_id = ?", uid).First(&rod, rod_id)
 	return rod
 }
 
