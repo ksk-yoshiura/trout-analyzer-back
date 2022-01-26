@@ -21,9 +21,11 @@ func NewFieldsController() *FieldsController {
   フィールド一覧取得
 */
 func (uc *FieldsController) Index(c echo.Context) error {
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
 	// データ取得
 	fields := []models.Field{}
-	result := models.GetAllFields(fields)
+	result := models.GetAllFields(fields, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,

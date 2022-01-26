@@ -31,9 +31,10 @@ func FieldValidate(field Field) error {
 /**
   フィールド一覧取得
 */
-func GetAllFields(fields []Field) []Field {
+func GetAllFields(fields []Field, uid int) []Field {
 	db := database.GetDBConn()
-	db.Find(&fields)
+	// ログインユーザは自分のフィールドしか見れない
+	db.Where("user_id = ?", uid).Find(&fields)
 	return fields
 }
 
