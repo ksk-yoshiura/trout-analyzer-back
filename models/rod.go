@@ -54,7 +54,8 @@ func GetRod(rod Rod, rod_id int, uid int) Rod {
 func UpdateRod(r Rod, rod_id int) error {
 	var rod Rod
 	db := database.GetDBConn()
-	db.First(&rod, rod_id)
+	// ログインユーザは自分のロッドしか見れない
+	db.Where("user_id = ?", r.UserId).First(&rod, rod_id)
 
 	result := db.Model(&rod).Updates(Rod{
 		Name:        r.Name,
