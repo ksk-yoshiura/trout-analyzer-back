@@ -2,11 +2,9 @@ package models
 
 import (
 	"regexp"
-	"strconv"
 	"trout-analyzer-back/database"
 
 	"github.com/jinzhu/gorm"
-	"github.com/labstack/echo"
 	"github.com/wcl48/valval"
 )
 
@@ -51,18 +49,16 @@ func GetField(field Field, field_id int, uid int) Field {
 /**
   フィールド更新
 */
-func UpdateField(field Field, field_id int, c echo.Context) error {
+func UpdateField(f Field, field_id int) error {
+	var field Field
 	db := database.GetDBConn()
-
-	db.First(&field, field_id)
-	name := c.FormValue("name")
-	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
-	address := c.FormValue("address")
+	// ログインユーザは自分のフィールドしか見れない
+	db.Where("user_id = ?", f.UserId).First(&field, field_id)
 
 	result := db.Model(&field).Updates(Field{
-		Name:    name,
-		UserId:  user_id,
-		Address: address,
+		Name:    f.Name,
+		UserId:  f.UserId,
+		Address: f.Address,
 	}).Error
 	return result
 }

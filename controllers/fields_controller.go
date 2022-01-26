@@ -61,14 +61,24 @@ func (uc *FieldsController) Show(c echo.Context) error {
   フィールド更新
 */
 func (uc *FieldsController) Update(c echo.Context) error {
-	field := models.Field{}
-
+	// idチェック
 	field_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	result := models.UpdateField(field, field_id, c)
+	// データセット
+	field := models.Field{}
+	if err := c.Bind(&field); err != nil {
+		return err
+	}
+
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	field.UserId = uid
+
+	// 更新
+	result := models.UpdateField(field, field_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
