@@ -38,9 +38,17 @@ func (uc *FieldsController) Index(c echo.Context) error {
   フィールド取得
 */
 func (uc *FieldsController) Show(c echo.Context) error {
+	// idチェック
+	field_id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	// データ取得
 	field := models.Field{}
-	field_id, _ := strconv.Atoi(c.Param("id"))
-	result := models.GetField(field, field_id)
+	result := models.GetField(field, field_id, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,

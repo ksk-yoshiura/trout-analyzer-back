@@ -41,9 +41,10 @@ func GetAllFields(fields []Field, uid int) []Field {
 /**
   フィールド取得
 */
-func GetField(field Field, field_id int) Field {
+func GetField(field Field, field_id int, uid int) Field {
 	db := database.GetDBConn()
-	db.First(&field, field_id)
+	// ログインユーザは自分のフィールドしか見れない
+	db.Where("user_id = ?", uid).First(&field, field_id)
 	return field
 }
 
