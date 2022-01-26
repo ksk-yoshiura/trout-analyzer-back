@@ -21,6 +21,7 @@ func NewFieldsController() *FieldsController {
   フィールド一覧取得
 */
 func (uc *FieldsController) Index(c echo.Context) error {
+	// データ取得
 	fields := []models.Field{}
 	result := models.GetAllFields(fields)
 
