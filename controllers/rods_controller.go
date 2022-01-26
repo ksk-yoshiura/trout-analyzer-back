@@ -71,9 +71,10 @@ func (uc *RodsController) Update(c echo.Context) error {
 
 	// トークンからユーザID取得
 	uid := userIDFromToken(c)
+	rod.UserId = uid
 
 	// 更新
-	result := models.UpdateRod(rod, rod_id, uid)
+	result := models.UpdateRod(rod, rod_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,

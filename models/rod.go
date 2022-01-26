@@ -49,14 +49,14 @@ func GetRod(rod Rod, rod_id int) Rod {
 /**
   ロッド更新
 */
-func UpdateRod(r Rod, rod_id int, uid int) error {
+func UpdateRod(r Rod, rod_id int) error {
 	var rod Rod
 	db := database.GetDBConn()
 	db.First(&rod, rod_id)
 
 	result := db.Model(&rod).Updates(Rod{
 		Name:        r.Name,
-		UserId:      uid,
+		UserId:      r.UserId,
 		HardnessId:  r.HardnessId,
 		Length:      r.Length,
 		CompanyName: r.CompanyName,
