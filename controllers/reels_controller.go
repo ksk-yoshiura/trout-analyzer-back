@@ -21,8 +21,11 @@ func NewReelsController() *ReelsController {
   リール一覧取得
 */
 func (uc *ReelsController) Index(c echo.Context) error {
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	// データ取得
 	reels := []models.Reel{}
-	result := models.GetAllReels(reels)
+	result := models.GetAllReels(reels, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
@@ -41,9 +44,11 @@ func (uc *ReelsController) Show(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
 	// データ取得
 	reel := models.Reel{}
-	result := models.GetReel(reel, reel_id)
+	result := models.GetReel(reel, reel_id, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,

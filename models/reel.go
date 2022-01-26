@@ -31,18 +31,20 @@ func ReelValidate(reel Reel) error {
 /**
   リール一覧取得
 */
-func GetAllReels(reels []Reel) []Reel {
+func GetAllReels(reels []Reel, uid int) []Reel {
 	db := database.GetDBConn()
-	db.Find(&reels)
+	// ログインユーザは自分のリールしか見れない
+	db.Where("user_id = ?", uid).Find(&reels)
 	return reels
 }
 
 /**
   リール取得
 */
-func GetReel(reel Reel, reel_id int) Reel {
+func GetReel(reel Reel, reel_id int, uid int) Reel {
 	db := database.GetDBConn()
-	db.First(&reel, reel_id)
+	// ログインユーザは自分のリールしか見れない
+	db.Where("user_id = ?", uid).First(&reel, reel_id)
 	return reel
 }
 
