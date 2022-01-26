@@ -110,12 +110,14 @@ func (uc *ReelsController) Create(c echo.Context) error {
   リール削除
 */
 func (uc *ReelsController) Delete(c echo.Context) error {
-	reel := models.Reel{}
+	// idチェック
 	reel_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
+	// 削除
+	reel := models.Reel{}
 	result := models.DeleteReel(reel, reel_id)
 
 	return c.JSON(http.StatusOK, newResponse(
