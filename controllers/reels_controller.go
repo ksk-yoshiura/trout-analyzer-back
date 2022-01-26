@@ -56,13 +56,24 @@ func (uc *ReelsController) Show(c echo.Context) error {
   リール更新
 */
 func (uc *ReelsController) Update(c echo.Context) error {
-	reel := models.Reel{}
+	// idチェック
 	reel_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	result := models.UpdateReel(reel, reel_id, c)
+	// データセット
+	reel := models.Reel{}
+	if err := c.Bind(&reel); err != nil {
+		return err
+	}
+
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	reel.UserId = uid
+
+	// 更新
+	result := models.UpdateReel(reel, reel_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,

@@ -2,11 +2,9 @@ package models
 
 import (
 	"regexp"
-	"strconv"
 	"trout-analyzer-back/database"
 
 	"github.com/jinzhu/gorm"
-	"github.com/labstack/echo"
 	"github.com/wcl48/valval"
 )
 
@@ -51,22 +49,17 @@ func GetReel(reel Reel, reel_id int) Reel {
 /**
   リール更新
 */
-func UpdateReel(reel Reel, reel_id int, c echo.Context) error {
+func UpdateReel(r Reel, reel_id int) error {
+	var reel Reel
 	db := database.GetDBConn()
-
 	db.First(&reel, reel_id)
-	name := c.FormValue("name")
-	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
-	type_number, _ := strconv.Atoi(c.FormValue("type_number"))
-	gear := c.FormValue("gear")
-	company_name := c.FormValue("company_name")
 
 	result := db.Model(&reel).Updates(Reel{
-		Name:        name,
-		UserId:      user_id,
-		TypeNumber:  type_number,
-		Gear:        gear,
-		CompanyName: company_name,
+		Name:        r.Name,
+		UserId:      r.UserId,
+		TypeNumber:  r.TypeNumber,
+		Gear:        r.Gear,
+		CompanyName: r.CompanyName,
 	}).Error
 	return result
 }
