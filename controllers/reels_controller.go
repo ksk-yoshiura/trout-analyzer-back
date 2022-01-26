@@ -35,8 +35,14 @@ func (uc *ReelsController) Index(c echo.Context) error {
   リール取得
 */
 func (uc *ReelsController) Show(c echo.Context) error {
+	// idチェック
+	reel_id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+	// データ取得
 	reel := models.Reel{}
-	reel_id, _ := strconv.Atoi(c.Param("id"))
 	result := models.GetReel(reel, reel_id)
 
 	return c.JSON(http.StatusOK, newResponse(
