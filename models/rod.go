@@ -33,6 +33,7 @@ func RodValidate(rod Rod) error {
 */
 func GetAllRods(rods []Rod, uid int) []Rod {
 	db := database.GetDBConn()
+	// ログインユーザは自分のロッドしか見れない
 	db.Where("user_id = ?", uid).Find(&rods)
 	return rods
 }
