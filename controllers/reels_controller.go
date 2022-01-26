@@ -86,11 +86,17 @@ func (uc *ReelsController) Update(c echo.Context) error {
   リール作成
 */
 func (uc *ReelsController) Create(c echo.Context) error {
+	// データセット
 	reel := models.Reel{}
 	if err := c.Bind(&reel); err != nil {
 		return err
 	}
 
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	reel.UserId = uid
+
+	// 登録
 	result := models.CreateReel(reel)
 
 	return c.JSON(http.StatusCreated, newResponse(
