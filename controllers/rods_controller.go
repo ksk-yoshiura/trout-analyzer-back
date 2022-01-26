@@ -21,7 +21,6 @@ func NewRodsController() *RodsController {
   ロッド一覧取得
 */
 func (uc *RodsController) Index(c echo.Context) error {
-
 	// トークンからユーザID取得
 	uid := userIDFromToken(c)
 	// データ取得
