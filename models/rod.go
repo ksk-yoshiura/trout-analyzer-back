@@ -31,9 +31,9 @@ func RodValidate(rod Rod) error {
 /**
   ロッド一覧取得
 */
-func GetAllRods(rods []Rod) []Rod {
+func GetAllRods(rods []Rod, uid int) []Rod {
 	db := database.GetDBConn()
-	db.Find(&rods)
+	db.Where("user_id = ?", uid).Find(&rods)
 	return rods
 }
 

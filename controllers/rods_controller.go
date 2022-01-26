@@ -21,9 +21,12 @@ func NewRodsController() *RodsController {
   ロッド一覧取得
 */
 func (uc *RodsController) Index(c echo.Context) error {
+
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
 	// データ取得
 	rods := []models.Rod{}
-	result := models.GetAllRods(rods)
+	result := models.GetAllRods(rods, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
