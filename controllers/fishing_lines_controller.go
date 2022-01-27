@@ -21,8 +21,11 @@ func NewFishingLinesController() *FishingLinesController {
   ライン一覧取得
 */
 func (uc *FishingLinesController) Index(c echo.Context) error {
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	// データ取得
 	fishing_lines := []models.FishingLine{}
-	result := models.GetAllLines(fishing_lines)
+	result := models.GetAllLines(fishing_lines, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,

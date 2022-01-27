@@ -33,9 +33,10 @@ func FishingLineValidate(fishing_line FishingLine) error {
 /**
   ライン一覧取得
 */
-func GetAllLines(fishing_lines []FishingLine) []FishingLine {
+func GetAllLines(fishing_lines []FishingLine, uid int) []FishingLine {
 	db := database.GetDBConn()
-	db.Find(&fishing_lines)
+	// ログインユーザは自分のラインしか見れない
+	db.Where("user_id = ?", uid).Find(&fishing_lines)
 	return fishing_lines
 }
 
