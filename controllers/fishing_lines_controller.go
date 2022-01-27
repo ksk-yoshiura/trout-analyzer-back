@@ -90,11 +90,17 @@ func (uc *FishingLinesController) Update(c echo.Context) error {
   ライン作成
 */
 func (uc *FishingLinesController) Create(c echo.Context) error {
+	// データセット
 	fishing_line := models.FishingLine{}
 	if err := c.Bind(&fishing_line); err != nil {
 		return err
 	}
 
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	fishing_line.UserId = uid
+
+	// 登録
 	result := models.CreateLine(fishing_line)
 
 	return c.JSON(http.StatusCreated, newResponse(
