@@ -83,10 +83,10 @@ func newRouter() *echo.Echo {
 	fishingLinesController := controllers.NewFishingLinesController()
 
 	api.GET("/lines", fishingLinesController.Index)
-	api.GET("/lines/:id", fishingLinesController.Show)
-	api.PUT("/lines/:id", fishingLinesController.Update)
-	api.POST("/lines", fishingLinesController.Create)
-	api.POST("/lines/:id", fishingLinesController.Delete)
+	api.GET("/line/:id", fishingLinesController.Show)
+	api.PUT("/line/:id", fishingLinesController.Update)
+	api.POST("/line", fishingLinesController.Create)
+	api.POST("/line/:id", fishingLinesController.Delete)
 
 	// ヒットパターンコントローラー
 	hitPatternsController := controllers.NewHitPatternsController()
