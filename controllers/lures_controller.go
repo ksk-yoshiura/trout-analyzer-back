@@ -21,8 +21,11 @@ func NewLuresController() *LuresController {
   ルアー一覧取得
 */
 func (uc *LuresController) Index(c echo.Context) error {
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	// データ取得
 	lures := []models.Lure{}
-	result := models.GetAllLures(lures)
+	result := models.GetAllLures(lures, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,

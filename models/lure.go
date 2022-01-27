@@ -34,9 +34,10 @@ func LureValidate(lure Lure) error {
 /**
   ルアー一覧取得
 */
-func GetAllLures(lures []Lure) []Lure {
+func GetAllLures(lures []Lure, uid int) []Lure {
 	db := database.GetDBConn()
-	db.Find(&lures)
+	// ログインユーザは自分のルアーしか見れない
+	db.Where("user_id = ?", uid).Find(&lures)
 	return lures
 }
 
