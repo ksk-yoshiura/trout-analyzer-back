@@ -32,9 +32,10 @@ func TackleValidate(tackle Tackle) error {
 /**
   タックル一覧取得
 */
-func GetAllTackles(tackles []Tackle) []Tackle {
+func GetAllTackles(tackles []Tackle, uid int) []Tackle {
 	db := database.GetDBConn()
-	db.Find(&tackles)
+	// ログインユーザは自分のタックルしか見れない
+	db.Where("user_id = ?", uid).Find(&tackles)
 	return tackles
 }
 

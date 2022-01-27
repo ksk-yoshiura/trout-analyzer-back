@@ -21,8 +21,11 @@ func NewTacklesController() *TacklesController {
   タックル一覧取得
 */
 func (uc *TacklesController) Index(c echo.Context) error {
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	// データ取得
 	tackles := []models.Tackle{}
-	result := models.GetAllTackles(tackles)
+	result := models.GetAllTackles(tackles, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
