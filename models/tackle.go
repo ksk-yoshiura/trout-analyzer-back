@@ -2,11 +2,9 @@ package models
 
 import (
 	"regexp"
-	"strconv"
 	"trout-analyzer-back/database"
 
 	"github.com/jinzhu/gorm"
-	"github.com/labstack/echo"
 	"github.com/wcl48/valval"
 )
 
@@ -52,20 +50,18 @@ func GetTackle(tackle Tackle, tackle_id int, uid int) Tackle {
 /**
   タックル更新
 */
-func UpdateTackle(tackle Tackle, tackle_id int, c echo.Context) error {
+func UpdateTackle(t Tackle, tackle_id int) error {
+	var tackle Tackle
 	db := database.GetDBConn()
 
-	db.First(&tackle, tackle_id)
-	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
-	rod_id, _ := strconv.Atoi(c.FormValue("rod_id"))
-	reel_id, _ := strconv.Atoi(c.FormValue("reel_id"))
-	line_id, _ := strconv.Atoi(c.FormValue("line_id"))
+	// ログインユーザは自分のタックルしか見れない
+	db.Where("user_id = ?", t.UserId).First(&tackle, tackle_id)
 
 	result := db.Model(&tackle).Updates(Tackle{
-		UserId: user_id,
-		RodId:  rod_id,
-		ReelId: reel_id,
-		LineId: line_id,
+		UserId: t.UserId,
+		RodId:  t.RodId,
+		ReelId: t.ReelId,
+		LineId: t.LineId,
 	}).Error
 	return result
 }

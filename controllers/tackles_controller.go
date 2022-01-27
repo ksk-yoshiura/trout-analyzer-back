@@ -61,13 +61,22 @@ func (uc *TacklesController) Show(c echo.Context) error {
   タックル更新
 */
 func (uc *TacklesController) Update(c echo.Context) error {
-	tackle := models.Tackle{}
 	tackle_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	result := models.UpdateTackle(tackle, tackle_id, c)
+	tackle := models.Tackle{}
+	if err := c.Bind(&tackle); err != nil {
+		return err
+	}
+
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	tackle.UserId = uid
+
+	// 更新
+	result := models.UpdateTackle(tackle, tackle_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
