@@ -43,9 +43,10 @@ func GetAllLines(fishing_lines []FishingLine, uid int) []FishingLine {
 /**
   ライン取得
 */
-func GetLine(fishing_line FishingLine, line_id int) FishingLine {
+func GetLine(fishing_line FishingLine, line_id int, uid int) FishingLine {
 	db := database.GetDBConn()
-	db.First(&fishing_line, line_id)
+	// ログインユーザは自分のラインしか見れない
+	db.Where("user_id = ?", uid).First(&fishing_line, line_id)
 	return fishing_line
 }
 

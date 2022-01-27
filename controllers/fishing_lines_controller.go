@@ -38,9 +38,17 @@ func (uc *FishingLinesController) Index(c echo.Context) error {
   ライン取得
 */
 func (uc *FishingLinesController) Show(c echo.Context) error {
+	// idチェック
+	line_id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	// データ取得
 	fishing_line := models.FishingLine{}
-	line_id, _ := strconv.Atoi(c.Param("id"))
-	result := models.GetLine(fishing_line, line_id)
+	result := models.GetLine(fishing_line, line_id, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
