@@ -44,9 +44,10 @@ func GetAllLures(lures []Lure, uid int) []Lure {
 /**
   ルアー取得
 */
-func GetLure(lure Lure, lure_id int) Lure {
+func GetLure(lure Lure, lure_id int, uid int) Lure {
 	db := database.GetDBConn()
-	db.First(&lure, lure_id)
+	// ログインユーザは自分のルアーしか見れない
+	db.Where("user_id = ?", uid).First(&lure, lure_id)
 	return lure
 }
 

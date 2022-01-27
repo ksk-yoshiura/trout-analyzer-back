@@ -38,9 +38,17 @@ func (uc *LuresController) Index(c echo.Context) error {
   ルアー取得
 */
 func (uc *LuresController) Show(c echo.Context) error {
+	// idチェック
+	lure_id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	// データ取得
 	lure := models.Lure{}
-	lure_id, _ := strconv.Atoi(c.Param("id"))
-	result := models.GetLure(lure, lure_id)
+	result := models.GetLure(lure, lure_id, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
