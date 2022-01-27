@@ -89,11 +89,17 @@ func (uc *TacklesController) Update(c echo.Context) error {
   タックル作成
 */
 func (uc *TacklesController) Create(c echo.Context) error {
+	// データセット
 	tackle := models.Tackle{}
 	if err := c.Bind(&tackle); err != nil {
 		return err
 	}
 
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	tackle.UserId = uid
+
+	// 登録
 	result := models.CreateTackle(tackle)
 
 	return c.JSON(http.StatusCreated, newResponse(
