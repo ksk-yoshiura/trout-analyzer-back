@@ -91,11 +91,17 @@ func (uc *LuresController) Update(c echo.Context) error {
   ルアー作成
 */
 func (uc *LuresController) Create(c echo.Context) error {
+	// データセット
 	lure := models.Lure{}
 	if err := c.Bind(&lure); err != nil {
 		return err
 	}
 
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	lure.UserId = uid
+
+	// 登録
 	result := models.CreateLure(lure)
 
 	return c.JSON(http.StatusCreated, newResponse(
