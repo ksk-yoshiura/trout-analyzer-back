@@ -114,12 +114,14 @@ func (uc *FishingLinesController) Create(c echo.Context) error {
   ライン削除
 */
 func (uc *FishingLinesController) Delete(c echo.Context) error {
-	fishing_line := models.FishingLine{}
+	// idチェック
 	line_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
+	// 削除
+	fishing_line := models.FishingLine{}
 	result := models.DeleteLine(fishing_line, line_id)
 
 	return c.JSON(http.StatusOK, newResponse(
