@@ -38,10 +38,10 @@ func newRouter() *echo.Echo {
 	luresController := controllers.NewLuresController()
 
 	api.GET("/lures", luresController.Index)
-	api.GET("/lures/:id", luresController.Show)
-	api.PUT("/lures/:id", luresController.Update)
-	api.POST("/lures", luresController.Create)
-	api.POST("/lures/:id", luresController.Delete)
+	api.GET("/lure/:id", luresController.Show)
+	api.PUT("/lure/:id", luresController.Update)
+	api.POST("/lure", luresController.Create)
+	api.POST("/lure/:id", luresController.Delete)
 
 	// ロッドコントローラー
 	rodsController := controllers.NewRodsController()
