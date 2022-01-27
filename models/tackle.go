@@ -42,9 +42,10 @@ func GetAllTackles(tackles []Tackle, uid int) []Tackle {
 /**
   タックル取得
 */
-func GetTackle(tackle Tackle, tackle_id int) Tackle {
+func GetTackle(tackle Tackle, tackle_id int, uid int) Tackle {
 	db := database.GetDBConn()
-	db.First(&tackle, tackle_id)
+	// ログインユーザは自分のタックルしか見れない
+	db.Where("user_id = ?", uid).First(&tackle, tackle_id)
 	return tackle
 }
 

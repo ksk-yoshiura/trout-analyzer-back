@@ -38,9 +38,17 @@ func (uc *TacklesController) Index(c echo.Context) error {
   タックル取得
 */
 func (uc *TacklesController) Show(c echo.Context) error {
+	// idチェック
+	tackle_id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	// データ取得
 	tackle := models.Tackle{}
-	tackle_id, _ := strconv.Atoi(c.Param("id"))
-	result := models.GetTackle(tackle, tackle_id)
+	result := models.GetTackle(tackle, tackle_id, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
