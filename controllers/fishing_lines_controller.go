@@ -61,13 +61,23 @@ func (uc *FishingLinesController) Show(c echo.Context) error {
   ライン更新
 */
 func (uc *FishingLinesController) Update(c echo.Context) error {
-	fishing_line := models.FishingLine{}
+	// idチェック
 	line_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	result := models.UpdateLine(fishing_line, line_id, c)
+	// データセット
+	fishing_line := models.FishingLine{}
+	if err := c.Bind(&fishing_line); err != nil {
+		return err
+	}
+
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	fishing_line.UserId = uid
+
+	result := models.UpdateLine(fishing_line, line_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,

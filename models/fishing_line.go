@@ -2,11 +2,9 @@ package models
 
 import (
 	"regexp"
-	"strconv"
 	"trout-analyzer-back/database"
 
 	"github.com/jinzhu/gorm"
-	"github.com/labstack/echo"
 	"github.com/wcl48/valval"
 )
 
@@ -53,22 +51,18 @@ func GetLine(fishing_line FishingLine, line_id int, uid int) FishingLine {
 /**
   ライン更新
 */
-func UpdateLine(fishing_line FishingLine, line_id int, c echo.Context) error {
+func UpdateLine(f FishingLine, line_id int) error {
+	var fishing_line FishingLine
 	db := database.GetDBConn()
 
 	db.First(&fishing_line, line_id)
-	name := c.FormValue("name")
-	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
-	line_type_id, _ := strconv.Atoi(c.FormValue("line_type_id"))
-	thickness, _ := strconv.Atoi(c.FormValue("thickness"))
-	company_name := c.FormValue("company_name")
 
 	result := db.Model(&fishing_line).Updates(FishingLine{
-		Name:        name,
-		UserId:      user_id,
-		LineTypeId:  line_type_id,
-		Thickness:   thickness,
-		CompanyName: company_name,
+		Name:        f.Name,
+		UserId:      f.UserId,
+		LineTypeId:  f.LineTypeId,
+		Thickness:   f.Thickness,
+		CompanyName: f.CompanyName,
 	}).Error
 	return result
 }
