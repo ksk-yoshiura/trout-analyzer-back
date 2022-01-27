@@ -115,12 +115,14 @@ func (uc *LuresController) Create(c echo.Context) error {
   ルアー削除
 */
 func (uc *LuresController) Delete(c echo.Context) error {
-	lure := models.Lure{}
+	// idチェック
 	lure_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
+	// 削除
+	lure := models.Lure{}
 	result := models.DeleteLure(lure, lure_id)
 
 	return c.JSON(http.StatusOK, newResponse(
