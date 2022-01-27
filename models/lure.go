@@ -2,11 +2,9 @@ package models
 
 import (
 	"regexp"
-	"strconv"
 	"trout-analyzer-back/database"
 
 	"github.com/jinzhu/gorm"
-	"github.com/labstack/echo"
 	"github.com/wcl48/valval"
 )
 
@@ -54,24 +52,19 @@ func GetLure(lure Lure, lure_id int, uid int) Lure {
 /**
   ルアー更新
 */
-func UpdateLure(lure Lure, lure_id int, c echo.Context) error {
+func UpdateLure(l Lure, lure_id int, uid int) error {
+	var lure Lure
 	db := database.GetDBConn()
-
-	db.First(&lure, lure_id)
-	name := c.FormValue("name")
-	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
-	lure_type_id, _ := strconv.Atoi(c.FormValue("lure_type_id"))
-	company_name := c.FormValue("company_name")
-	color := c.FormValue("color")
-	weight := c.FormValue("weight")
+	// ログインユーザは自分のルアーしか見れない
+	db.Where("user_id = ?", uid).First(&lure, lure_id)
 
 	result := db.Model(&lure).Updates(Lure{
-		Name:        name,
-		UserId:      user_id,
-		LureTypeId:  lure_type_id,
-		CompanyName: company_name,
-		Color:       color,
-		Weight:      weight,
+		Name:        l.Name,
+		UserId:      l.UserId,
+		LureTypeId:  l.LureTypeId,
+		CompanyName: l.CompanyName,
+		Color:       l.Color,
+		Weight:      l.Weight,
 	}).Error
 	return result
 }

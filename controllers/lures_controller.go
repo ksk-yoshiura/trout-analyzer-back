@@ -61,14 +61,24 @@ func (uc *LuresController) Show(c echo.Context) error {
   ルアー更新
 */
 func (uc *LuresController) Update(c echo.Context) error {
-	lure := models.Lure{}
-
+	// idチェック
 	lure_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	result := models.UpdateLure(lure, lure_id, c)
+	// データセット
+	lure := models.Lure{}
+	if err := c.Bind(&lure); err != nil {
+		return err
+	}
+
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	lure.UserId = uid
+
+	// 更新
+	result := models.UpdateLure(lure, lure_id, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
