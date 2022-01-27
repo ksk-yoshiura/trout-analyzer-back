@@ -113,12 +113,14 @@ func (uc *TacklesController) Create(c echo.Context) error {
   タックル削除
 */
 func (uc *TacklesController) Delete(c echo.Context) error {
-	tackle := models.Tackle{}
+	// idチェック
 	tackle_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
+	// 削除
+	tackle := models.Tackle{}
 	result := models.DeleteTackle(tackle, tackle_id)
 
 	return c.JSON(http.StatusOK, newResponse(
