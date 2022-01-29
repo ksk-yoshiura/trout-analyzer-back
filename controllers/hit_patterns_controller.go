@@ -115,12 +115,14 @@ func (uc *HitPatternsController) Create(c echo.Context) error {
   ヒットパターン削除
 */
 func (uc *HitPatternsController) Delete(c echo.Context) error {
-	hit_pattern := models.HitPattern{}
+	// idチェック
 	hit_pattern_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
+	// 削除
+	hit_pattern := models.HitPattern{}
 	result := models.DeleteHitPattern(hit_pattern, hit_pattern_id)
 
 	return c.JSON(http.StatusOK, newResponse(
