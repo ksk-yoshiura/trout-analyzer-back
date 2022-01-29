@@ -21,8 +21,11 @@ func NewHitPatternsController() *HitPatternsController {
   ヒットパターン一覧取得
 */
 func (uc *HitPatternsController) Index(c echo.Context) error {
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	// データ取得
 	hit_patterns := []models.HitPattern{}
-	result := models.GetAllHitPatterns(hit_patterns)
+	result := models.GetAllHitPatterns(hit_patterns, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,

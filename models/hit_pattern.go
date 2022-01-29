@@ -36,9 +36,10 @@ func HitPatternValidate(hit_pattern HitPattern) error {
 /**
   ヒットパターン一覧取得
 */
-func GetAllHitPatterns(hit_patterns []HitPattern) []HitPattern {
+func GetAllHitPatterns(hit_patterns []HitPattern, uid int) []HitPattern {
 	db := database.GetDBConn()
-	db.Find(&hit_patterns)
+	// ログインユーザは自分のヒットパターンしか見れない
+	db.Where("user_id = ?", uid).Find(&hit_patterns)
 	return hit_patterns
 }
 
