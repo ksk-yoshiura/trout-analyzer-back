@@ -38,9 +38,17 @@ func (uc *HitPatternsController) Index(c echo.Context) error {
   ヒットパターン取得
 */
 func (uc *HitPatternsController) Show(c echo.Context) error {
+	// idチェック
+	hit_pattern_id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	// データ取得
 	hit_pattern := models.HitPattern{}
-	hit_pattern_id, _ := strconv.Atoi(c.Param("id"))
-	result := models.GetHitPattern(hit_pattern, hit_pattern_id)
+	result := models.GetHitPattern(hit_pattern, hit_pattern_id, uid)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,

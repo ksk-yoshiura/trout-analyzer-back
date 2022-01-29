@@ -46,9 +46,10 @@ func GetAllHitPatterns(hit_patterns []HitPattern, uid int) []HitPattern {
 /**
   ヒットパターン取得
 */
-func GetHitPattern(hit_pattern HitPattern, hit_pattern_id int) HitPattern {
+func GetHitPattern(hit_pattern HitPattern, hit_pattern_id int, uid int) HitPattern {
 	db := database.GetDBConn()
-	db.First(&hit_pattern, hit_pattern_id)
+	// ログインユーザは自分のヒットパターンしか見れない
+	db.Where("user_id = ?", uid).First(&hit_pattern, hit_pattern_id)
 	return hit_pattern
 }
 
