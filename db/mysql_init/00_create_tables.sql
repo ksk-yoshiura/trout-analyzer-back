@@ -77,6 +77,20 @@ CREATE TABLE tool_conditions (
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+-- レコードテーブル --
+
+DROP TABLE IF EXISTS records;
+
+CREATE TABLE records (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` int(255) DEFAULT NULL,
+  `field_id` int(255) DEFAULT NULL,
+  `created_at` Datetime DEFAULT NULL,
+  `updated_at` Datetime DEFAULT NULL,
+  `deleted_at` Datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 -- ヒットパターンテーブル --
 
 DROP TABLE IF EXISTS hit_patterns;
@@ -86,11 +100,11 @@ CREATE TABLE hit_patterns (
   `user_id` int(255) DEFAULT NULL,
   `lure_id` int(255) DEFAULT NULL,
   `tackle_id` int(255) DEFAULT NULL,
+  `record_id` int(255) DEFAULT NULL,
   `speed` int(255) DEFAULT NULL,
   `depth` VARCHAR(255) DEFAULT NULL,
   `weather` VARCHAR(255) DEFAULT NULL,
   `result` VARCHAR(255) DEFAULT NULL,
-  `field_id` int(255) DEFAULT NULL,
   `created_at` Datetime DEFAULT NULL,
   `updated_at` Datetime DEFAULT NULL,
   `deleted_at` Datetime DEFAULT NULL,
