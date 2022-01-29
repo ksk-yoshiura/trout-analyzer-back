@@ -17,7 +17,7 @@ type HitPattern struct {
 	Depth    int `json:"depth"`
 	Weather  int `json:"weather"`
 	Result   int `json:"result"`
-	FieldId  int `json:"field_id"`
+	RecordId int `json:"record_id"`
 }
 
 func HitPatternValidate(hit_pattern HitPattern) error {
@@ -69,7 +69,7 @@ func UpdateHitPattern(h HitPattern, hit_pattern_id int) error {
 		Depth:    h.Depth,
 		Weather:  h.Weather,
 		Result:   h.Result,
-		FieldId:  h.FieldId,
+		RecordId: h.RecordId,
 	}).Error
 
 	return result
