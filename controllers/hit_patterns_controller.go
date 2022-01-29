@@ -61,14 +61,24 @@ func (uc *HitPatternsController) Show(c echo.Context) error {
   ヒットパターン更新
 */
 func (uc *HitPatternsController) Update(c echo.Context) error {
-	hit_pattern := models.HitPattern{}
 
 	hit_pattern_id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return echo.ErrNotFound
 	}
 
-	result := models.UpdateHitPattern(hit_pattern, hit_pattern_id, c)
+	// データセット
+	hit_pattern := models.HitPattern{}
+	if err := c.Bind(&hit_pattern); err != nil {
+		return err
+	}
+
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	hit_pattern.UserId = uid
+
+	// 更新
+	result := models.UpdateHitPattern(hit_pattern, hit_pattern_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,

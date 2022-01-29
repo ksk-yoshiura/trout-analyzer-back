@@ -2,11 +2,9 @@ package models
 
 import (
 	"regexp"
-	"strconv"
 	"trout-analyzer-back/database"
 
 	"github.com/jinzhu/gorm"
-	"github.com/labstack/echo"
 	"github.com/wcl48/valval"
 )
 
@@ -56,28 +54,22 @@ func GetHitPattern(hit_pattern HitPattern, hit_pattern_id int, uid int) HitPatte
 /**
   ヒットパターン更新
 */
-func UpdateHitPattern(hit_pattern HitPattern, hit_pattern_id int, c echo.Context) error {
+func UpdateHitPattern(h HitPattern, hit_pattern_id int) error {
+	var hit_pattern HitPattern
 	db := database.GetDBConn()
 
-	db.First(&hit_pattern, hit_pattern_id)
-	user_id, _ := strconv.Atoi(c.FormValue("user_id"))
-	lure_id, _ := strconv.Atoi(c.FormValue("lure_id"))
-	tackle_id, _ := strconv.Atoi(c.FormValue("tackle_id"))
-	speed, _ := strconv.Atoi(c.FormValue("speed"))
-	depth, _ := strconv.Atoi(c.FormValue("depth"))
-	weather, _ := strconv.Atoi(c.FormValue("weather"))
-	result_id, _ := strconv.Atoi(c.FormValue("result"))
-	field_id, _ := strconv.Atoi(c.FormValue("field_id"))
+	// ログインユーザは自分のロッドしか見れない
+	db.Where("user_id = ?", h.UserId).First(&hit_pattern, hit_pattern_id)
 
 	result := db.Model(&hit_pattern).Updates(HitPattern{
-		UserId:   user_id,
-		LureId:   lure_id,
-		TackleId: tackle_id,
-		Speed:    speed,
-		Depth:    depth,
-		Weather:  weather,
-		Result:   result_id,
-		FieldId:  field_id,
+		UserId:   h.UserId,
+		LureId:   h.LureId,
+		TackleId: h.TackleId,
+		Speed:    h.Speed,
+		Depth:    h.Depth,
+		Weather:  h.Weather,
+		Result:   h.Result,
+		FieldId:  h.FieldId,
 	}).Error
 
 	return result
