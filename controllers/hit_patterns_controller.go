@@ -91,11 +91,17 @@ func (uc *HitPatternsController) Update(c echo.Context) error {
   ヒットパターン作成
 */
 func (uc *HitPatternsController) Create(c echo.Context) error {
+	// データセット
 	hit_pattern := models.HitPattern{}
 	if err := c.Bind(&hit_pattern); err != nil {
 		return err
 	}
 
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	hit_pattern.UserId = uid
+
+	// 登録
 	result := models.CreateHitPattern(hit_pattern)
 
 	return c.JSON(http.StatusCreated, newResponse(
