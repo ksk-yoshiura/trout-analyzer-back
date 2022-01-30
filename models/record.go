@@ -10,8 +10,9 @@ import (
 
 type Record struct {
 	gorm.Model
-	UserId  int `json:"user_id"`
-	FieldId int `json:"field_id"`
+	Field   Field `gorm:"foreignKey:FieldId"`
+	UserId  int   `json:"user_id"`
+	FieldId int   `json:"field_id"`
 }
 
 func RecordValidate(record Record) error {
@@ -31,7 +32,7 @@ func RecordValidate(record Record) error {
 func GetAllRecords(records []Record, uid int) []Record {
 	db := database.GetDBConn()
 	// ログインユーザは自分のレコードしか見れない
-	db.Where("user_id = ?", uid).Find(&records)
+	db.Where("user_id = ?", uid).Preload("Field").Find(&records)
 	return records
 }
 
@@ -41,7 +42,7 @@ func GetAllRecords(records []Record, uid int) []Record {
 func GetRecord(record Record, record_id int, uid int) Record {
 	db := database.GetDBConn()
 	// ログインユーザは自分のレコードしか見れない
-	db.Where("user_id = ?", uid).First(&record, record_id)
+	db.Where("user_id = ?", uid).Preload("Field").First(&record, record_id)
 	return record
 }
 
