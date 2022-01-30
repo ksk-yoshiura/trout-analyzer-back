@@ -10,10 +10,13 @@ import (
 
 type Tackle struct {
 	gorm.Model
-	UserId int `json:"user_id"`
-	RodId  int `json:"rod_id"`
-	ReelId int `json:"reel_id"`
-	LineId int `json:"liner_id"`
+	Reel        Reel        `gorm:"foreignKey:ReelId"` // HasOne
+	Rod         Rod         `gorm:"foreignKey:RodId"`  // HasOne
+	FishingLine FishingLine `gorm:"foreignKey:LineId"` // HasOne
+	UserId      int         `json:"user_id"`
+	RodId       int         `json:"rod_id"`
+	ReelId      int         `json:"reel_id"`
+	LineId      int         `json:"liner_id"`
 }
 
 func TackleValidate(tackle Tackle) error {
@@ -33,7 +36,7 @@ func TackleValidate(tackle Tackle) error {
 func GetAllTackles(tackles []Tackle, uid int) []Tackle {
 	db := database.GetDBConn()
 	// ログインユーザは自分のタックルしか見れない
-	db.Where("user_id = ?", uid).Find(&tackles)
+	db.Where("user_id = ?", uid).Preload("Rod").Preload("Reel").Preload("FishingLine").Find(&tackles)
 	return tackles
 }
 
