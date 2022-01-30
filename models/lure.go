@@ -10,7 +10,7 @@ import (
 
 type Lure struct {
 	gorm.Model
-	LureType    LureType `gorm:"foreignKey:LureTypeId"` // BelongsTo
+	LureType    LureType `gorm:"foreignKey:LureTypeId"` // HasOne
 	Name        string   `json:"name"`
 	UserId      int      `json:"user_id"`
 	LureTypeId  int      `json:"lure_type_id"`
