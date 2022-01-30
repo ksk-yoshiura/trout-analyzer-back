@@ -10,12 +10,13 @@ import (
 
 type Lure struct {
 	gorm.Model
-	Name        string `json:"name"`
-	UserId      int    `json:"user_id"`
-	LureTypeId  int    `json:"lure_type_id"`
-	CompanyName string `json:"company_name"`
-	Weight      string `json:"weight"`
-	Color       string `json:"color"`
+	LureType    LureType `gorm:"foreignKey:LureTypeId"` // BelongsTo
+	Name        string   `json:"name"`
+	UserId      int      `json:"user_id"`
+	LureTypeId  int      `json:"lure_type_id"`
+	CompanyName string   `json:"company_name"`
+	Weight      string   `json:"weight"`
+	Color       string   `json:"color"`
 }
 
 func LureValidate(lure Lure) error {
@@ -35,7 +36,7 @@ func LureValidate(lure Lure) error {
 func GetAllLures(lures []Lure, uid int) []Lure {
 	db := database.GetDBConn()
 	// ログインユーザは自分のルアーしか見れない
-	db.Where("user_id = ?", uid).Find(&lures)
+	db.Where("user_id = ?", uid).Preload("LureType").Find(&lures)
 	return lures
 }
 
