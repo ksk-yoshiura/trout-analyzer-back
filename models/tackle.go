@@ -10,9 +10,9 @@ import (
 
 type Tackle struct {
 	gorm.Model
-	Reel        Reel        `gorm:"foreignKey:ReelId"` // HasOne
-	Rod         Rod         `gorm:"foreignKey:RodId"`  // HasOne
-	FishingLine FishingLine `gorm:"foreignKey:LineId"` // HasOne
+	Reel        Reel        `gorm:"foreignKey:ReelId"`
+	Rod         Rod         `gorm:"foreignKey:RodId"`
+	FishingLine FishingLine `gorm:"foreignKey:LineId"`
 	UserId      int         `json:"user_id"`
 	RodId       int         `json:"rod_id"`
 	ReelId      int         `json:"reel_id"`
