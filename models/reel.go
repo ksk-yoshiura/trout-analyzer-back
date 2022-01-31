@@ -46,7 +46,7 @@ func GetAllReels(reels []Reel, uid int) []Reel {
 func GetReel(reel Reel, reel_id int, uid int) Reel {
 	db := database.GetDBConn()
 	// ログインユーザは自分のリールしか見れない
-	db.Where("user_id = ?", uid).First(&reel, reel_id)
+	db.Where("user_id = ?", uid).Preload("GearCondition").Preload("TypeNumberCondition").First(&reel, reel_id)
 	return reel
 }
 
