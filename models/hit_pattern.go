@@ -10,14 +10,21 @@ import (
 
 type HitPattern struct {
 	gorm.Model
-	UserId   int `json:"user_id"`
-	LureId   int `json:"lure_id"`
-	TackleId int `json:"tackle_id"`
-	Speed    int `json:"speed"`
-	Depth    int `json:"depth"`
-	Weather  int `json:"weather"`
-	Result   int `json:"result"`
-	RecordId int `json:"record_id"`
+	Lure             Lure             `gorm:"foreignKey:LureId"`
+	Tackle           Tackle           `gorm:"foreignKey:TackleId"`
+	Record           Record           `gorm:"foreignKey:RecordId"`
+	SpeedCondition   PatternCondition `gorm:"foreignKey:Speed"`
+	DepthCondition   PatternCondition `gorm:"foreignKey:Depth"`
+	WeatherCondition PatternCondition `gorm:"foreignKey:Weather"`
+	ResultCondition  PatternCondition `gorm:"foreignKey:Result"`
+	UserId           int              `json:"user_id"`
+	LureId           int              `json:"lure_id"`
+	TackleId         int              `json:"tackle_id"`
+	Speed            int              `json:"speed"`
+	Depth            int              `json:"depth"`
+	Weather          int              `json:"weather"`
+	Result           int              `json:"result"`
+	RecordId         int              `json:"record_id"`
 }
 
 func HitPatternValidate(hit_pattern HitPattern) error {
@@ -37,7 +44,7 @@ func HitPatternValidate(hit_pattern HitPattern) error {
 func GetAllHitPatterns(hit_patterns []HitPattern, uid int) []HitPattern {
 	db := database.GetDBConn()
 	// ログインユーザは自分のヒットパターンしか見れない
-	db.Where("user_id = ?", uid).Find(&hit_patterns)
+	db.Where("user_id = ?", uid).Preload("Lure").Preload("Tackle").Preload("Record").Preload("SpeedCondition").Preload("DeepCondition").Preload("WeatherCondition").Preload("ResultCondition").Find(&hit_patterns)
 	return hit_patterns
 }
 
@@ -47,7 +54,7 @@ func GetAllHitPatterns(hit_patterns []HitPattern, uid int) []HitPattern {
 func GetHitPattern(hit_pattern HitPattern, hit_pattern_id int, uid int) HitPattern {
 	db := database.GetDBConn()
 	// ログインユーザは自分のヒットパターンしか見れない
-	db.Where("user_id = ?", uid).First(&hit_pattern, hit_pattern_id)
+	db.Where("user_id = ?", uid).Preload("Lure").Preload("Tackle").Preload("Record").Preload("SpeedCondition").Preload("DeepCondition").Preload("WeatherCondition").Preload("ResultCondition").First(&hit_pattern, hit_pattern_id)
 	return hit_pattern
 }
 
