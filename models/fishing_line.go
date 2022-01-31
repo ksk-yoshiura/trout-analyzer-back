@@ -10,11 +10,12 @@ import (
 
 type FishingLine struct {
 	gorm.Model
-	Name        string `json:"name"`
-	UserId      int    `json:"user_id"`
-	LineTypeId  int    `json:"line_type_id"`
-	Thickness   int    `json:"thickness"`
-	CompanyName string `json:"company_name"`
+	LineCondition ToolCondition `gorm:"foreignKey:LineTypeId"`
+	Name          string        `json:"name"`
+	UserId        int           `json:"user_id"`
+	LineTypeId    int           `json:"line_type_id"`
+	Thickness     int           `json:"thickness"`
+	CompanyName   string        `json:"company_name"`
 }
 
 func FishingLineValidate(fishing_line FishingLine) error {
@@ -34,7 +35,7 @@ func FishingLineValidate(fishing_line FishingLine) error {
 func GetAllLines(fishing_lines []FishingLine, uid int) []FishingLine {
 	db := database.GetDBConn()
 	// ログインユーザは自分のラインしか見れない
-	db.Where("user_id = ?", uid).Find(&fishing_lines)
+	db.Where("user_id = ?", uid).Preload("LineCondition").Find(&fishing_lines)
 	return fishing_lines
 }
 
