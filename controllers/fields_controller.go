@@ -91,11 +91,17 @@ func (uc *FieldsController) Update(c echo.Context) error {
   フィールド作成
 */
 func (uc *FieldsController) Create(c echo.Context) error {
+	// データセット
 	field := models.Field{}
 	if err := c.Bind(&field); err != nil {
 		return err
 	}
 
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	field.UserId = uid
+
+	// 登録
 	result := models.CreateField(field)
 
 	return c.JSON(http.StatusCreated, newResponse(
