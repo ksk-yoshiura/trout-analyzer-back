@@ -10,12 +10,12 @@ import (
 
 type Rod struct {
 	gorm.Model
-	ToolCondition ToolCondition `gorm:"foreignKey:HardnessId"`
-	Name          string        `json:"name"`
-	UserId        int           `json:"user_id"`
-	CompanyName   string        `json:"company_name"`
-	Length        string        `json:"length"`
-	HardnessId    int           `json:"hardness_id"`
+	RodHardnessCondition ToolCondition `gorm:"foreignKey:HardnessId"`
+	Name                 string        `json:"name"`
+	UserId               int           `json:"user_id"`
+	CompanyName          string        `json:"company_name"`
+	Length               string        `json:"length"`
+	HardnessId           int           `json:"hardness_id"`
 }
 
 func RodValidate(rod Rod) error {
@@ -35,7 +35,7 @@ func RodValidate(rod Rod) error {
 func GetAllRods(rods []Rod, uid int) []Rod {
 	db := database.GetDBConn()
 	// ログインユーザは自分のロッドしか見れない
-	db.Where("user_id = ?", uid).Preload("ToolCondition").Find(&rods)
+	db.Where("user_id = ?", uid).Preload("RodHardnessCondition").Find(&rods)
 	return rods
 }
 
