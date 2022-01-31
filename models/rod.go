@@ -10,12 +10,12 @@ import (
 
 type Rod struct {
 	gorm.Model
-	RodHardnessCondition ToolCondition `gorm:"foreignKey:HardnessId"`
+	RodHardnessCondition ToolCondition `gorm:"foreignKey:Hardness"`
 	Name                 string        `json:"name"`
 	UserId               int           `json:"user_id"`
 	CompanyName          string        `json:"company_name"`
 	Length               string        `json:"length"`
-	HardnessId           int           `json:"hardness_id"`
+	Hardness             int           `json:"hardness"`
 }
 
 func RodValidate(rod Rod) error {
@@ -61,7 +61,7 @@ func UpdateRod(r Rod, rod_id int) error {
 	result := db.Model(&rod).Updates(Rod{
 		Name:        r.Name,
 		UserId:      r.UserId,
-		HardnessId:  r.HardnessId,
+		Hardness:    r.Hardness,
 		Length:      r.Length,
 		CompanyName: r.CompanyName,
 	}).Error
