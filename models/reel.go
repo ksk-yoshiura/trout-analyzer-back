@@ -10,11 +10,13 @@ import (
 
 type Reel struct {
 	gorm.Model
-	Name        string `json:"name"`
-	UserId      int    `json:"user_id"`
-	CompanyName string `json:"company_name"`
-	TypeNumber  int    `json:"type_number"`
-	Gear        string `json:"gear"`
+	GearCondition       ToolCondition `gorm:"foreignKey:Gear"`
+	TypeNumberCondition ToolCondition `gorm:"foreignKey:TypeNumber"`
+	Name                string        `json:"name"`
+	UserId              int           `json:"user_id"`
+	CompanyName         string        `json:"company_name"`
+	TypeNumber          int           `json:"type_number"`
+	Gear                int           `json:"gear"`
 }
 
 func ReelValidate(reel Reel) error {
@@ -34,7 +36,7 @@ func ReelValidate(reel Reel) error {
 func GetAllReels(reels []Reel, uid int) []Reel {
 	db := database.GetDBConn()
 	// ログインユーザは自分のリールしか見れない
-	db.Where("user_id = ?", uid).Find(&reels)
+	db.Where("user_id = ?", uid).Preload("GearCondition").Preload("TypeNumberCondition").Find(&reels)
 	return reels
 }
 
