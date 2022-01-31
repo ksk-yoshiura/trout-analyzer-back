@@ -6,6 +6,6 @@ import (
 
 type ToolCondition struct {
 	gorm.Model
-	TypeNum  int `json:"type_num"`
-	TypeName int `json:"type_name"`
+	TypeNum  int    `json:"type_num"`
+	TypeName string `json:"type_name"`
 }
