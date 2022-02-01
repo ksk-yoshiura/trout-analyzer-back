@@ -36,3 +36,12 @@ func GetAllRodHardnessConditions(tool_conditions []ToolCondition) []ToolConditio
 	db.Where("type_num = ?", ROD_TYPE_NUM).Find(&tool_conditions)
 	return tool_conditions
 }
+
+/**
+  リールのギア条件各種一覧取得
+*/
+func GetReelGearConditions(tool_conditions []ToolCondition) []ToolCondition {
+	db := database.GetDBConn()
+	db.Where("type_num = ?", GEAR_TYPE_NUM).Find(&tool_conditions)
+	return tool_conditions
+}
