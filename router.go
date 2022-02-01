@@ -123,5 +123,18 @@ func newRouter() *echo.Echo {
 	api.GET("/tool_conditions/reel_type", ToolConditionsController.GetReelType)
 	// ラインタイプリスト取得
 	api.GET("/tool_conditions/line_type", ToolConditionsController.GetLineType)
+
+	// ヒットパターン条件各種コントローラー
+	PatternConditionsController := controllers.NewPatternConditionsController()
+
+	api.GET("/pattern_conditions", PatternConditionsController.Index)
+	// 釣果条件各種一覧取得
+	api.GET("/pattern_conditions/result", PatternConditionsController.GetResult)
+	// ルアー速度条件各種一覧取得
+	api.GET("/pattern_conditions/lure_speed", PatternConditionsController.GetLureSpeed)
+	// ルアー深度条件各種一覧取得
+	api.GET("/pattern_conditions/lure_depth", PatternConditionsController.GetLureDepth)
+	// 天気条件各種一覧取得
+	api.GET("/pattern_conditions/weather", PatternConditionsController.GetWeather)
 	return e
 }
