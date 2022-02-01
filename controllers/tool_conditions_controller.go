@@ -60,3 +60,18 @@ func (uc *ToolConditionsController) GetReelGear(c echo.Context) error {
 		result,
 	))
 }
+
+/**
+  リールの型番条件各種一覧取得
+*/
+func (uc *ToolConditionsController) GetReelType(c echo.Context) error {
+	// データ取得
+	tool_conditions := []models.ToolCondition{}
+	result := models.GetReelTypeConditions(tool_conditions)
+
+	return c.JSON(http.StatusOK, newResponse(
+		http.StatusOK,
+		http.StatusText(http.StatusOK),
+		result,
+	))
+}

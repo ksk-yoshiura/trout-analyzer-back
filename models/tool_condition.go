@@ -45,3 +45,12 @@ func GetReelGearConditions(tool_conditions []ToolCondition) []ToolCondition {
 	db.Where("type_num = ?", REEL_GEAR_NUM).Find(&tool_conditions)
 	return tool_conditions
 }
+
+/**
+  リールの型番条件各種一覧取得
+*/
+func GetReelTypeConditions(tool_conditions []ToolCondition) []ToolCondition {
+	db := database.GetDBConn()
+	db.Where("type_num = ?", REEL_TYPE_NUM).Find(&tool_conditions)
+	return tool_conditions
+}
