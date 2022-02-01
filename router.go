@@ -115,5 +115,7 @@ func newRouter() *echo.Echo {
 	ToolConditionsController := controllers.NewToolConditionsController()
 
 	api.GET("/tool_conditions", ToolConditionsController.Index)
+	// ロッドの硬さリスト取得
+	api.GET("/tool_conditions/rod_hardness", ToolConditionsController.GetRodHardness)
 	return e
 }

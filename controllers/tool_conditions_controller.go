@@ -30,3 +30,18 @@ func (uc *ToolConditionsController) Index(c echo.Context) error {
 		result,
 	))
 }
+
+/**
+  ロッドの硬さ条件各種一覧取得
+*/
+func (uc *ToolConditionsController) GetRodHardness(c echo.Context) error {
+	// データ取得
+	tool_conditions := []models.ToolCondition{}
+	result := models.GetAllRodHardnessConditions(tool_conditions)
+
+	return c.JSON(http.StatusOK, newResponse(
+		http.StatusOK,
+		http.StatusText(http.StatusOK),
+		result,
+	))
+}
