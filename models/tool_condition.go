@@ -31,7 +31,7 @@ func GetAllToolConditions(tool_conditions []ToolCondition) []ToolCondition {
 /**
   ロッドの硬さ条件各種一覧取得
 */
-func GetAllRodHardnessConditions(tool_conditions []ToolCondition) []ToolCondition {
+func GetRodHardnessConditions(tool_conditions []ToolCondition) []ToolCondition {
 	db := database.GetDBConn()
 	db.Where("type_num = ?", ROD_TYPE_NUM).Find(&tool_conditions)
 	return tool_conditions

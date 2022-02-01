@@ -37,7 +37,7 @@ func (uc *ToolConditionsController) Index(c echo.Context) error {
 func (uc *ToolConditionsController) GetRodHardness(c echo.Context) error {
 	// データ取得
 	tool_conditions := []models.ToolCondition{}
-	result := models.GetAllRodHardnessConditions(tool_conditions)
+	result := models.GetRodHardnessConditions(tool_conditions)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
