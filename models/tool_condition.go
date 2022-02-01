@@ -14,7 +14,7 @@ type ToolCondition struct {
 
 const (
 	ROD_TYPE_NUM  = 1
-	GEAR_TYPE_NUM = 2
+	REEL_GEAR_NUM = 2
 	REEL_TYPE_NUM = 3
 	LINE_TYPE_NUM = 4
 )
@@ -42,6 +42,6 @@ func GetRodHardnessConditions(tool_conditions []ToolCondition) []ToolCondition {
 */
 func GetReelGearConditions(tool_conditions []ToolCondition) []ToolCondition {
 	db := database.GetDBConn()
-	db.Where("type_num = ?", GEAR_TYPE_NUM).Find(&tool_conditions)
+	db.Where("type_num = ?", REEL_GEAR_NUM).Find(&tool_conditions)
 	return tool_conditions
 }
