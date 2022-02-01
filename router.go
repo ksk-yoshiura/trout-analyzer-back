@@ -110,5 +110,10 @@ func newRouter() *echo.Echo {
 	LureTypesController := controllers.NewLureTypesController()
 
 	api.GET("/lure_types", LureTypesController.Index)
+
+	// ツール条件各種コントローラー
+	ToolConditionsController := controllers.NewToolConditionsController()
+
+	api.GET("/tool_conditions", ToolConditionsController.Index)
 	return e
 }
