@@ -121,5 +121,7 @@ func newRouter() *echo.Echo {
 	api.GET("/tool_conditions/reel_gear", ToolConditionsController.GetReelGear)
 	// リールの型番リスト取得
 	api.GET("/tool_conditions/reel_type", ToolConditionsController.GetReelType)
+	// ラインタイプリスト取得
+	api.GET("/tool_conditions/line_type", ToolConditionsController.GetLineType)
 	return e
 }

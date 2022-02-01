@@ -75,3 +75,18 @@ func (uc *ToolConditionsController) GetReelType(c echo.Context) error {
 		result,
 	))
 }
+
+/**
+  ラインのタイプ条件各種一覧取得
+*/
+func (uc *ToolConditionsController) GetLineType(c echo.Context) error {
+	// データ取得
+	tool_conditions := []models.ToolCondition{}
+	result := models.GetLineTypeConditions(tool_conditions)
+
+	return c.JSON(http.StatusOK, newResponse(
+		http.StatusOK,
+		http.StatusText(http.StatusOK),
+		result,
+	))
+}
