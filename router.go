@@ -105,5 +105,10 @@ func newRouter() *echo.Echo {
 	api.PUT("/pattern/:id", hitPatternsController.Update)
 	api.POST("/pattern", hitPatternsController.Create)
 	api.POST("/pattern/:id", hitPatternsController.Delete)
+
+	// ルアータイプコントローラー
+	LureTypesController := controllers.NewLureTypesController()
+
+	api.GET("/lure_types", LureTypesController.Index)
 	return e
 }
