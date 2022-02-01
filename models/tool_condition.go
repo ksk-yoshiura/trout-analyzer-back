@@ -12,6 +12,13 @@ type ToolCondition struct {
 	TypeName string `json:"type_name"`
 }
 
+const (
+	ROD_TYPE_NUM  = 1
+	GEAR_TYPE_NUM = 2
+	REEL_TYPE_NUM = 3
+	LINE_TYPE_NUM = 4
+)
+
 /**
   ツール条件各種一覧取得
 */
@@ -26,6 +33,6 @@ func GetAllToolConditions(tool_conditions []ToolCondition) []ToolCondition {
 */
 func GetAllRodHardnessConditions(tool_conditions []ToolCondition) []ToolCondition {
 	db := database.GetDBConn()
-	db.Where("type_num = ?", 1).Find(&tool_conditions)
+	db.Where("type_num = ?", ROD_TYPE_NUM).Find(&tool_conditions)
 	return tool_conditions
 }
