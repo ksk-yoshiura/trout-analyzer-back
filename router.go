@@ -56,10 +56,10 @@ func newRouter() *echo.Echo {
 	reelsController := controllers.NewReelsController()
 
 	api.GET("/reels", reelsController.Index)
-	api.GET("/reel/:id", reelsController.Show)
-	api.PUT("/reel/:id", reelsController.Update)
-	api.POST("/reel", reelsController.Create)
-	api.POST("/reel/:id", reelsController.Delete)
+	api.GET("/reels/:id", reelsController.Show)
+	api.PUT("/reels/:id", reelsController.Update)
+	api.POST("/reels", reelsController.Create)
+	api.POST("/reels/:id", reelsController.Delete)
 
 	// タックルコントローラー
 	tacklesController := controllers.NewTacklesController()
