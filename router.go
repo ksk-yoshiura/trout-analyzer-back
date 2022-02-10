@@ -29,9 +29,9 @@ func newRouter() *echo.Echo {
 	usersController := controllers.NewUsersController()
 
 	api.GET("/users", usersController.Index)
-	api.GET("/user", usersController.Show)
-	api.PUT("/user", usersController.Update)
-	api.POST("/user", usersController.Create)
+	api.GET("/users", usersController.Show)
+	api.PUT("/users", usersController.Update)
+	api.POST("/users", usersController.Create)
 	api.POST("/users/:id", usersController.Delete)
 
 	// ルアーコントローラー
