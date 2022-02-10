@@ -65,10 +65,10 @@ func newRouter() *echo.Echo {
 	tacklesController := controllers.NewTacklesController()
 
 	api.GET("/tackles", tacklesController.Index)
-	api.GET("/tackle/:id", tacklesController.Show)
-	api.PUT("/tackle/:id", tacklesController.Update)
-	api.POST("/tackle", tacklesController.Create)
-	api.POST("/tackle/:id", tacklesController.Delete)
+	api.GET("/tackles/:id", tacklesController.Show)
+	api.PUT("/tackles/:id", tacklesController.Update)
+	api.POST("/tackles", tacklesController.Create)
+	api.POST("/tackles/:id", tacklesController.Delete)
 
 	// フィールドコントローラー
 	fieldsController := controllers.NewFieldsController()
