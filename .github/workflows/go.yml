@@ -1,9 +1,9 @@
 name: Go test
 
 on:
-    push: 
-      branches:
-        - main
+  push: 
+    branches:
+      - main
 
 jobs:
   build:
