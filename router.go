@@ -1,6 +1,8 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 
@@ -16,6 +18,11 @@ func newRouter() *echo.Echo {
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	// CORS対策
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:3000"},
+		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
+	}))
 
 	// サインアップ
 	e.POST("/signup", controllers.Signup)
