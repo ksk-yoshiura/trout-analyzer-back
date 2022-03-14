@@ -11,8 +11,8 @@ import (
 type Record struct {
 	gorm.Model
 	Field   Field `gorm:"foreignKey:FieldId"`
-	UserId  int   `json:"user_id"`
-	FieldId int   `json:"field_id"`
+	UserId  int   `json:"userId"`
+	FieldId int   `json:"fieldId"`
 }
 
 func RecordValidate(record Record) error {

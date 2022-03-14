@@ -13,10 +13,10 @@ type Tackle struct {
 	Reel        Reel        `gorm:"foreignKey:ReelId"`
 	Rod         Rod         `gorm:"foreignKey:RodId"`
 	FishingLine FishingLine `gorm:"foreignKey:LineId"`
-	UserId      int         `json:"user_id"`
-	RodId       int         `json:"rod_id"`
-	ReelId      int         `json:"reel_id"`
-	LineId      int         `json:"liner_id"`
+	UserId      int         `json:"userId"`
+	RodId       int         `json:"rodId"`
+	ReelId      int         `json:"reelId"`
+	LineId      int         `json:"linerId"`
 }
 
 func TackleValidate(tackle Tackle) error {

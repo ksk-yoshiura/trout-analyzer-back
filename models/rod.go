@@ -12,8 +12,8 @@ type Rod struct {
 	gorm.Model
 	RodHardnessCondition ToolCondition `gorm:"foreignKey:Hardness"`
 	Name                 string        `json:"name"`
-	UserId               int           `json:"user_id"`
-	CompanyName          string        `json:"company_name"`
+	UserId               int           `json:"userId"`
+	CompanyName          string        `json:"companyName"`
 	Length               string        `json:"length"`
 	Hardness             int           `json:"hardness"`
 }

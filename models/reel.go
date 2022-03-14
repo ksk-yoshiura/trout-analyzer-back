@@ -13,9 +13,9 @@ type Reel struct {
 	GearCondition       ToolCondition `gorm:"foreignKey:Gear"`
 	TypeNumberCondition ToolCondition `gorm:"foreignKey:TypeNumber"`
 	Name                string        `json:"name"`
-	UserId              int           `json:"user_id"`
-	CompanyName         string        `json:"company_name"`
-	TypeNumber          int           `json:"type_number"`
+	UserId              int           `json:"userId"`
+	CompanyName         string        `json:"company"`
+	TypeNumber          int           `json:"typeNumber"`
 	Gear                int           `json:"gear"`
 }
 

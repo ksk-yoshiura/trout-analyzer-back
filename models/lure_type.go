@@ -8,7 +8,7 @@ import (
 
 type LureType struct {
 	gorm.Model
-	TypeName string `json:"type_name"`
+	TypeName string `json:"typeName"`
 }
 
 /**

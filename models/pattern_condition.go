@@ -8,8 +8,8 @@ import (
 
 type PatternCondition struct {
 	gorm.Model
-	TypeNum  int    `json:"type_num"`
-	TypeName string `json:"type_name"`
+	TypeNum  int    `json:"typeNum"`
+	TypeName string `json:"typeName"`
 }
 
 const (

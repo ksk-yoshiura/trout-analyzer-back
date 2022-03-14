@@ -12,9 +12,9 @@ type Lure struct {
 	gorm.Model
 	LureType    LureType `gorm:"foreignKey:LureTypeId"`
 	Name        string   `json:"name"`
-	UserId      int      `json:"user_id"`
-	LureTypeId  int      `json:"lure_type_id"`
-	CompanyName string   `json:"company_name"`
+	UserId      int      `json:"userId"`
+	LureTypeId  int      `json:"lureTypeId"`
+	CompanyName string   `json:"companyName"`
 	Weight      string   `json:"weight"`
 	Color       string   `json:"color"`
 }

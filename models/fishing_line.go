@@ -12,10 +12,10 @@ type FishingLine struct {
 	gorm.Model
 	LineCondition ToolCondition `gorm:"foreignKey:LineTypeId"`
 	Name          string        `json:"name"`
-	UserId        int           `json:"user_id"`
-	LineTypeId    int           `json:"line_type_id"`
+	UserId        int           `json:"userId"`
+	LineTypeId    int           `json:"lineTypeId"`
 	Thickness     int           `json:"thickness"`
-	CompanyName   string        `json:"company_name"`
+	CompanyName   string        `json:"company"`
 }
 
 func FishingLineValidate(fishing_line FishingLine) error {

@@ -17,14 +17,14 @@ type HitPattern struct {
 	DepthCondition   PatternCondition `gorm:"foreignKey:Depth"`
 	WeatherCondition PatternCondition `gorm:"foreignKey:Weather"`
 	ResultCondition  PatternCondition `gorm:"foreignKey:Result"`
-	UserId           int              `json:"user_id"`
-	LureId           int              `json:"lure_id"`
-	TackleId         int              `json:"tackle_id"`
+	UserId           int              `json:"userId"`
+	LureId           int              `json:"lureId"`
+	TackleId         int              `json:"tackleId"`
 	Speed            int              `json:"speed"`
 	Depth            int              `json:"depth"`
 	Weather          int              `json:"weather"`
 	Result           int              `json:"result"`
-	RecordId         int              `json:"record_id"`
+	RecordId         int              `json:"recordId"`
 }
 
 func HitPatternValidate(hit_pattern HitPattern) error {

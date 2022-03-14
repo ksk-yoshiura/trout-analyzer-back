@@ -13,9 +13,9 @@ type User struct {
 	Email     string `json:"email"`
 	Password  string `json:"password"`
 	Nickname  string `json:"nickname"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	GroupId   int    `json:"group_id"`
+	FirstName string `json:"firstName"`
+	LastName  string `json:"lastName"`
+	GroupId   int    `json:"groupId"`
 }
 
 func UserValidate(user User) error {
