@@ -10,13 +10,13 @@ import (
 
 type Tackle struct {
 	gorm.Model
-	Reel        Reel        `gorm:"foreignKey:ReelId"`
-	Rod         Rod         `gorm:"foreignKey:RodId"`
-	FishingLine FishingLine `gorm:"foreignKey:LineId"`
-	UserId      int         `json:"userId"`
-	RodId       int         `json:"rodId"`
-	ReelId      int         `json:"reelId"`
-	LineId      int         `json:"linerId"`
+	Reel   Reel        `gorm:"foreignKey:ReelId"`
+	Rod    Rod         `gorm:"foreignKey:RodId"`
+	Line   FishingLine `gorm:"foreignKey:LineId"`
+	UserId int         `json:"userId"`
+	RodId  int         `json:"rodId"`
+	ReelId int         `json:"reelId"`
+	LineId int         `json:"linerId"`
 }
 
 func TackleValidate(tackle Tackle) error {
@@ -36,7 +36,7 @@ func TackleValidate(tackle Tackle) error {
 func GetAllTackles(tackles []Tackle, uid int) []Tackle {
 	db := database.GetDBConn()
 	// ログインユーザは自分のタックルしか見れない
-	db.Where("user_id = ?", uid).Preload("Rod").Preload("Reel").Preload("FishingLine").Find(&tackles)
+	db.Where("user_id = ?", uid).Preload("Rod").Preload("Reel").Preload("Line").Find(&tackles)
 	return tackles
 }
 
@@ -46,7 +46,7 @@ func GetAllTackles(tackles []Tackle, uid int) []Tackle {
 func GetTackle(tackle Tackle, tackle_id int, uid int) Tackle {
 	db := database.GetDBConn()
 	// ログインユーザは自分のタックルしか見れない
-	db.Where("user_id = ?", uid).Preload("Rod").Preload("Reel").Preload("FishingLine").First(&tackle, tackle_id)
+	db.Where("user_id = ?", uid).Preload("Rod").Preload("Reel").Preload("Line").First(&tackle, tackle_id)
 	return tackle
 }
 
