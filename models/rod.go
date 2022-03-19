@@ -15,7 +15,7 @@ type Rod struct {
 	UserId               int           `json:"userId"`
 	CompanyName          string        `json:"companyName"`
 	Length               string        `json:"length"`
-	Hardness             int           `json:"hardness"`
+	Hardness             string        `json:"hardness"`
 }
 
 func RodValidate(rod Rod) error {
@@ -45,7 +45,7 @@ func GetAllRods(rods []Rod, uid int) []Rod {
 func GetRod(rod Rod, rod_id int, uid int) Rod {
 	db := database.GetDBConn()
 	// ログインユーザは自分のロッドしか見れない
-	db.Where("user_id = ?", uid).Preload("ToolCondition").First(&rod, rod_id)
+	db.Where("user_id = ?", uid).Preload("RodHardnessCondition").First(&rod, rod_id)
 	return rod
 }
 

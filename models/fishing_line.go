@@ -13,7 +13,7 @@ type FishingLine struct {
 	LineCondition ToolCondition `gorm:"foreignKey:LineTypeId"`
 	Name          string        `json:"name"`
 	UserId        int           `json:"userId"`
-	LineTypeId    int           `json:"lineTypeId"`
+	LineTypeId    string        `json:"lineTypeId"`
 	Thickness     int           `json:"thickness"`
 	CompanyName   string        `json:"company"`
 }
