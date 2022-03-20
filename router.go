@@ -98,7 +98,7 @@ func newRouter() *echo.Echo {
 	// レコードコントローラー
 	recordsController := controllers.NewRecordsController()
 
-	api.GET("/records", recordsController.Index)
+	api.GET("/records/all", recordsController.Index)
 	api.GET("/records/:id", recordsController.Show)
 	api.PUT("/records/:id", recordsController.Update)
 	api.POST("/records", recordsController.Create)
