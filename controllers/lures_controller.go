@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -25,7 +26,20 @@ func (uc *LuresController) Index(c echo.Context) error {
 	uid := userIDFromToken(c)
 	// データ取得
 	lures := []models.Lure{}
-	result := models.GetAllLures(lures, uid)
+	// クエリパラメータ
+	// ルアータイプ
+	type_id := c.QueryParam("type_id")
+
+	var result []models.Lure
+
+	fmt.Println(type_id)
+
+	if type_id == "0" || len(type_id) == 0 {
+		result = models.GetAllLures(lures, uid)
+	} else {
+		result = models.GetLuresSelectedLureType(lures, type_id, uid)
+
+	}
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
