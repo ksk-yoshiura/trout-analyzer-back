@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -31,9 +30,7 @@ func (uc *LuresController) Index(c echo.Context) error {
 	type_id := c.QueryParam("type_id")
 
 	var result []models.Lure
-
-	fmt.Println(type_id)
-
+	// ルアータイプIDがある場合絞り込む
 	if type_id == "0" || len(type_id) == 0 {
 		result = models.GetAllLures(lures, uid)
 	} else {
