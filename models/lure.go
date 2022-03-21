@@ -40,6 +40,13 @@ func GetAllLures(lures []Lure, uid int) []Lure {
 	return lures
 }
 
+func GetLuresSelectedLureType(lures []Lure, type_id string, uid int) []Lure {
+	db := database.GetDBConn()
+	// ログインユーザは自分のルアーしか見れない
+	db.Where("user_id = ? AND lure_type_id = ?", uid, type_id).Preload("LureType").Find(&lures)
+	return lures
+}
+
 /**
   ルアー取得
 */
