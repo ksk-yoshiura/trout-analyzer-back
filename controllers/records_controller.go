@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -102,13 +103,22 @@ func (uc *RecordsController) Create(c echo.Context) error {
 	record.UserId = uid
 
 	// 登録
-	result := models.CreateRecord(record)
+	record, result := models.CreateRecord(record)
+	fmt.Println(record)
 
-	return c.JSON(http.StatusCreated, newResponse(
-		http.StatusOK,
-		http.StatusText(http.StatusOK),
-		result,
-	))
+	if result == nil {
+		return c.JSON(http.StatusCreated, newResponse(
+			http.StatusOK,
+			http.StatusText(http.StatusOK),
+			record,
+		))
+	} else {
+		return c.JSON(http.StatusCreated, newResponse(
+			http.StatusOK,
+			http.StatusText(http.StatusOK),
+			result,
+		))
+	}
 }
 
 /**

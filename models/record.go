@@ -65,10 +65,12 @@ func UpdateRecord(r Record, record_id int) error {
 /**
   レコード作成
 */
-func CreateRecord(record Record) error {
+func CreateRecord(record Record) (Record, error) {
 	db := database.GetDBConn()
-	result := db.Create(&record).Error
-	return result
+	if result := db.Create(&record); result.Error != nil {
+		return record, result.Error
+	}
+	return record, nil
 }
 
 /**
