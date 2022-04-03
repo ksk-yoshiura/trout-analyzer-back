@@ -107,7 +107,7 @@ func newRouter() *echo.Echo {
 	// ヒットパターンコントローラー
 	hitPatternsController := controllers.NewHitPatternsController()
 
-	api.GET("/patterns", hitPatternsController.Index)
+	api.GET("/patterns/list/:record_id", hitPatternsController.Index)
 	api.GET("/patterns/:id", hitPatternsController.Show)
 	api.PUT("/patterns/:id", hitPatternsController.Update)
 	api.POST("/patterns", hitPatternsController.Create)
