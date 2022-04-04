@@ -15,7 +15,7 @@ type FishingLine struct {
 	UserId        int           `json:"userId"`
 	LineTypeId    string        `json:"lineTypeId"`
 	Thickness     int           `json:"thickness"`
-	CompanyName   string        `json:"company"`
+	CompanyName   string        `json:"companyName"`
 }
 
 func FishingLineValidate(fishing_line FishingLine) error {
