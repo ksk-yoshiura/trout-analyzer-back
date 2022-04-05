@@ -14,7 +14,7 @@ type FishingLine struct {
 	Name          string        `json:"name"`
 	UserId        int           `json:"userId"`
 	LineTypeId    string        `json:"lineTypeId"`
-	Thickness     int           `json:"thickness"`
+	Thickness     string        `json:"thickness"`
 	CompanyName   string        `json:"companyName"`
 }
 
