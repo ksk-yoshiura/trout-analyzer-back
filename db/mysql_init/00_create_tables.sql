@@ -187,6 +187,7 @@ CREATE TABLE fields (
   `user_id` int(255) DEFAULT NULL,
   `name` VARCHAR(255) DEFAULT NULL,
   `address` VARCHAR(255) DEFAULT NULL,
+  `last_visited_at` timestamp DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` timestamp DEFAULT NULL,
