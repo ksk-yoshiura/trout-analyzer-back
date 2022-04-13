@@ -141,3 +141,15 @@ func (uc *RecordsController) Delete(c echo.Context) error {
 		result,
 	))
 }
+
+/**
+  レコード作成終了
+*/
+func (uc *RecordsController) Finish(c echo.Context) error {
+
+	return c.JSON(http.StatusOK, newResponse(
+		http.StatusOK,
+		http.StatusText(http.StatusOK),
+		nil,
+	))
+}

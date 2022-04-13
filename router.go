@@ -103,6 +103,7 @@ func newRouter() *echo.Echo {
 	api.PUT("/records/:id", recordsController.Update)
 	api.POST("/records", recordsController.Create)
 	api.POST("/records/:id", recordsController.Delete)
+	api.POST("/records/finish", recordsController.Finish)
 
 	// ヒットパターンコントローラー
 	hitPatternsController := controllers.NewHitPatternsController()
