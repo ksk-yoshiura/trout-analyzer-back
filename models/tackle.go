@@ -16,7 +16,7 @@ type Tackle struct {
 	UserId int         `json:"userId"`
 	RodId  int         `json:"rodId"`
 	ReelId int         `json:"reelId"`
-	LineId int         `json:"linerId"`
+	LineId int         `json:"lineId"`
 }
 
 func TackleValidate(tackle Tackle) error {
