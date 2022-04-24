@@ -26,7 +26,6 @@ func TackleValidate(tackle Tackle) error {
 			valval.Regexp(regexp.MustCompile(`^[a-z ]+$`)),
 		),
 	})
-
 	return Validator.Validate(tackle)
 }
 
