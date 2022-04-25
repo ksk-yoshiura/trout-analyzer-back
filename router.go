@@ -25,7 +25,7 @@ func newRouter() *echo.Echo {
 	}))
 
 	// サインアップ
-	e.POST("/signup", controllers.Signup)
+	e.POST("/sign_up", controllers.Signup)
 	// ログイン
 	e.POST("/login", controllers.Login)
 
