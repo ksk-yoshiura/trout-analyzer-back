@@ -30,7 +30,7 @@ var Config = middleware.JWTConfig{
  */
 func Signup(c echo.Context) error {
 	user := models.User{}
-	if err := c.Bind(user); err != nil {
+	if err := c.Bind(&user); err != nil {
 		return err
 	}
 
