@@ -35,7 +35,7 @@ func TackleValidate(tackle Tackle) error {
 func GetAllTackles(tackles []Tackle, uid int) []Tackle {
 	db := database.GetDBConn()
 	// ログインユーザは自分のタックルしか見れない
-	db.Where("user_id = ?", uid).Preload("Rod").Preload("Reel").Preload("Line").Find(&tackles)
+	db.Where("user_id = ?", uid).Preload("Rod.RodHardnessCondition").Preload("Reel.TypeNumberCondition").Preload("Line.LineCondition").Find(&tackles)
 	return tackles
 }
 
