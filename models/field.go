@@ -2,6 +2,7 @@ package models
 
 import (
 	"regexp"
+	"time"
 	"trout-analyzer-back/database"
 
 	"github.com/jinzhu/gorm"
@@ -10,9 +11,10 @@ import (
 
 type Field struct {
 	gorm.Model
-	Name    string `json:"name"`
-	UserId  int    `json:"user_id"`
-	Address string `json:"address"`
+	Name          string    `json:"name"`
+	UserId        int       `json:"user_id"`
+	Address       string    `json:"address"`
+	LastVisitedAt time.Time `json:"last_visited_at"`
 }
 
 func FieldValidate(field Field) error {
@@ -79,5 +81,20 @@ func DeleteField(field Field, field_id int) error {
 	db := database.GetDBConn()
 	db.First(&field, field_id)
 	result := db.Delete(&field).Error
+	return result
+}
+
+/**
+  フィールド訪問最終日更新
+*/
+func RecordLastVisitDate(uid int, field_id int) error {
+	var field Field
+	db := database.GetDBConn()
+	// ログインユーザは自分のフィールドしか見れない
+	db.Where("user_id = ?", uid).First(&field, field_id)
+
+	result := db.Model(&field).Updates(Field{
+		LastVisitedAt: time.Now(),
+	}).Error
 	return result
 }

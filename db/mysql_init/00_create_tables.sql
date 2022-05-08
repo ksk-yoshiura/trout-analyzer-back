@@ -1,6 +1,7 @@
 -- CREATE DATABASE trout_analyzer;
 use trout_analyzer;
 
+-- SET GLOBAL sql_mode = 'ALLOW_INVALID_DATES';
 
 DROP TABLE IF EXISTS users;
 

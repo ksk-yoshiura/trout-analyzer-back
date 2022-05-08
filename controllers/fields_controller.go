@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 	"strconv"
+	"time"
 
 	"trout-analyzer-back/models"
 
@@ -100,6 +101,7 @@ func (uc *FieldsController) Create(c echo.Context) error {
 	// トークンからユーザID取得
 	uid := userIDFromToken(c)
 	field.UserId = uid
+	field.LastVisitedAt = time.Time{}
 
 	// 登録
 	result := models.CreateField(field)

@@ -104,7 +104,10 @@ func (uc *RecordsController) Create(c echo.Context) error {
 	// 登録
 	record, result := models.CreateRecord(record)
 
-	if result == nil {
+	// フィールド訪問最終日更新
+	resultFieldUpdate := models.RecordLastVisitDate(uid, record.FieldId)
+
+	if result == nil && resultFieldUpdate == nil {
 		return c.JSON(http.StatusCreated, newResponse(
 			http.StatusOK,
 			http.StatusText(http.StatusOK),
