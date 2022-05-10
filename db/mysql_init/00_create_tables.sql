@@ -29,6 +29,7 @@ CREATE TABLE lures (
   `lure_type_id` tinyint(4) DEFAULT NULL,
   `user_id` int(255) DEFAULT NULL,
   `color` VARCHAR(255) DEFAULT NULL,
+  `sub_color` VARCHAR(255) DEFAULT NULL,
   `weight` int(255) DEFAULT NULL,
   `company_name` VARCHAR(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
