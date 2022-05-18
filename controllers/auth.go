@@ -73,7 +73,7 @@ func Login(c echo.Context) error {
 
 	// ユーザーパスワード
 	hash, _ := HashPassword(user.Password)
-	// パスワードチェックpasuwa-dotyekku
+	// パスワードチェック
 	match := CheckPasswordHash(u.Password, hash)
 
 	if user.ID == 0 || !match {
