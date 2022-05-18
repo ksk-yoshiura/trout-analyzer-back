@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"time"
 
+	"golang.org/x/crypto/bcrypt"
+
 	"trout-analyzer-back/models"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -48,6 +50,9 @@ func Signup(c echo.Context) error {
 		}
 	}
 
+	// ユーザーパスワード暗号化
+	hash, _ := HashPassword(user.Password)
+	user.Password = hash
 	models.CreateUser(user)
 	user.Password = ""
 
@@ -64,7 +69,13 @@ func Login(c echo.Context) error {
 	}
 
 	user := models.FindUser(models.User{Email: u.Email})
-	if user.ID == 0 || user.Password != u.Password {
+
+	// ユーザーパスワード
+	hash, _ := HashPassword(user.Password)
+	// パスワードチェックpasuwa-dotyekku
+	match := CheckPasswordHash(u.Password, hash)
+
+	if user.ID == 0 || !match {
 		return &echo.HTTPError{
 			Code:    http.StatusUnauthorized,
 			Message: "invalid email or password",
@@ -98,4 +109,20 @@ func userIDFromToken(c echo.Context) int {
 	claims := user.Claims.(*jwtCustomClaims)
 	uid := claims.UID
 	return uid
+}
+
+/**
+ * パスワードハッシュ化
+ */
+func HashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
+}
+
+/**
+ * パスワードチェック
+ */
+func CheckPasswordHash(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
 }
