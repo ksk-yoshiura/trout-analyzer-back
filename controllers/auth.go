@@ -54,6 +54,7 @@ func Signup(c echo.Context) error {
 	hash, _ := HashPassword(user.Password)
 	user.Password = hash
 	models.CreateUser(user)
+	// パスワードは空にする
 	user.Password = ""
 
 	return c.JSON(http.StatusCreated, user)
