@@ -35,7 +35,7 @@ func newRouter() *echo.Echo {
 	// ユーザコントローラー
 	usersController := controllers.NewUsersController()
 
-	api.GET("/users", usersController.Index)
+	// api.GET("/users", usersController.Index)
 	api.GET("/users", usersController.Show)
 	api.PUT("/users", usersController.Update)
 	api.POST("/users", usersController.Create)
