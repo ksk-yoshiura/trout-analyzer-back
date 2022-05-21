@@ -195,3 +195,73 @@ CREATE TABLE fields (
   `deleted_at` timestamp DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- フィールド画像テーブル --
+
+DROP TABLE IF EXISTS field_images;
+
+CREATE TABLE field_images (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `field_id` int(255) DEFAULT NULL,
+  `image_file` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` timestamp DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ロッド画像テーブル --
+
+DROP TABLE IF EXISTS rod_images;
+
+CREATE TABLE rod_images (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `rod_id` int(255) DEFAULT NULL,
+  `image_file` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` timestamp DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- リール画像テーブル --
+
+DROP TABLE IF EXISTS reel_images;
+
+CREATE TABLE reel_images (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `reel_id` int(255) DEFAULT NULL,
+  `image_file` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` timestamp DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ライン画像テーブル --
+
+DROP TABLE IF EXISTS line_images;
+
+CREATE TABLE line_images (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `line_id` int(255) DEFAULT NULL,
+  `image_file` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` timestamp DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ルアー画像テーブル --
+
+DROP TABLE IF EXISTS lure_images;
+
+CREATE TABLE lure_images (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `lure_id` int(255) DEFAULT NULL,
+  `image_file` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` timestamp DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
