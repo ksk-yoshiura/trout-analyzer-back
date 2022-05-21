@@ -69,12 +69,12 @@ func Login(c echo.Context) error {
 		return err
 	}
 
+	// メールアドレスからユーザ-レコード取得
 	user := models.FindUser(models.User{Email: u.Email})
-
 	// ユーザーパスワード
 	hash, _ := HashPassword(user.Password)
 	// パスワードチェック
-	match := CheckPasswordHash(u.Password, hash)
+	match := CheckPasswordHash(user.Password, hash)
 
 	if user.ID == 0 || !match {
 		return &echo.HTTPError{
