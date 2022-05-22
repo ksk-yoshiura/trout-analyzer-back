@@ -3,6 +3,7 @@ module trout-analyzer-back
 go 1.16
 
 require (
+	github.com/aws/aws-sdk-go v1.44.19
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/jinzhu/gorm v1.9.16
@@ -16,6 +17,4 @@ require (
 	github.com/valyala/fasttemplate v1.2.1 // indirect
 	github.com/wcl48/valval v0.0.0-20190607031309-ea550ab72393
 	golang.org/x/crypto v0.0.0-20191205180655-e7c4368fe9dd
-	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd // indirect
-	gopkg.in/yaml.v2 v2.2.8 // indirect
 )
