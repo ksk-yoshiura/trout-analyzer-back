@@ -3,6 +3,8 @@ package main
 import (
 	"net/http"
 
+	"trout-analyzer-back/module"
+
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 
@@ -15,6 +17,9 @@ import (
 */
 func newRouter() *echo.Echo {
 	e := echo.New()
+
+	// customBinderでdefaultBinderを上書き
+	e.Binder = module.NewBinder()
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
