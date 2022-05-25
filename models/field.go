@@ -2,6 +2,7 @@ package models
 
 import (
 	"regexp"
+	"strconv"
 	"time"
 	"trout-analyzer-back/database"
 
@@ -68,9 +69,31 @@ func UpdateField(f Field, field_id int) error {
 /**
   フィールド作成
 */
-func CreateField(field Field) error {
+func CreateField(field Field, image Image) error {
+	// フィールド画像モデル
+	var field_image FieldImage
 	db := database.GetDBConn()
-	result := db.Create(&field).Error
+	result := db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Create(&field).Error; err != nil {
+			// エラーの場合ロールバックされる
+			return err
+		}
+		// 画像データにフィールドIDをセット
+		field_image.FieldId = field.ID
+		file_name := CreateImageName()
+		image_path := "/field_image/" + strconv.Itoa(field.UserId) + "/" + file_name
+		field_image.ImageFile = image_path
+
+		if err := tx.Create(&field_image).Error; err != nil {
+			// エラーの場合ロールバックされる
+			return err
+		}
+
+		// S3に画像アップロード
+		UploadToS3(image, image_path)
+		// nilが返却されるとトランザクション内の全処理がコミットされる
+		return nil
+	})
 	return result
 }
 
