@@ -1,34 +1,25 @@
 package models
 
 import (
+	"bytes"
+	"crypto/sha256"
+	"encoding/hex"
 	"log"
-	"os"
+	"strings"
+	"time"
+
+	"encoding/base64"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 )
 
-func newS3() (*s3.S3, error) {
-	s, err := session.NewSession()
-	if err != nil {
-		return nil, err
-	}
-
-	ak := "minio"
-	sk := "minio123"
-	cfg := aws.Config{
-		Credentials:      credentials.NewStaticCredentials(ak, sk, ""),
-		Region:           aws.String("ap-northeast-1"),
-		Endpoint:         aws.String("http://127.0.0.1:9090"),
-		S3ForcePathStyle: aws.Bool(true),
-	}
-	return s3.New(s, &cfg), nil
+type Image struct {
+	Image string `json:"image"`
 }
 
-// セッションを返す
+/** セッションを返す */
 func createSession() *session.Session {
 	// 特に設定しなくても環境変数にセットしたクレデンシャル情報を利用して接続してくれる
 	cfg := aws.Config{
@@ -39,65 +30,43 @@ func createSession() *session.Session {
 	return session.Must(session.NewSession(&cfg))
 }
 
-func upload_minio() {
-	sess := createSession()
-
-	// ファイルを開く
-	targetFilePath := "./sample.txt"
-	file, err := os.Open(targetFilePath)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	bucketName := "develop"
-	objectKey := "test3"
-
-	// Uploaderを作成し、ローカルファイルをアップロード
-	uploader := s3manager.NewUploader(sess)
-	_, err = uploader.Upload(&s3manager.UploadInput{
-		Bucket: aws.String(bucketName),
-		Key:    aws.String(objectKey),
-		Body:   file,
-	})
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Println("done")
-
+/** 画像名を現在時刻からハッシュ値で作成 */
+func CreateImageName() string {
+	// 現在時刻
+	current_time := time.Now()
+	s := current_time.String()
+	b := []byte(s)
+	sha256 := sha256.Sum256(b)
+	return hex.EncodeToString(sha256[:])
 }
 
-func upload() {
-	// sessionの作成
-	sess := session.Must(session.NewSessionWithOptions(session.Options{
-		Profile:           "test",
-		SharedConfigState: session.SharedConfigEnable,
-		Config: aws.Config{
-			CredentialsChainVerboseErrors: aws.Bool(true),
-			Region:                        aws.String("ap-northeast-1"),
-		},
-	}))
+/** S3にアップロード */
+func UploadToS3(image Image, image_file string) {
+	sess := createSession()
 
-	// ファイルを開く
-	targetFilePath := "./sample.txt"
-	file, err := os.Open(targetFilePath)
+	image_base64 := image.Image
+	b64data := image_base64[strings.IndexByte(image_base64, ',')+1:]
+	// デコード
+	decode, err := base64.StdEncoding.DecodeString(b64data)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer file.Close()
 
+	// フォルダ名
 	bucketName := "trout-analyzer-upload"
-	objectKey := "test3"
+	// ファイル名
+	objectKey := image_file
 
 	// Uploaderを作成し、ローカルファイルをアップロード
 	uploader := s3manager.NewUploader(sess)
 	_, err = uploader.Upload(&s3manager.UploadInput{
 		Bucket: aws.String(bucketName),
 		Key:    aws.String(objectKey),
-		Body:   file,
+		Body:   bytes.NewReader(decode),
 	})
 	if err != nil {
 		log.Fatal(err)
 	}
 	log.Println("done")
+
 }
