@@ -97,14 +97,20 @@ func (uc *FieldsController) Create(c echo.Context) error {
 	if err := c.Bind(&field); err != nil {
 		return err
 	}
+	// 画像
+	image := models.Image{}
+	if err := c.Bind(&image); err != nil {
+		return err
+	}
 
 	// トークンからユーザID取得
 	uid := userIDFromToken(c)
 	field.UserId = uid
+	// 新規登録の時はからデータを入れる
 	field.LastVisitedAt = time.Time{}
 
 	// 登録
-	result := models.CreateField(field)
+	result := models.CreateField(field, image)
 
 	return c.JSON(http.StatusCreated, newResponse(
 		http.StatusOK,
