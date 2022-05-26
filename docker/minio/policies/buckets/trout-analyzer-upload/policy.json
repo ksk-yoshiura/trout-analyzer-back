@@ -13,7 +13,7 @@
         "s3:ListBucket"
       ],
       "Resource": [
-        "arn:aws:s3:::develop"
+        "arn:aws:s3:::trout-analyzer-upload"
       ]
     },
     {
@@ -29,8 +29,8 @@
         "s3:DeleteObject"
       ],
       "Resource": [
-        "arn:aws:s3:::develop/*",
-        "arn:aws:s3:::develop"
+        "arn:aws:s3:::trout-analyzer-upload/*",
+        "arn:aws:s3:::trout-analyzer-upload"
       ]
     }
   ]
