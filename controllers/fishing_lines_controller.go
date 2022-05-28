@@ -95,13 +95,18 @@ func (uc *FishingLinesController) Create(c echo.Context) error {
 	if err := c.Bind(&fishing_line); err != nil {
 		return err
 	}
+	// 画像
+	image := models.Image{}
+	if err := c.Bind(&image); err != nil {
+		return err
+	}
 
 	// トークンからユーザID取得
 	uid := userIDFromToken(c)
 	fishing_line.UserId = uid
 
 	// 登録
-	result := models.CreateLine(fishing_line)
+	result := models.CreateLine(fishing_line, image)
 
 	return c.JSON(http.StatusCreated, newResponse(
 		http.StatusOK,
