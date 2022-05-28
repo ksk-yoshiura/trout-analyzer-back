@@ -96,13 +96,18 @@ func (uc *RodsController) Create(c echo.Context) error {
 	if err := c.Bind(&rod); err != nil {
 		return err
 	}
+	// 画像
+	image := models.Image{}
+	if err := c.Bind(&image); err != nil {
+		return err
+	}
 
 	// トークンからユーザID取得
 	uid := userIDFromToken(c)
 	rod.UserId = uid
 
 	// 登録
-	result := models.CreateRod(rod)
+	result := models.CreateRod(rod, image)
 
 	return c.JSON(http.StatusCreated, newResponse(
 		http.StatusOK,

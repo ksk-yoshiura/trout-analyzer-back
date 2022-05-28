@@ -2,6 +2,7 @@ package models
 
 import (
 	"regexp"
+	"strconv"
 	"trout-analyzer-back/database"
 
 	"github.com/jinzhu/gorm"
@@ -71,9 +72,31 @@ func UpdateRod(r Rod, rod_id int) error {
 /**
   ロッド作成
 */
-func CreateRod(rod Rod) error {
+func CreateRod(rod Rod, image Image) error {
+	// ロッド画像モデル
+	var rod_image RodImage
 	db := database.GetDBConn()
-	result := db.Create(&rod).Error
+	result := db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Create(&rod).Error; err != nil {
+			// エラーの場合ロールバックされる
+			return err
+		}
+		// 画像データにロッドIDをセット
+		rod_image.RodId = rod.ID
+		file_name := CreateImageName()
+		image_path := "/rod_image/" + strconv.Itoa(rod.UserId) + "/" + file_name
+		rod_image.ImageFile = image_path
+
+		if err := tx.Create(&rod_image).Error; err != nil {
+			// エラーの場合ロールバックされる
+			return err
+		}
+
+		// S3に画像アップロード
+		UploadToS3(image, image_path)
+		// nilが返却されるとトランザクション内の全処理がコミットされる
+		return nil
+	})
 	return result
 }
 
