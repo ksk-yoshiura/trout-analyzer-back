@@ -11,6 +11,7 @@ import (
 
 type Rod struct {
 	gorm.Model
+	RodImage             RodImage      `gorm:"foreignKey:RodId"`
 	RodHardnessCondition ToolCondition `gorm:"foreignKey:Hardness"`
 	Name                 string        `json:"name"`
 	UserId               int           `json:"userId"`
@@ -46,7 +47,7 @@ func GetAllRods(rods []Rod, uid int) []Rod {
 func GetRod(rod Rod, rod_id int, uid int) Rod {
 	db := database.GetDBConn()
 	// ログインユーザは自分のロッドしか見れない
-	db.Where("user_id = ?", uid).Preload("RodHardnessCondition").First(&rod, rod_id)
+	db.Where("user_id = ?", uid).Preload("RodImage").Preload("RodHardnessCondition").First(&rod, rod_id)
 	return rod
 }
 
