@@ -19,13 +19,19 @@ type Image struct {
 	Image string `json:"image"`
 }
 
+const (
+	S3_REGION   = "ap-northeast-1"
+	S3_BUCKET   = "trout-analyzer-upload"
+	S3_ENDPOINT = "http://minio:9000"
+)
+
 /** セッションを返す */
 func createSession() *session.Session {
 	// 特に設定しなくても環境変数にセットしたクレデンシャル情報を利用して接続してくれる
 	cfg := aws.Config{
-		Region:           aws.String("ap-northeast-1"),
-		Endpoint:         aws.String("http://minio:9000"), // コンテナ内からアクセスする場合はホストをサービス名で指定
-		S3ForcePathStyle: aws.Bool(true),                  // ローカルで動かす場合は必須
+		Region:           aws.String(S3_REGION),
+		Endpoint:         aws.String(S3_ENDPOINT), // コンテナ内からアクセスする場合はホストをサービス名で指定
+		S3ForcePathStyle: aws.Bool(true),          // ローカルで動かす場合は必須
 	}
 	return session.Must(session.NewSession(&cfg))
 }
@@ -42,6 +48,7 @@ func CreateImageName() string {
 
 /** S3にアップロード */
 func UploadToS3(image Image, image_file string) {
+	// セッション作成
 	sess := createSession()
 
 	image_base64 := image.Image
@@ -52,20 +59,23 @@ func UploadToS3(image Image, image_file string) {
 		log.Fatal(err)
 	}
 
-	// フォルダ名
-	bucketName := "trout-analyzer-upload"
 	// ファイル名
-	objectKey := image_file
+	file_names := []string{
+		image_file + ".webp",
+		image_file + ".png",
+	}
 
 	// Uploaderを作成し、ローカルファイルをアップロード
 	uploader := s3manager.NewUploader(sess)
-	_, err = uploader.Upload(&s3manager.UploadInput{
-		Bucket: aws.String(bucketName),
-		Key:    aws.String(objectKey),
-		Body:   bytes.NewReader(decode),
-	})
-	if err != nil {
-		log.Fatal(err)
+	for _, file_name := range file_names {
+		_, err = uploader.Upload(&s3manager.UploadInput{
+			Bucket: aws.String(S3_BUCKET),
+			Key:    aws.String(file_name),
+			Body:   bytes.NewReader(decode),
+		})
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 	log.Println("done")
 
