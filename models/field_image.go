@@ -13,7 +13,7 @@ type FieldImage struct {
 }
 
 /**
-  フィールド作成
+フィールド画像登録
 */
 func CreateFieldImage(image FieldImage) error {
 	db := database.GetDBConn()

@@ -12,10 +12,11 @@ import (
 
 type Field struct {
 	gorm.Model
-	Name          string    `json:"name"`
-	UserId        int       `json:"user_id"`
-	Address       string    `json:"address"`
-	LastVisitedAt time.Time `json:"last_visited_at"`
+	FieldImage    FieldImage `gorm:"foreignKey:FieldId"`
+	Name          string     `json:"name"`
+	UserId        int        `json:"user_id"`
+	Address       string     `json:"address"`
+	LastVisitedAt time.Time  `json:"last_visited_at"`
 }
 
 func FieldValidate(field Field) error {
@@ -45,7 +46,7 @@ func GetAllFields(fields []Field, uid int) []Field {
 func GetField(field Field, field_id int, uid int) Field {
 	db := database.GetDBConn()
 	// ログインユーザは自分のフィールドしか見れない
-	db.Where("user_id = ?", uid).First(&field, field_id)
+	db.Where("user_id = ?", uid).Preload("FieldImage").First(&field, field_id)
 	return field
 }
 
