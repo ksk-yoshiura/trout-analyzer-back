@@ -2,6 +2,7 @@ package models
 
 import (
 	"regexp"
+	"strconv"
 	"trout-analyzer-back/database"
 
 	"github.com/jinzhu/gorm"
@@ -71,9 +72,31 @@ func UpdateReel(r Reel, reel_id int) error {
 /**
   リール作成
 */
-func CreateReel(reel Reel) error {
+func CreateReel(reel Reel, image Image) error {
+	// リール画像モデル
+	var reel_image ReelImage
 	db := database.GetDBConn()
-	result := db.Create(&reel).Error
+	result := db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Create(&reel).Error; err != nil {
+			// エラーの場合ロールバックされる
+			return err
+		}
+		// 画像データにリールIDをセット
+		reel_image.ReelId = reel.ID
+		file_name := CreateImageName()
+		image_path := "/reel_image/" + strconv.Itoa(reel.UserId) + "/" + file_name
+		reel_image.ImageFile = image_path
+
+		if err := tx.Create(&reel_image).Error; err != nil {
+			// エラーの場合ロールバックされる
+			return err
+		}
+
+		// S3に画像アップロード
+		UploadToS3(image, image_path)
+		// nilが返却されるとトランザクション内の全処理がコミットされる
+		return nil
+	})
 	return result
 }
 

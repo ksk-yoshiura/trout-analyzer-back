@@ -96,13 +96,18 @@ func (uc *ReelsController) Create(c echo.Context) error {
 	if err := c.Bind(&reel); err != nil {
 		return err
 	}
+	// 画像
+	image := models.Image{}
+	if err := c.Bind(&image); err != nil {
+		return err
+	}
 
 	// トークンからユーザID取得
 	uid := userIDFromToken(c)
 	reel.UserId = uid
 
 	// 登録
-	result := models.CreateReel(reel)
+	result := models.CreateReel(reel, image)
 
 	return c.JSON(http.StatusCreated, newResponse(
 		http.StatusOK,
