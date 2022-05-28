@@ -2,6 +2,7 @@ package models
 
 import (
 	"regexp"
+	"strconv"
 	"trout-analyzer-back/database"
 
 	"github.com/jinzhu/gorm"
@@ -80,9 +81,31 @@ func UpdateLure(l Lure, lure_id int, uid int) error {
 /**
   ルアー作成
 */
-func CreateLure(lure Lure) error {
+func CreateLure(lure Lure, image Image) error {
+	// ルアー画像モデル
+	var lure_image LureImage
 	db := database.GetDBConn()
-	result := db.Create(&lure).Error
+	result := db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Create(&lure).Error; err != nil {
+			// エラーの場合ロールバックされる
+			return err
+		}
+		// 画像データにルアーIDをセット
+		lure_image.LureId = lure.ID
+		file_name := CreateImageName()
+		image_path := "/lure_image/" + strconv.Itoa(lure.UserId) + "/" + file_name
+		lure_image.ImageFile = image_path
+
+		if err := tx.Create(&lure_image).Error; err != nil {
+			// エラーの場合ロールバックされる
+			return err
+		}
+
+		// S3に画像アップロード
+		UploadToS3(image, image_path)
+		// nilが返却されるとトランザクション内の全処理がコミットされる
+		return nil
+	})
 	return result
 }
 
