@@ -1,33 +1,32 @@
 package database
 
 import (
+	"log"
 	"os"
 
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/joho/godotenv"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 var DB *gorm.DB
 
 // GetDB returns database connection
 func GetDBConn() *gorm.DB {
-	db, err := gorm.Open(GetDBConfig())
+	CONNECT := GetDBConfig()
+	db, err := gorm.Open(mysql.Open(CONNECT), &gorm.Config{})
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
-
-	db.LogMode(true)
 	return db
 }
 
-func GetDBConfig() (string, string) {
+func GetDBConfig() string {
 	err := godotenv.Load()
 	if err != nil {
-		panic(err.Error())
+		log.Fatal(err)
 	}
 
-	DBMS := "mysql"
 	user := os.Getenv("DB_USER")
 	password := os.Getenv("DB_PASSWORD")
 	host := os.Getenv("DB_HOST")
@@ -35,5 +34,5 @@ func GetDBConfig() (string, string) {
 	database_name := os.Getenv("DB_DATABASE_NAME")
 
 	CONNECT := user + ":" + password + "@tcp(" + host + ":" + port + ")/" + database_name + "?charset=utf8mb4&parseTime=true"
-	return DBMS, CONNECT
+	return CONNECT
 }
