@@ -1,7 +1,7 @@
 -- CREATE DATABASE trout_analyzer;
 use trout_analyzer;
 
--- SET GLOBAL sql_mode = 'ALLOW_INVALID_DATES';
+SET GLOBAL sql_mode = 'ALLOW_INVALID_DATES';
 
 DROP TABLE IF EXISTS users;
 
@@ -260,6 +260,20 @@ CREATE TABLE lure_images (
   `id` INT NOT NULL AUTO_INCREMENT,
   `lure_id` int(255) DEFAULT NULL,
   `image_file` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `deleted_at` timestamp DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- ルアーカラーテーブル --
+
+DROP TABLE IF EXISTS colors;
+
+CREATE TABLE colors (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) DEFAULT NULL,
+  `code` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` timestamp DEFAULT NULL,
