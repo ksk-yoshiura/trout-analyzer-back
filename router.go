@@ -149,5 +149,11 @@ func newRouter() *echo.Echo {
 	api.GET("/pattern_conditions/lure_depth", PatternConditionsController.GetLureDepth)
 	// 天気条件各種一覧取得
 	api.GET("/pattern_conditions/weather", PatternConditionsController.GetWeather)
+
+	// カラーコントローラー
+	ColorsController := controllers.NewColorsController()
+
+	api.GET("/colors", ColorsController.Index)
+	api.GET("/colors/:id", ColorsController.Show)
 	return e
 }
