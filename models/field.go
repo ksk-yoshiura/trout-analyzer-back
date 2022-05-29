@@ -6,8 +6,8 @@ import (
 	"time"
 	"trout-analyzer-back/database"
 
-	"github.com/jinzhu/gorm"
 	"github.com/wcl48/valval"
+	"gorm.io/gorm"
 )
 
 type Field struct {
@@ -104,7 +104,7 @@ func CreateField(field Field, image Image) error {
 func DeleteField(field Field, field_id int) error {
 	db := database.GetDBConn()
 	db.First(&field, field_id)
-	result := db.Delete(&field).Error
+	result := db.Select("FieldImage").Delete(&field).Error
 	return result
 }
 

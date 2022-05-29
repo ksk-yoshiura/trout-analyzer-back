@@ -4,8 +4,8 @@ import (
 	"regexp"
 	"trout-analyzer-back/database"
 
-	"github.com/jinzhu/gorm"
 	"github.com/wcl48/valval"
+	"gorm.io/gorm"
 )
 
 type HitPattern struct {
@@ -13,7 +13,7 @@ type HitPattern struct {
 	Lure             Lure             `gorm:"foreignKey:LureId"`
 	Tackle           Tackle           `gorm:"foreignKey:TackleId"`
 	Record           Record           `gorm:"foreignKey:RecordId"`
-	SpeedCondition   PatternCondition `gorm:"foreignKey:Speed;references:Id"`
+	SpeedCondition   PatternCondition `gorm:"foreignKey:Speed"`
 	DepthCondition   PatternCondition `gorm:"foreignKey:Depth"`
 	WeatherCondition PatternCondition `gorm:"foreignKey:Weather"`
 	ResultCondition  PatternCondition `gorm:"foreignKey:Result"`

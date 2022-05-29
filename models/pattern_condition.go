@@ -3,7 +3,7 @@ package models
 import (
 	"trout-analyzer-back/database"
 
-	"github.com/jinzhu/gorm"
+	"gorm.io/gorm"
 )
 
 type PatternCondition struct {

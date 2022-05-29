@@ -4,15 +4,17 @@ import (
 	"regexp"
 	"trout-analyzer-back/database"
 
-	"github.com/jinzhu/gorm"
 	"github.com/wcl48/valval"
+	"gorm.io/gorm"
 )
 
 type Record struct {
 	gorm.Model
-	Field   Field `gorm:"foreignKey:FieldId"`
-	UserId  int   `json:"userId"`
-	FieldId int   `json:"fieldId"`
+	// HitPattern HitPattern `gorm:"foreignKey:Id;references:RecordId"`
+	FieldImage FieldImage `gorm:"foreignKey:FieldId"`
+	Field      Field      `gorm:"foreignKey:FieldId"`
+	UserId     int        `json:"userId"`
+	FieldId    int        `json:"fieldId"`
 }
 
 func RecordValidate(record Record) error {
@@ -31,8 +33,13 @@ func RecordValidate(record Record) error {
 */
 func GetAllRecords(records []Record, uid int) []Record {
 	db := database.GetDBConn()
+
+	subQueryPatternSum := db.Model(&Record{}).Select("Count(HitPattern.ID)").Preload("HitPattern").Where("user_id = ?", uid)
+	subQueryPatternCaughtSum := db.Model(&Record{}).Select("Count(HitPattern.ID)").Preload("HitPattern").Where("user_id = ? AND result = ?", uid, 1)
+	subQueryPatternBitSum := db.Model(&Record{}).Select("Count(HitPattern.ID)").Preload("HitPattern").Where("user_id = ? AND result = ?", uid, 2)
+	subQueryPatternChasedSum := db.Model(&Record{}).Select("Count(HitPattern.ID)").Preload("HitPattern").Where("user_id = ? AND result = ?", uid, 3)
 	// ログインユーザは自分のレコードしか見れない
-	db.Where("user_id = ?", uid).Preload("Field").Find(&records)
+	db.Table("(?) as pattern_sum, (?) as caught_sum, (?) as bit_sum, (?) as chased_sum", subQueryPatternSum, subQueryPatternCaughtSum, subQueryPatternBitSum, subQueryPatternChasedSum).Where("user_id = ?", uid).Preload("Field.FieldImage").Find(&records)
 	return records
 }
 

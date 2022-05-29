@@ -4,8 +4,8 @@ import (
 	"regexp"
 	"trout-analyzer-back/database"
 
-	"github.com/jinzhu/gorm"
 	"github.com/wcl48/valval"
+	"gorm.io/gorm"
 )
 
 type User struct {
