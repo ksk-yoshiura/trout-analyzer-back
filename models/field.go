@@ -1,12 +1,11 @@
 package models
 
 import (
-	"regexp"
 	"strconv"
 	"time"
 	"trout-analyzer-back/database"
 
-	"github.com/wcl48/valval"
+	validation "github.com/go-ozzo/ozzo-validation"
 	"gorm.io/gorm"
 )
 
@@ -19,15 +18,22 @@ type Field struct {
 	LastVisitedAt time.Time  `json:"last_visited_at"`
 }
 
-func FieldValidate(field Field) error {
-	Validator := valval.Object(valval.M{
-		"Name": valval.String(
-			valval.MaxLength(20),
-			valval.Regexp(regexp.MustCompile(`^[a-z ]+$`)),
+/**
+バリデーション
+*/
+func (field Field) Validate() error {
+	return validation.ValidateStruct(&field,
+		validation.Field(
+			&field.Name,
+			validation.Required.Error("Name is required"),
+			validation.RuneLength(1, 40).Error("Name should be less thna 40 letters"),
 		),
-	})
-
-	return Validator.Validate(field)
+		validation.Field(
+			&field.Address,
+			validation.Required.Error("Address is required"),
+			validation.RuneLength(1, 80).Error("Address should be less thna 80 letters"),
+		),
+	)
 }
 
 /**
