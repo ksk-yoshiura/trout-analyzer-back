@@ -21,6 +21,7 @@ func newRouter() *echo.Echo {
 	// customBinderでdefaultBinderを上書き
 	e.Binder = module.NewBinder()
 
+	e.Validator = &module.CustomValidator{}
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	// CORS対策
