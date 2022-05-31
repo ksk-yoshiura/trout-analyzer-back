@@ -1,11 +1,10 @@
 package models
 
 import (
-	"regexp"
 	"strconv"
 	"trout-analyzer-back/database"
 
-	"github.com/wcl48/valval"
+	validation "github.com/go-ozzo/ozzo-validation"
 	"gorm.io/gorm"
 )
 
@@ -20,15 +19,21 @@ type FishingLine struct {
 	CompanyName   string        `json:"companyName"`
 }
 
-func FishingLineValidate(fishing_line FishingLine) error {
-	Validator := valval.Object(valval.M{
-		"Name": valval.String(
-			valval.MaxLength(20),
-			valval.Regexp(regexp.MustCompile(`^[a-z ]+$`)),
+/**
+バリデーション
+*/
+func (line FishingLine) Validate() error {
+	return validation.ValidateStruct(&line,
+		validation.Field(
+			&line.Name,
+			validation.Required.Error("Name is required"),
+			validation.RuneLength(1, 40).Error("Name should be less thna 40 letters"),
 		),
-	})
-
-	return Validator.Validate(fishing_line)
+		validation.Field(
+			&line.CompanyName,
+			validation.RuneLength(0, 80).Error("CompanyName should be less thna 80 letters"),
+		),
+	)
 }
 
 /**
