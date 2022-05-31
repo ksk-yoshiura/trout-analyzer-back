@@ -1,11 +1,10 @@
 package models
 
 import (
-	"regexp"
 	"strconv"
 	"trout-analyzer-back/database"
 
-	"github.com/wcl48/valval"
+	validation "github.com/go-ozzo/ozzo-validation"
 	"gorm.io/gorm"
 )
 
@@ -18,18 +17,32 @@ type Lure struct {
 	LureTypeId  string    `json:"lureTypeId"`
 	CompanyName string    `json:"companyName"`
 	Weight      string    `json:"weight"`
-	Color       string    `json:"color"`
+	ColorId     int       `json:"color"`
 }
 
-func LureValidate(lure Lure) error {
-	Validator := valval.Object(valval.M{
-		"Name": valval.String(
-			valval.MaxLength(20),
-			valval.Regexp(regexp.MustCompile(`^[a-z ]+$`)),
+/**
+バリデーション
+*/
+func (lure Lure) Validate() error {
+	return validation.ValidateStruct(&lure,
+		validation.Field(
+			&lure.Name,
+			validation.Required.Error("Name is required"),
+			validation.RuneLength(1, 40).Error("Name should be less thna 40 letters"),
 		),
-	})
-
-	return Validator.Validate(lure)
+		validation.Field(
+			&lure.ColorId,
+			validation.Required.Error("Color is required"),
+		),
+		validation.Field(
+			&lure.LureTypeId,
+			validation.Required.Error("LureType is required"),
+		),
+		validation.Field(
+			&lure.CompanyName,
+			validation.RuneLength(1, 80).Error("CompanyName should be less thna 80 letters"),
+		),
+	)
 }
 
 /**
@@ -73,7 +86,7 @@ func UpdateLure(l Lure, lure_id int, uid int) error {
 		UserId:      l.UserId,
 		LureTypeId:  l.LureTypeId,
 		CompanyName: l.CompanyName,
-		Color:       l.Color,
+		ColorId:     l.ColorId,
 		Weight:      l.Weight,
 	}).Error
 	return result
