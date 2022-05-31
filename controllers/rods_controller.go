@@ -6,6 +6,7 @@ import (
 
 	"trout-analyzer-back/models"
 
+	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/labstack/echo"
 )
 
@@ -96,6 +97,16 @@ func (uc *RodsController) Create(c echo.Context) error {
 	if err := c.Bind(&rod); err != nil {
 		return err
 	}
+
+	// バリデーション
+	if err := c.Validate(rod); err != nil {
+		errs := err.(validation.Errors)
+		for k, err := range errs {
+			c.Logger().Error(k + ": " + err.Error())
+		}
+		return err
+	}
+
 	// 画像
 	image := models.Image{}
 	if err := c.Bind(&image); err != nil {

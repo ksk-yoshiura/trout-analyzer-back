@@ -1,11 +1,10 @@
 package models
 
 import (
-	"regexp"
 	"strconv"
 	"trout-analyzer-back/database"
 
-	"github.com/wcl48/valval"
+	validation "github.com/go-ozzo/ozzo-validation"
 	"gorm.io/gorm"
 )
 
@@ -20,15 +19,21 @@ type Rod struct {
 	Hardness             string        `json:"hardness"`
 }
 
-func RodValidate(rod Rod) error {
-	Validator := valval.Object(valval.M{
-		"Name": valval.String(
-			valval.MaxLength(20),
-			valval.Regexp(regexp.MustCompile(`^[a-z ]+$`)),
+/**
+バリデーション
+*/
+func (rod Rod) Validate() error {
+	return validation.ValidateStruct(&rod,
+		validation.Field(
+			&rod.Name,
+			validation.Required.Error("Name is required"),
+			validation.RuneLength(1, 40).Error("Name should be less thna 40 letters"),
 		),
-	})
-
-	return Validator.Validate(rod)
+		validation.Field(
+			&rod.CompanyName,
+			validation.RuneLength(1, 80).Error("CompanyName should be less thna 80 letters"),
+		),
+	)
 }
 
 /**
