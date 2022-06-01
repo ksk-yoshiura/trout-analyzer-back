@@ -12,6 +12,7 @@ type Lure struct {
 	gorm.Model
 	LureImage   LureImage `gorm:"foreignKey:LureId"`
 	LureType    LureType  `gorm:"foreignKey:LureTypeId"`
+	Color       Color     `gorm:"foreignKey:ColorId"`
 	Name        string    `json:"name"`
 	UserId      int       `json:"userId"`
 	LureTypeId  string    `json:"lureTypeId"`
@@ -55,10 +56,13 @@ func GetAllLures(lures []Lure, uid int) []Lure {
 	return lures
 }
 
+/**
+  ルアータイプ毎のルアー一覧取得
+*/
 func GetLuresSelectedLureType(lures []Lure, type_id string, uid int) []Lure {
 	db := database.GetDBConn()
 	// ログインユーザは自分のルアーしか見れない
-	db.Where("user_id = ? AND lure_type_id = ?", uid, type_id).Preload("LureType").Find(&lures)
+	db.Where("user_id = ? AND lure_type_id = ?", uid, type_id).Preload("Color").Preload("LureType").Find(&lures)
 	return lures
 }
 
@@ -68,7 +72,7 @@ func GetLuresSelectedLureType(lures []Lure, type_id string, uid int) []Lure {
 func GetLure(lure Lure, lure_id int, uid int) Lure {
 	db := database.GetDBConn()
 	// ログインユーザは自分のルアーしか見れない
-	db.Where("user_id = ?", uid).Preload("LureImage").Preload("LureType").First(&lure, lure_id)
+	db.Where("user_id = ?", uid).Preload("Color").Preload("LureImage").Preload("LureType").First(&lure, lure_id)
 	return lure
 }
 
