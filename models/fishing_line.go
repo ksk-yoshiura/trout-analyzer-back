@@ -10,7 +10,7 @@ import (
 
 type FishingLine struct {
 	gorm.Model
-	LineImage     LineImage     `gorm:"foreignKey:LineId;references:FishingLineId"`
+	LineImage     LineImage     `gorm:"foreignKey:LineId;"`
 	LineCondition ToolCondition `gorm:"foreignKey:LineTypeId"`
 	Name          string        `json:"name"`
 	UserId        int           `json:"userId"`
