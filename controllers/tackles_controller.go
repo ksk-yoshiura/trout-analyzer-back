@@ -6,6 +6,7 @@ import (
 
 	"trout-analyzer-back/models"
 
+	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/labstack/echo"
 )
 
@@ -92,6 +93,15 @@ func (uc *TacklesController) Create(c echo.Context) error {
 	// データセット
 	tackle := models.Tackle{}
 	if err := c.Bind(&tackle); err != nil {
+		return err
+	}
+
+	// バリデーション
+	if err := c.Validate(tackle); err != nil {
+		errs := err.(validation.Errors)
+		for k, err := range errs {
+			c.Logger().Error(k + ": " + err.Error())
+		}
 		return err
 	}
 

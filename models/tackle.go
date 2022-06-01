@@ -26,14 +26,17 @@ func (tackle Tackle) Validate() error {
 		validation.Field(
 			&tackle.RodId,
 			validation.Required.Error("Rod is required"),
+			validation.Min(1).Error("Rod is required"),
 		),
 		validation.Field(
 			&tackle.ReelId,
 			validation.Required.Error("Reel is required"),
+			validation.Min(1).Error("Reel is required"),
 		),
 		validation.Field(
 			&tackle.LineId,
 			validation.Required.Error("Line is required"),
+			validation.Min(1).Error("Line is required"),
 		),
 	)
 }
