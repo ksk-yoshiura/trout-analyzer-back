@@ -1,10 +1,9 @@
 package models
 
 import (
-	"regexp"
 	"trout-analyzer-back/database"
 
-	"github.com/wcl48/valval"
+	validation "github.com/go-ozzo/ozzo-validation"
 	"gorm.io/gorm"
 )
 
@@ -19,14 +18,24 @@ type Tackle struct {
 	LineId int         `json:"lineId"`
 }
 
-func TackleValidate(tackle Tackle) error {
-	Validator := valval.Object(valval.M{
-		"Name": valval.String(
-			valval.MaxLength(20),
-			valval.Regexp(regexp.MustCompile(`^[a-z ]+$`)),
+/**
+バリデーション
+*/
+func (tackle Tackle) Validate() error {
+	return validation.ValidateStruct(&tackle,
+		validation.Field(
+			&tackle.RodId,
+			validation.Required.Error("Rod is required"),
 		),
-	})
-	return Validator.Validate(tackle)
+		validation.Field(
+			&tackle.ReelId,
+			validation.Required.Error("Reel is required"),
+		),
+		validation.Field(
+			&tackle.LineId,
+			validation.Required.Error("Line is required"),
+		),
+	)
 }
 
 /**
