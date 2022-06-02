@@ -152,8 +152,8 @@ DROP TABLE IF EXISTS reels;
 
 CREATE TABLE reels (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `user_id` int(255) NOT  NULL,
-  `name` VARCHAR(255) NOT  NULL,
+  `user_id` int(255) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
   `type_number` int(255) DEFAULT NULL,
   `gear` VARCHAR(255) DEFAULT NULL,
   `company_name` VARCHAR(255) DEFAULT NULL,
