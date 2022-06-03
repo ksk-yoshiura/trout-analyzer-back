@@ -1,13 +1,4 @@
 -- 初期データ --
--- ユーザー --
--- INSERT INTO users 
--- (`id`, `email`, `password`, `nickname`, `first_name`, `last_name`, `group_id`, `created_at`, `updated_at`, `deleted_at`) 
--- VALUES 
--- (1, "yamada@example.com", "testpass", "yama","taro", "yamada", 2, "2021-12-01 00:00:00", "2021-12-01 00:00:00", null),
--- (2, "yoshida@example.com", "testpass", "yoshi", "go", "yoshida", 2, "2021-12-01 00:00:00", "2021-12-01 00:00:00", null),
--- (3, "kawata@example.com", "testpass", "kawa", "ken", "kawata", 2, "2021-12-01 00:00:00", "2021-12-01 00:00:00", null),
--- (4, "hama@example.com", "testpass", "hana", "hanako", "hama", 2, "2021-12-01 00:00:00", "2021-12-01 00:00:00", null)
--- ;
 
 -- ルアータイプ --
 INSERT INTO lure_types 
