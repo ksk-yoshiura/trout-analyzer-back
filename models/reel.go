@@ -43,7 +43,7 @@ func (reel Reel) Validate() error {
 func GetAllReels(reels []Reel, uid int) []Reel {
 	db := database.GetDBConn()
 	// ログインユーザは自分のリールしか見れない
-	db.Where("user_id = ?", uid).Preload("GearCondition").Preload("TypeNumberCondition").Find(&reels)
+	db.Where("user_id = ?", uid).Preload("ReelImage").Preload("GearCondition").Preload("TypeNumberCondition").Find(&reels)
 	return reels
 }
 
