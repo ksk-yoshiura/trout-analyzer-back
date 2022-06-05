@@ -42,7 +42,7 @@ func (field Field) Validate() error {
 func GetAllFields(fields []Field, uid int) []Field {
 	db := database.GetDBConn()
 	// ログインユーザは自分のフィールドしか見れない
-	db.Where("user_id = ?", uid).Find(&fields)
+	db.Where("user_id = ?", uid).Preload("FieldImage").Find(&fields)
 	return fields
 }
 
