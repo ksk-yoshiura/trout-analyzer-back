@@ -52,7 +52,7 @@ func (lure Lure) Validate() error {
 func GetAllLures(lures []Lure, uid int) []Lure {
 	db := database.GetDBConn()
 	// ログインユーザは自分のルアーしか見れない
-	db.Where("user_id = ?", uid).Preload("LureType").Find(&lures)
+	db.Where("user_id = ?", uid).Preload("LureImage").Preload("LureType").Find(&lures)
 	return lures
 }
 
@@ -62,7 +62,7 @@ func GetAllLures(lures []Lure, uid int) []Lure {
 func GetLuresSelectedLureType(lures []Lure, type_id string, uid int) []Lure {
 	db := database.GetDBConn()
 	// ログインユーザは自分のルアーしか見れない
-	db.Where("user_id = ? AND lure_type_id = ?", uid, type_id).Preload("Color").Preload("LureType").Find(&lures)
+	db.Where("user_id = ? AND lure_type_id = ?", uid, type_id).Preload("LureImage").Preload("Color").Preload("LureType").Find(&lures)
 	return lures
 }
 
