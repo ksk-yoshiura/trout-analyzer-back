@@ -87,19 +87,22 @@ func CreateRod(rod Rod, image Image) error {
 			// エラーの場合ロールバックされる
 			return err
 		}
-		// 画像データにロッドIDをセット
-		rod_image.RodId = rod.ID
-		file_name := CreateImageName()
-		image_path := "/rod_image/" + strconv.Itoa(rod.UserId) + "/" + file_name
-		rod_image.ImageFile = image_path
 
-		if err := tx.Create(&rod_image).Error; err != nil {
-			// エラーの場合ロールバックされる
-			return err
+		if (Image{}) != image { // 画像データがセットされている場合
+			// 画像データにロッドIDをセット
+			rod_image.RodId = rod.ID
+			file_name := CreateImageName()
+			image_path := "/rod_image/" + strconv.Itoa(rod.UserId) + "/" + file_name
+			rod_image.ImageFile = image_path
+
+			if err := tx.Create(&rod_image).Error; err != nil {
+				// エラーの場合ロールバックされる
+				return err
+			}
+
+			// S3に画像アップロード
+			UploadToS3(image, image_path)
 		}
-
-		// S3に画像アップロード
-		UploadToS3(image, image_path)
 		// nilが返却されるとトランザクション内の全処理がコミットされる
 		return nil
 	})

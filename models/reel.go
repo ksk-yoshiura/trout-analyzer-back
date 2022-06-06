@@ -87,19 +87,22 @@ func CreateReel(reel Reel, image Image) error {
 			// エラーの場合ロールバックされる
 			return err
 		}
-		// 画像データにリールIDをセット
-		reel_image.ReelId = reel.ID
-		file_name := CreateImageName()
-		image_path := "/reel_image/" + strconv.Itoa(reel.UserId) + "/" + file_name
-		reel_image.ImageFile = image_path
 
-		if err := tx.Create(&reel_image).Error; err != nil {
-			// エラーの場合ロールバックされる
-			return err
+		if (Image{}) != image { // 画像データがセットされている場合
+			// 画像データにリールIDをセット
+			reel_image.ReelId = reel.ID
+			file_name := CreateImageName()
+			image_path := "/reel_image/" + strconv.Itoa(reel.UserId) + "/" + file_name
+			reel_image.ImageFile = image_path
+
+			if err := tx.Create(&reel_image).Error; err != nil {
+				// エラーの場合ロールバックされる
+				return err
+			}
+
+			// S3に画像アップロード
+			UploadToS3(image, image_path)
 		}
-
-		// S3に画像アップロード
-		UploadToS3(image, image_path)
 		// nilが返却されるとトランザクション内の全処理がコミットされる
 		return nil
 	})
