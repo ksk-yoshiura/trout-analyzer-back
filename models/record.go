@@ -3,6 +3,7 @@ package models
 import (
 	"trout-analyzer-back/database"
 
+	validation "github.com/go-ozzo/ozzo-validation"
 	"gorm.io/gorm"
 )
 
@@ -11,6 +12,18 @@ type Record struct {
 	Field   Field `gorm:"foreignKey:FieldId"`
 	UserId  int   `json:"userId"`
 	FieldId int   `json:"fieldId"`
+}
+
+/**
+バリデーション
+*/
+func (record Record) Validate() error {
+	return validation.ValidateStruct(&record,
+		validation.Field(
+			&record.FieldId,
+			validation.Required.Error("Field is required"),
+		),
+	)
 }
 
 /**
