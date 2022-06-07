@@ -1,10 +1,8 @@
 package models
 
 import (
-	"regexp"
 	"trout-analyzer-back/database"
 
-	"github.com/wcl48/valval"
 	"gorm.io/gorm"
 )
 
@@ -25,17 +23,6 @@ type HitPattern struct {
 	Weather          int              `json:"weather"`
 	Result           int              `json:"result"`
 	RecordId         int              `json:"recordId"`
-}
-
-func HitPatternValidate(hit_pattern HitPattern) error {
-	Validator := valval.Object(valval.M{
-		"Name": valval.String(
-			valval.MaxLength(20),
-			valval.Regexp(regexp.MustCompile(`^[a-z ]+$`)),
-		),
-	})
-
-	return Validator.Validate(hit_pattern)
 }
 
 /**
