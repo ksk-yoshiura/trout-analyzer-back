@@ -1,10 +1,8 @@
 package models
 
 import (
-	"regexp"
 	"trout-analyzer-back/database"
 
-	"github.com/wcl48/valval"
 	"gorm.io/gorm"
 )
 
@@ -16,17 +14,6 @@ type User struct {
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 	GroupId   int    `json:"groupId"`
-}
-
-func UserValidate(user User) error {
-	Validator := valval.Object(valval.M{
-		"Name": valval.String(
-			valval.MaxLength(20),
-			valval.Regexp(regexp.MustCompile(`^[a-z ]+$`)),
-		),
-	})
-
-	return Validator.Validate(user)
 }
 
 /**
