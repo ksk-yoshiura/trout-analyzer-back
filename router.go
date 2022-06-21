@@ -123,9 +123,9 @@ func newRouter() *echo.Echo {
 	// パターン分析コントローラー
 	PatternAnalysisController := controllers.NewPatternAnalysisController()
 
-	api.GET("/pattern/analysis/color_weather/:result", PatternAnalysisController.GetColorWeatherRelation)
-	api.GET("/pattern/analysis/color_depth/:result", PatternAnalysisController.GetColorDepthRelation)
-	api.GET("/pattern/analysis/color_type/:result", PatternAnalysisController.GetColorLureTypeRelation)
+	api.GET("/pattern/:id/analysis/color_weather/:result", PatternAnalysisController.GetColorWeatherRelation)
+	api.GET("/pattern/:id/analysis/color_depth/:result", PatternAnalysisController.GetColorDepthRelation)
+	api.GET("/pattern/:id/analysis/color_type/:result", PatternAnalysisController.GetColorLureTypeRelation)
 
 	// ルアータイプコントローラー
 	LureTypesController := controllers.NewLureTypesController()
