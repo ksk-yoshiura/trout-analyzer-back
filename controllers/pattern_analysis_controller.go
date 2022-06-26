@@ -2,6 +2,8 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
+	"trout-analyzer-back/models"
 
 	"github.com/labstack/echo"
 )
@@ -19,17 +21,23 @@ func NewPatternAnalysisController() *PatternAnalysisController {
 	ルアーカラーと天気
 */
 func (uc *PatternAnalysisController) GetColorWeatherRelation(c echo.Context) error {
+	// idチェック
+	record_id, err := strconv.Atoi(c.Param("record_id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+	// resultパラメータチェック
+	result_param := c.Param("result")
 
-	// // トークンからユーザID取得
-	// uid := userIDFromToken(c)
-	// // データ取得
-	// hit_pattern := []models.HitPattern{}
-	// result := models.GetAnalysis(hit_pattern, uid, record_id)
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	// データ取得
+	result := models.GetColorWeatherAnalysis(result_param, uid, record_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		"color weather",
+		result,
 	))
 }
 
