@@ -71,16 +71,22 @@ func (uc *PatternAnalysisController) GetColorDepthRelation(c echo.Context) error
 	ルアーカラーとルアータイプ
 */
 func (uc *PatternAnalysisController) GetColorLureTypeRelation(c echo.Context) error {
+	// idチェック
+	record_id, err := strconv.Atoi(c.Param("record_id"))
+	if err != nil {
+		return echo.ErrNotFound
+	}
+	// resultパラメータチェック
+	result_param := c.Param("result")
 
-	// // トークンからユーザID取得
-	// uid := userIDFromToken(c)
-	// // データ取得
-	// hit_pattern := []models.HitPattern{}
-	// result := models.GetAnalysis(hit_pattern, uid, record_id)
+	// トークンからユーザID取得
+	uid := userIDFromToken(c)
+	// データ取得
+	result := models.GetColorLureTypeAnalysis(result_param, uid, record_id)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
 		http.StatusText(http.StatusOK),
-		"color type",
+		result,
 	))
 }
