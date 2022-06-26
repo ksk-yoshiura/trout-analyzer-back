@@ -90,8 +90,9 @@ func DeleteHitPattern(hit_pattern HitPattern, hit_pattern_id int) error {
 
 /**
   ヒットパッテーン分析取得
+	ルアーカラーとルアータイプ
 */
-func GetAnalysis(hit_patterns []HitPattern, uid int, record_id int) []HitPattern {
+func GetColorLureTypeAnalysis(hit_patterns []HitPattern, uid int, record_id int) []HitPattern {
 	db := database.GetDBConn()
 	// ログインユーザは自分の分析しか見れない
 	db.Where("user_id = ? AND record_id = ?", uid, record_id).Find(&hit_patterns)
