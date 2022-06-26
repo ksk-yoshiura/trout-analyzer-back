@@ -54,7 +54,7 @@ func GetColorWeatherAnalysis(result_param string, uid int, record_id int) []Colo
 		WHERE hit_patterns.user_id = ? AND hit_patterns.record_id = ? AND weather.type_num = ?
 		`
 	if result_param != "all" {
-		sql += `AND result.type_name = ?`
+		sql += `AND result.type_name = ? OR result.type_name = "no reaction"`
 	} else { // FIX ME：一時的な誤魔化し
 		sql += `AND result.type_name != ?`
 	}
@@ -90,7 +90,7 @@ func GetColorDepthAnalysis(result_param string, uid int, record_id int) []ColorD
 		WHERE hit_patterns.user_id = ? AND hit_patterns.record_id = ? AND depth.type_num = ?
 		`
 	if result_param != "all" {
-		sql += `AND result.type_name = ?`
+		sql += `AND result.type_name = ? OR result.type_name = "no reaction"`
 	} else { // FIX ME：一時的な誤魔化し
 		sql += `AND result.type_name != ?`
 	}
@@ -126,7 +126,7 @@ func GetColorLureTypeAnalysis(result_param string, uid int, record_id int) []Col
 		WHERE hit_patterns.user_id = ? AND hit_patterns.record_id = ?
 		`
 	if result_param != "all" {
-		sql += `AND result.type_name = ?`
+		sql += `AND result.type_name = ? OR result.type_name = "no reaction"`
 	} else { // FIX ME：一時的な誤魔化し
 		sql += `AND result.type_name != ?`
 	}
