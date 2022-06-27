@@ -45,6 +45,7 @@ func GetColorWeatherAnalysis(result_param string, uid int, record_id int) []Colo
 			colors.name as color_name, 
 			colors.code as color_code,
 			weather.type_name as weather_type,
+			weather.id as weather_id,
 			CASE result.type_name
 			  WHEN "no reaction" THEN "no reaction"
 				ELSE "reaction"
@@ -63,7 +64,8 @@ func GetColorWeatherAnalysis(result_param string, uid int, record_id int) []Colo
 	}
 	sql +=
 		`
-		GROUP BY color_name, color_code, result_type, weather_type
+		GROUP BY color_name, color_code, result_type, weather_type, weather_id
+		ORDER BY weather_id ASC
 		`
 
 	db.Raw(sql, uid, record_id, pattern_weather, result_param).Scan(&result)
@@ -84,6 +86,7 @@ func GetColorDepthAnalysis(result_param string, uid int, record_id int) []ColorD
 			colors.name as color_name, 
 			colors.code as color_code,
 			depth.type_name as depth_type,
+			depth.id as depth_id,
 			CASE result.type_name
 			  WHEN "no reaction" THEN "no reaction"
 				ELSE "reaction"
@@ -102,7 +105,8 @@ func GetColorDepthAnalysis(result_param string, uid int, record_id int) []ColorD
 	}
 	sql +=
 		`
-		GROUP BY color_name, color_code, result_type, depth_type
+		GROUP BY color_name, color_code, result_type, depth_type, depth_id
+		ORDER BY depth_id ASC
 		`
 
 	db.Raw(sql, uid, record_id, pattern_depth, result_param).Scan(&result)
@@ -123,6 +127,7 @@ func GetColorLureTypeAnalysis(result_param string, uid int, record_id int) []Col
 			colors.name as color_name, 
 			colors.code as color_code,
 			lure_types.type_name as lure_type,
+			lure_types.id as lure_type_id,
 			CASE result.type_name
 			  WHEN "no reaction" THEN "no reaction"
 				ELSE "reaction"
@@ -141,7 +146,8 @@ func GetColorLureTypeAnalysis(result_param string, uid int, record_id int) []Col
 	}
 	sql +=
 		`
-		GROUP BY color_name, color_code, result_type, lure_type
+		GROUP BY color_name, color_code, result_type, lure_type, lure_type_id
+		ORDER BY lure_type_id ASC
 		`
 
 	db.Raw(sql, uid, record_id, result_param).Scan(&result)
