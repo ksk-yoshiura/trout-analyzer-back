@@ -44,8 +44,11 @@ func GetColorWeatherAnalysis(result_param string, uid int, record_id int) []Colo
 			COUNT(colors.id) as sum, 
 			colors.name as color_name, 
 			colors.code as color_code,
-			result.type_name as result_type,
-			weather.type_name as weather_type
+			weather.type_name as weather_type,
+			CASE result.type_name
+			  WHEN "no reaction" THEN "no reaction"
+				ELSE "reaction"
+			END as result_type
 		FROM hit_patterns 
 		LEFT JOIN lures ON lures.id = hit_patterns.lure_id
 		LEFT JOIN colors ON lures.color_id = colors.id
