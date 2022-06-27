@@ -83,11 +83,11 @@ func GetColorDepthAnalysis(result_param string, uid int, record_id int) []ColorD
 			COUNT(colors.id) as sum, 
 			colors.name as color_name, 
 			colors.code as color_code,
+			depth.type_name as depth_type,
 			CASE result.type_name
 			  WHEN "no reaction" THEN "no reaction"
 				ELSE "reaction"
 			END as result_type
-			depth.type_name as depth_type
 		FROM hit_patterns 
 		LEFT JOIN lures ON lures.id = hit_patterns.lure_id
 		LEFT JOIN colors ON lures.color_id = colors.id
@@ -122,11 +122,11 @@ func GetColorLureTypeAnalysis(result_param string, uid int, record_id int) []Col
 			COUNT(colors.id) as sum, 
 			colors.name as color_name, 
 			colors.code as color_code,
+			lure_types.type_name as lure_type,
 			CASE result.type_name
 			  WHEN "no reaction" THEN "no reaction"
 				ELSE "reaction"
 			END as result_type
-			lure_types.type_name as lure_type
 		FROM hit_patterns 
 		LEFT JOIN lures ON lures.id = hit_patterns.lure_id
 		LEFT JOIN lure_types ON lure_types.id = lures.lure_type_id
