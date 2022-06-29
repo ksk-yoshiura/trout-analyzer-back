@@ -64,8 +64,8 @@ func GetColorWeatherAnalysis(result_param string, uid int, record_id int) []Colo
 	}
 	sql +=
 		`
-		GROUP BY color_name, color_code, result_type, weather_type, weather_id
-		ORDER BY weather_id ASC
+		GROUP BY weather_type, weather_id, color_name, color_code, result_type
+		ORDER BY color_code ASC, result_type ASC, weather_id ASC
 		`
 
 	db.Raw(sql, uid, record_id, pattern_weather, result_param).Scan(&result)
