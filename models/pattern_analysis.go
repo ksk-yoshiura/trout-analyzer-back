@@ -106,7 +106,7 @@ func GetColorDepthAnalysis(result_param string, uid int, record_id int) []ColorD
 	sql +=
 		`
 		GROUP BY color_name, color_code, result_type, depth_type, depth_id
-		ORDER BY depth_id ASC
+		ORDER BY color_code ASC, result_type ASC, depth_id ASC
 		`
 
 	db.Raw(sql, uid, record_id, pattern_depth, result_param).Scan(&result)
@@ -147,7 +147,7 @@ func GetColorLureTypeAnalysis(result_param string, uid int, record_id int) []Col
 	sql +=
 		`
 		GROUP BY color_name, color_code, result_type, lure_type, lure_type_id
-		ORDER BY lure_type_id ASC
+		ORDER BY color_code ASC, result_type ASC, lure_type_id ASC
 		`
 
 	db.Raw(sql, uid, record_id, result_param).Scan(&result)
