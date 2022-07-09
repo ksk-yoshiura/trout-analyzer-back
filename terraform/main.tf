@@ -12,13 +12,6 @@ module "acm" {
   domain = var.domain
 }
 
-module "spa" {
-  source   = "./spa"
-  app_name = var.app_name
-  domain   = var.domain
-  acm_id   = module.acm.acm_id
-}
-
 module "subdomain_acm" {
   source = "./subdomain_acm"
   domain = var.domain
