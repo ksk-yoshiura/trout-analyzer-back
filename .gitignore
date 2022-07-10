@@ -20,4 +20,10 @@ tmp/
 db/mysql_data
 
 .DS_store
-terraform/.terraform
+*/AWSCLIV2.pkg
+
+# terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
