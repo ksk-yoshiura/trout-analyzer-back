@@ -1,5 +1,5 @@
 data "aws_route53_zone" "this" {
-  name = "tranaza.link"
+  name = "trout-analyzer.com" // 取得済み
 }
 
 resource "aws_route53_zone" "certificate_validation" {
