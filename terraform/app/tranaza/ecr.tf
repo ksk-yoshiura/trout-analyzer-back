@@ -1,11 +1,11 @@
 module "docker" {
   source = "../../modules/ecr"
 
-  name = "tranaza-prod-docker"
+  name = "${local.service_name}-${local.env_name}-docker"
 }
 
 module "golang" {
   source = "../../modules/ecr"
 
-  name = "${locals.service_name}-${locals.env_name}-golang"
+  name = "${local.service_name}-${local.env_name}-golang"
 }
