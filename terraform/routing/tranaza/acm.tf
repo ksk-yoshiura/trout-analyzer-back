@@ -3,7 +3,7 @@ resource "aws_acm_certificate" "root" {
 
   validation_method = "DNS"
   tags = {
-    Name = "${local.name_prefix}-tranaza-link"
+    Name = "tranaza-link"
   }
 
   lifecycle { 
