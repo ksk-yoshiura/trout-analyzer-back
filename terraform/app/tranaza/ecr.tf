@@ -1,7 +1,7 @@
-module "docker" {
+module "nginx" {
   source = "../../modules/ecr"
 
-  name = "${local.service_name}-${local.env_name}-docker"
+  name = "${local.service_name}-${local.env_name}-nginx"
 }
 
 module "golang" {
