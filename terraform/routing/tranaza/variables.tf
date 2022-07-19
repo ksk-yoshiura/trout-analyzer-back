@@ -1,4 +1,4 @@
 variable "enable_alb" {
-  type = bool
+  type    = bool
   default = true
 }

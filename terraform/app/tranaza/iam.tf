@@ -26,7 +26,7 @@ data "aws_iam_policy" "ecs_task_execution" {
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_execution" {
-  role = aws_iam_role.ecs_task_execution.name
+  role       = aws_iam_role.ecs_task_execution.name
   policy_arn = data.aws_iam_policy.ecs_task_execution.arn
 }
 
@@ -53,7 +53,7 @@ resource "aws_iam_policy" "ssm" { // 多分関係ない。念の為残す
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_ssm" { // 多分関係ない。念の為残す
-  role = aws_iam_role.ecs_task_execution.name
+  role       = aws_iam_role.ecs_task_execution.name
   policy_arn = aws_iam_policy.ssm.arn
 }
 
@@ -95,7 +95,7 @@ resource "aws_iam_role_policy" "ecs_task_ssm" {
             "ssmmessages:OpenControlChannel",
             "ssmmessages:OpenDataChannel"
           ],
-          "Resource": "*"
+          "Resource" : "*"
         }
       ]
     }

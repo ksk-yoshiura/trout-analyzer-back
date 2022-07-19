@@ -37,7 +37,7 @@ resource "aws_lb_listener" "https" {
   ssl_policy = "ELBSecurityPolicy-2016-08"
 
   default_action {
-    type = "forward"
+    type             = "forward"
     target_group_arn = aws_lb_target_group.tranaza.arn
   }
 
@@ -66,10 +66,10 @@ resource "aws_lb_target_group" "tranaza" {
   name = "${local.name_prefix}-tranaza"
 
   deregistration_delay = 60
-  port                  = 80
-  protocol              = "HTTP"
-  target_type           = "ip"
-  vpc_id                = data.terraform_remote_state.network_main.outputs.vpc_this_id
+  port                 = 80
+  protocol             = "HTTP"
+  target_type          = "ip"
+  vpc_id               = data.terraform_remote_state.network_main.outputs.vpc_this_id
 
   health_check {
     healthy_threshold   = 2

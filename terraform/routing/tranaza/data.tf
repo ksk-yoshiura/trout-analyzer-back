@@ -3,7 +3,7 @@ data "terraform_remote_state" "network_main" {
 
   config = {
     bucket = "tfstate-s3-bucket-for-tranaza"
-    key = "network/main_v1.2.4.tfstate"
+    key    = "network/main_v1.2.4.tfstate"
     region = "ap-northeast-1"
   }
 }
@@ -13,7 +13,7 @@ data "terraform_remote_state" "log_alb" {
 
   config = {
     bucket = "tfstate-s3-bucket-for-tranaza"
-    key = "log/alb_v1.2.4.tfstate"
+    key    = "log/alb_v1.2.4.tfstate"
     region = "ap-northeast-1"
   }
 }

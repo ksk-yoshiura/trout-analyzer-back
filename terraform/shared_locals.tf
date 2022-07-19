@@ -1,5 +1,5 @@
 locals {
-  name_prefix = "tranaza-prod"
+  name_prefix  = "tranaza-prod"
   service_name = "tranaza"
-  env_name = "prod"
+  env_name     = "prod"
 }

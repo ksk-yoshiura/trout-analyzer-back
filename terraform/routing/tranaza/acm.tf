@@ -6,7 +6,7 @@ resource "aws_acm_certificate" "root" {
     Name = "tranaza-link"
   }
 
-  lifecycle { 
+  lifecycle {
     create_before_destroy = true
   }
 
