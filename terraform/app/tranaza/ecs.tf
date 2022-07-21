@@ -97,7 +97,7 @@ resource "aws_ecs_service" "this" {
 
   desired_count                      = var.desired_count
   deployment_minimum_healthy_percent = 100
-  deployment_maximum_percent          = 200
+  deployment_maximum_percent         = 200
 
   load_balancer {
     container_name   = "nginx"
