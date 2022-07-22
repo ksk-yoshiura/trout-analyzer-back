@@ -71,10 +71,6 @@ resource "aws_ecs_task_definition" "this" {
     ]
   )
 
-  # volume {
-  #   name = ""
-  # }
-
   tags = {
     Name = "${local.name_prefix}-${local.service_name}"
   }
