@@ -43,7 +43,7 @@ resource "aws_lb_listener" "https" {
 
 }
 
-resource "aws_lb_listener" "rredirect_http_to_https" {
+resource "aws_lb_listener" "redirect_http_to_https" {
   count = var.enable_alb ? 1 : 0
 
   load_balancer_arn = aws_lb.this[0].arn
