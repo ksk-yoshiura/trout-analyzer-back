@@ -39,6 +39,15 @@ resource "aws_lb_listener" "https" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.tranaza.arn
+
+    // ALBレスポンス確認に便利
+    # type = "fixed-response"
+    # fixed_response { 
+    #   content_type = "text/plain"
+    #   message_body = "Fixed response content"
+    #   status_code = "200"
+
+    # }
   }
 
 }
