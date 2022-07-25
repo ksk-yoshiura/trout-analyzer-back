@@ -31,7 +31,7 @@ type HitPattern struct {
 func GetAllHitPatterns(hit_patterns []HitPattern, uid int, record_id int) []HitPattern {
 	db := database.GetDBConn()
 	// ログインユーザは自分のヒットパターンしか見れない
-	db.Where("user_id = ? AND record_id = ?", uid, record_id).Preload("Lure.LureType").Preload("SpeedCondition").Preload("DepthCondition").Preload("WeatherCondition").Preload("ResultCondition").Find(&hit_patterns)
+	db.Where("user_id = ? AND record_id = ?", uid, record_id).Preload("Lure.LureType").Preload("Lure.LureImage").Preload("SpeedCondition").Preload("DepthCondition").Preload("WeatherCondition").Preload("ResultCondition").Find(&hit_patterns)
 	return hit_patterns
 }
 
@@ -41,7 +41,7 @@ func GetAllHitPatterns(hit_patterns []HitPattern, uid int, record_id int) []HitP
 func GetHitPattern(hit_pattern HitPattern, hit_pattern_id int, uid int) HitPattern {
 	db := database.GetDBConn()
 	// ログインユーザは自分のヒットパターンしか見れない
-	db.Where("user_id = ?", uid).Preload("Lure.LureType").Preload("Tackle.Reel.GearCondition").Preload("Tackle.Reel.TypeNumberCondition").Preload("Tackle.Rod.RodHardnessCondition").Preload("Tackle.Line.LineCondition").Preload("Record.Field").Preload("SpeedCondition").Preload("DepthCondition").Preload("WeatherCondition").Preload("ResultCondition").First(&hit_pattern, hit_pattern_id)
+	db.Where("user_id = ?", uid).Preload("Lure.LureType").Preload("Lure.LureImage").Preload("Tackle.Reel.GearCondition").Preload("Tackle.Reel.TypeNumberCondition").Preload("Tackle.Rod.RodHardnessCondition").Preload("Tackle.Line.LineCondition").Preload("Record.Field").Preload("SpeedCondition").Preload("DepthCondition").Preload("WeatherCondition").Preload("ResultCondition").First(&hit_pattern, hit_pattern_id)
 	return hit_pattern
 }
 
