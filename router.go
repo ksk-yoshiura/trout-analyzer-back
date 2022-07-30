@@ -38,6 +38,9 @@ func newRouter() *echo.Echo {
 	// /api 下はJWTの認証が必要
 	api := e.Group("/api")
 	api.Use(middleware.JWTWithConfig(controllers.Config))
+
+	// パスワード再設定
+	api.POST("/reset_password", controllers.ResetPassword)
 	// ユーザコントローラー
 	usersController := controllers.NewUsersController()
 
