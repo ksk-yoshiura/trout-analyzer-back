@@ -1,13 +1,13 @@
 resource "aws_iam_user" "github" {
-  name = "tranaza-prod-github"
+  name = "${local.service_name}-${local.env_name}-github"
 
   tags = {
-    Name = "tranaza-prod-github"
+    Name = "${local.service_name}-${local.env_name}-github"
   }
 }
 
 resource "aws_iam_role" "deployer" {
-  name = "tranaza-prod-deployer"
+  name = "${local.service_name}-${local.env_name}-deployer"
 
   assume_role_policy = jsonencode(
     {
@@ -28,7 +28,7 @@ resource "aws_iam_role" "deployer" {
   )
 
   tags = {
-    Name = "tranaza-prod-deployer"
+    Name = "${local.service_name}-${local.env_name}-deployer"
   }
 }
 
