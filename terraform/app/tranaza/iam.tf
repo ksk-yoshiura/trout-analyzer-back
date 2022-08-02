@@ -42,6 +42,7 @@ resource "aws_iam_policy" "ssm" { // 多分関係ない。念の為残す
             "ssm:GetParameters",
             "ssm:GetParameter"
           ],
+          // 値違う？p.154
           "Resource" : "arn:aws:ssm:${data.aws_region.current.id}:${data.aws_caller_identity.self.account_id}:parameter/${local.service_name}/${local.env_name}/*"
         }
       ]
@@ -52,7 +53,7 @@ resource "aws_iam_policy" "ssm" { // 多分関係ない。念の為残す
   }
 }
 
-resource "aws_iam_role_policy_attachment" "ecs_task_execution_ssm" { // 多分関係ない。念の為残す
+resource "aws_iam_role_policy_attachment" "ecs_task_execution_ssm" {
   role       = aws_iam_role.ecs_task_execution.name
   policy_arn = aws_iam_policy.ssm.arn
 }
