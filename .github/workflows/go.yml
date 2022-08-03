@@ -60,7 +60,7 @@ jobs:
         ECR_REPOSITORY: ${{ env.SERVICE_NAME }}-${{ env.ENV_NAME }}-golang
       run: |
         docker build . \
-          -f nginx/Dockerfile \
+          -f Dockerfile \
           -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
           -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
