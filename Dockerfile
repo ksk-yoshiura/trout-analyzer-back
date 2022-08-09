@@ -7,4 +7,4 @@ RUN go mod tidy
 # Airをインストール
 RUN go install github.com/cosmtrek/air@v1.27.3
 # Airで起動
-CMD ["air"]
+CMD go run main.go
