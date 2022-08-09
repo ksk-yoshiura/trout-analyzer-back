@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . /app
 # 必要なパッケージをインストール
 RUN go mod tidy
-# Airをインストール
+# Airをインストール TODO:devではいらない
 RUN go install github.com/cosmtrek/air@v1.27.3
-# Airで起動
-CMD go run main.go
+# TODO:devではair
+CMD ["air"]
