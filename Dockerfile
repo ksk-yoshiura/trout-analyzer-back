@@ -6,5 +6,7 @@ COPY . /app
 RUN go mod tidy
 # Airをインストール TODO:devではいらない
 RUN go install github.com/cosmtrek/air@v1.27.3
-# TODO:devではair
+# ポート設定
+EXPOSE 3000
+# 実行
 CMD go run main.go router.go
