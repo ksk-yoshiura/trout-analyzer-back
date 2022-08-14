@@ -49,7 +49,7 @@ resource "aws_ecs_task_definition" "this" {
         logConfiguration = {
           logDriver = "awslogs"
           options = {
-            awslogs-group         = "/ecs/${local.name_prefix}-${local.service_name}/nginx"
+            awslogs-group         = "/ecs/${local.service_name}-${local.env_name}-nginx"
             awslogs-region        = data.aws_region.current.id
             awslogs-stream-prefix = "ecs"
           }
@@ -59,10 +59,16 @@ resource "aws_ecs_task_definition" "this" {
         name  = "golang"
         image = "${module.golang.ecr_repository_this_repository_url}:latest"
 
+        portMappings : [
+          {
+            containerPort : 3000,
+            hostPort : 3000
+          }
+        ]
         logConfiguration = {
           logDriver = "awslogs"
           options = {
-            awslogs-group         = "/ecs/${local.name_prefix}-${local.service_name}/golang"
+            awslogs-group         = "/ecs/${local.service_name}-${local.env_name}-golang"
             awslogs-region        = data.aws_region.current.id
             awslogs-stream-prefix = "ecs"
           }
@@ -101,7 +107,7 @@ resource "aws_ecs_service" "this" {
     target_group_arn = data.terraform_remote_state.routing_tranaza_link.outputs.lb_target_group_tranaza_arn
   }
 
-  health_check_grace_period_seconds = 60
+  health_check_grace_period_seconds = 180
 
   network_configuration {
     assign_public_ip = false
