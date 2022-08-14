@@ -80,25 +80,25 @@ resource "aws_iam_role" "ecs_task" {
 #   policy_arn = aws_iam_policy.ssm.arn
 # }
 
-# resource "aws_iam_role_policy" "ecs_task_ssm" {
-#   name = "ssm"
-#   role = aws_iam_role.ecs_task.id
+resource "aws_iam_role_policy" "ecs_task_ssm" { // ECS EXECのため
+  name = "ssm"
+  role = aws_iam_role.ecs_task.id
 
-#   policy = jsonencode(
-#     {
-#       "Version" : "2012-10-17",
-#       "Statement" : [
-#         {
-#           "Effect" : "Allow",
-#           "Action" : [
-#             "ssmmessages:CreateControlChannel",
-#             "ssmmessages:CreateDataChannel",
-#             "ssmmessages:OpenControlChannel",
-#             "ssmmessages:OpenDataChannel"
-#           ],
-#           "Resource" : "*"
-#         }
-#       ]
-#     }
-#   )
-# }
+  policy = jsonencode(
+    {
+      "Version" : "2012-10-17",
+      "Statement" : [
+        {
+          "Effect" : "Allow",
+          "Action" : [
+            "ssmmessages:CreateControlChannel",
+            "ssmmessages:CreateDataChannel",
+            "ssmmessages:OpenControlChannel",
+            "ssmmessages:OpenDataChannel"
+          ],
+          "Resource" : "*"
+        }
+      ]
+    }
+  )
+}
