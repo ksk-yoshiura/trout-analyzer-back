@@ -30,6 +30,9 @@ func newRouter() *echo.Echo {
 		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
 	}))
 
+	// 確認用
+	e.GET("/", hello)
+
 	// サインアップ
 	e.POST("/sign_up", controllers.Signup)
 	// ログイン
@@ -167,4 +170,8 @@ func newRouter() *echo.Echo {
 	api.GET("/colors", ColorsController.Index)
 	api.GET("/colors/:id", ColorsController.Show)
 	return e
+}
+
+func hello(c echo.Context) error { // 確認用
+	return c.String(http.StatusOK, "Hello, World!")
 }
