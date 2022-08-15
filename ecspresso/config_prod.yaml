@@ -4,3 +4,7 @@ service: tranaza-prod-tranaza
 service_definition: ecs-service-def.json
 task_definition: ecs-task-def.json
 timeout: 10m0s
+plugins: 
+  -name: tfstate
+  config:
+    url: s3//tfstate-s3-bucket-for-tranaza/cicd/tranaza_v1.2.4.tfstate
