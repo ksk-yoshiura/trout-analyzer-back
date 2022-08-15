@@ -1,0 +1,60 @@
+{
+  "capacityProviderStrategy": [
+    {
+      "base": 0,
+      "capacityProvider": "FARGATE_SPOT",
+      "weight": 1
+    }
+  ],
+  "deploymentConfiguration": {
+    "deploymentCircuitBreaker": {
+      "enable": false,
+      "rollback": false
+    },
+    "maximumPercent": 200,
+    "minimumHealthyPercent": 100
+  },
+  "desiredCount": 1,
+  "enableECSManagedTags": false,
+  "enableExecuteCommand": true,
+  "healthCheckGracePeriodSeconds": 180,
+  "loadBalancers": [
+    {
+      "containerName": "nginx",
+      "containerPort": 80,
+      "targetGroupArn": "arn:aws:elasticloadbalancing:ap-northeast-1:996932974824:targetgroup/tranaza-prod-tranaza/0dfd94eec98ca4e7"
+    }
+  ],
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "assignPublicIp": "DISABLED",
+      "securityGroups": [
+        "sg-04f1e3f3fcf9decbe"
+      ],
+      "subnets": [
+        "subnet-0de2b61de1d44bb51",
+        "subnet-05759ec609da708ef"
+      ]
+    }
+  },
+  "placementConstraints": [],
+  "placementStrategy": [],
+  "platformFamily": "Linux",
+  "platformVersion": "1.4.0",
+  "schedulingStrategy": "REPLICA",
+  "serviceRegistries": [],
+  "tags": [
+    {
+      "key": "Env",
+      "value": "prod"
+    },
+    {
+      "key": "System",
+      "value": "tranaza"
+    },
+    {
+      "key": "Name",
+      "value": "tranaza-prod-tranaza"
+    }
+  ]
+}
