@@ -72,7 +72,7 @@ resource "aws_lb_listener" "redirect_http_to_https" {
 }
 
 resource "aws_lb_target_group" "tranaza" {
-  name = "${local.name_prefix}-tranaza"
+  name = "${local.name_prefix}-${local.service_name}"
 
   deregistration_delay = 60
   port                 = 80
