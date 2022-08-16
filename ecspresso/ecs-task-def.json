@@ -10,12 +10,12 @@
       ],
       "environment": [],
       "essential": true,
-      "image": "996932974824.dkr.ecr.ap-northeast-1.amazonaws.com/tranaza-prod-nginx:latest",
+      "image": "{{ tfstate `data.aws_ecr_repository.nginx.repository_url` }}:{{must_env `IMAGE_TAG`}}",
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/tranaza-prod-nginx",
-          "awslogs-region": "ap-northeast-1",
+          "awslogs-group": "{{ tfstate `data.aws_cloudwatch_log_group.nginx.name` }}",
+          "awslogs-region": "{{ must_env `AW_REGION` }}",
           "awslogs-stream-prefix": "ecs"
         }
       },
@@ -34,12 +34,12 @@
       "cpu": 0,
       "environment": [],
       "essential": true,
-      "image": "996932974824.dkr.ecr.ap-northeast-1.amazonaws.com/tranaza-prod-golang:latest",
+      "image": "{{ tfstate `data.aws_ecr_repository.golang.repository_url` }}:{{must_env `IMAGE_TAG`}}",
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/tranaza-prod-golang",
-          "awslogs-region": "ap-northeast-1",
+          "awslogs-group": "{{ tfstate `data.aws_cloudwatch_log_group.golang.name` }}",
+          "awslogs-region": "{{ must_env `AW_REGION` }}",
           "awslogs-stream-prefix": "ecs"
         }
       },
@@ -56,8 +56,8 @@
     }
   ],
   "cpu": "256",
-  "executionRoleArn": "arn:aws:iam::996932974824:role/tranaza-prod-ecs-task-execution",
-  "family": "tranaza-prod-tranaza",
+  "executionRoleArn": "{{ tfstate `data.aws_iam_role.ecs_task_execution.arn` }}",
+  "family": "{{ must_env `SYSTEM_NAME` }}-{{ must_env `ENV_NAME` }}-{{ must_env `SERVICE_NAME` }}",
   "memory": "512",
   "networkMode": "awsvpc",
   "placementConstraints": [],
@@ -67,17 +67,17 @@
   "tags": [
     {
       "key": "Env",
-      "value": "prod"
+      "value": "{{ must_env `ENV_NAME` }}"
     },
     {
       "key": "System",
-      "value": "tranaza"
+      "value": "{{ must_env `SYSTEM_NAME` }}"
     },
     {
       "key": "Name",
-      "value": "tranaza-prod-tranaza"
+      "value": "{{ must_env `SYSTEM_NAME` }}-{{ must_env `ENV_NAME` }}-{{ must_env `SERVICE_NAME` }}"
     }
   ],
-  "taskRoleArn": "arn:aws:iam::996932974824:role/tranaza-prod-tranaza-ecs-task",
+  "taskRoleArn": "{{ tfstate `data.aws_iam_role.ecs_task.arn` }}",
   "volumes": []
 }
