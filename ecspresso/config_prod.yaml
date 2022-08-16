@@ -7,4 +7,4 @@ timeout: 10m0s
 plugins: 
   - name: tfstate
   config:
-    url: s3//tfstate-s3-bucket-for-tranaza/tranaza/cicd/tranaza_v1.2.4.tfstate
+    url: s3//tfstate-s3-bucket-for-tranaza/tranaza/cicd/app_tranaza_v1.2.4.tfstate
