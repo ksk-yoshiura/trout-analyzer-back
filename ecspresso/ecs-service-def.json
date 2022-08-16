@@ -50,11 +50,11 @@
     },
     {
       "key": "System",
-      "value": "{{ must_env `SYSTEM_NAME` }}"
+      "value": "{{ must_env `SERVICE_NAME` }}"
     },
     {
       "key": "Name",
-      "value": "{{ must_env `SYSTEM_NAME` }}-{{ must_env `ENV_NAME` }}-{{ must_env `SERVICE_NAME` }}"
+      "value": "{{ must_env `SERVICE_NAME` }}-{{ must_env `ENV_NAME` }}-{{ must_env `SERVICE_NAME` }}"
     }
   ]
 }
