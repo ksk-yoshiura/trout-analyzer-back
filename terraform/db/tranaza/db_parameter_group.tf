@@ -35,7 +35,7 @@ resource "aws_db_parameter_group" "this" {
 
   parameter {
     name  = "collation_server"
-    value = "utf8mb4_0900ai_ci"
+    value = "utf8mb4_0900_ai_ci"
   }
 
   parameter {
@@ -43,15 +43,14 @@ resource "aws_db_parameter_group" "this" {
     value = "1"
   }
 
-
   parameter {
     name  = "slow_query_log"
     value = "1"
   }
 
   parameter {
-    name  = "long_query_log"
-    value = "1.o"
+    name  = "long_query_time"
+    value = "1.0"
   }
 
   parameter {
