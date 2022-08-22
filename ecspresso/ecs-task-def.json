@@ -52,6 +52,12 @@
           "protocol": "tcp"
         }
       ],
+      "secrets": [
+        {
+          "name": "DB_PASSWORD",
+          "valueFrom": "/tranaza/DB_PASSWORD"
+        }
+      ],
       "volumesFrom": []
     }
   ],
