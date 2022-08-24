@@ -53,6 +53,11 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
+    - name: Upload env file
+      run: aws s3 cp .env.$ENV_NAME \ 
+        s3:://tfstate-s3-bucket-for-tranaza-$SERVICE_NAME-$ENV_NAME-$SERVICE_NAME/$IMAGE_TAG/.env
+      working-directory: ./terraform
+
     - name: Push nginx image to ecr
       env:
         DOCKER_BUILDKIT: 1
@@ -80,7 +85,7 @@ jobs:
         ecspresso run --config config_$ENV_NAME.yaml \
           --latest-task-definition \
           --watch-container=golang \
-          --overrides='{"containerOverrides":[{"name":"nginx","command":["nginx","-v"]},{"name":"golang","command":["./docker-entrypoint-initdb.d/init-database.sh"]}]}'
+          --overrides='{"containerOverrides":[{"name":"nginx","command":["nginx","-v"]},{"name":"golang","command":["./db/mysql_init/00_create_tables.sql"]}]}'
       working-directory: ./ecspresso
 
     - name: Deploy to ecs
