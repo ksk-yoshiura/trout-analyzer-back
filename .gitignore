@@ -16,7 +16,7 @@
 
 tmp/
 .env
-*.env.prod
+# *.env.prod
 
 db/mysql_data
 
