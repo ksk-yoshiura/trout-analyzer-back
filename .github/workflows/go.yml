@@ -55,7 +55,7 @@ jobs:
 
     - name: Upload env file
       run: aws s3 cp .env.$ENV_NAME \ 
-        s3:://tfstate-s3-bucket-for-tranaza-$SERVICE_NAME-$ENV_NAME-$SERVICE_NAME/$IMAGE_TAG/.env
+        s3://tfstate-s3-bucket-for-tranaza-$SERVICE_NAME-$ENV_NAME-$SERVICE_NAME/$IMAGE_TAG/.env
       working-directory: ./terraform
 
     - name: Push nginx image to ecr
