@@ -54,8 +54,8 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
     - name: Upload env file
-      run: aws s3 cp ./terraform/.env.$ENV_NAME s3://tfstate-s3-bucket-for-tranaza-$SERVICE_NAME-$ENV_NAME-$SERVICE_NAME-env-file/$IMAGE_TAG/.env
-      working-directory: ./terraform
+      run: aws s3 cp .env.$ENV_NAME s3://tfstate-s3-bucket-for-tranaza-$SERVICE_NAME-$ENV_NAME-$SERVICE_NAME-env-file/$IMAGE_TAG/.env
+      working-directory: backend
 
     - name: Push nginx image to ecr
       env:
