@@ -22,7 +22,8 @@ func GetDBConn() *gorm.DB {
 }
 
 func GetDBConfig() string {
-	err := godotenv.Load()
+	// 読み込み
+	err := godotenv.Load("./bakcend/.env.prod")
 	if err != nil {
 		log.Fatal(err)
 	}
