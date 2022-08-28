@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -100,6 +101,41 @@ func Login(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]string{
 		"token": t,
 	})
+}
+
+/**
+ * パスワード再設定
+ */
+func ResetPassword(c echo.Context) error {
+
+	current_password := c.FormValue("password")
+	fmt.Println(c.Request())
+
+	// ユーザーIDからユーザ-レコード取得
+	uid := userIDFromToken(c)
+	u := models.User{}
+	user := models.GetUser(u, uid)
+
+	// 現在のパスワード
+	hash, _ := HashPassword(current_password)
+	// パスワードチェック
+	match := CheckPasswordHash(user.Password, hash)
+
+	fmt.Println(u.Password)
+	if u.ID == 0 || !match {
+		return &echo.HTTPError{
+			Code:    http.StatusUnauthorized,
+			Message: "invalid password",
+		}
+	}
+	new_password := c.FormValue("newPassword")
+
+	// ユーザーパスワード暗号化
+	new_hash, _ := HashPassword(new_password)
+	user.Password = new_hash
+	models.UpdateUser(user, uid)
+
+	return c.JSON(http.StatusCreated, u)
 }
 
 /**
