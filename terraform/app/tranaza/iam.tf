@@ -74,10 +74,10 @@ resource "aws_iam_policy" "ssm" {
   }
 }
 
-# resource "aws_iam_role_policy_attachment" "ecs_task_execution_ssm" {
-#   role       = aws_iam_role.ecs_task_execution.name
-#   policy_arn = aws_iam_policy.ssm.arn
-# }
+resource "aws_iam_role_policy_attachment" "ecs_task_execution_ssm" {
+  role       = aws_iam_role.ecs_task_execution.name
+  policy_arn = aws_iam_policy.ssm.arn
+}
 
 resource "aws_iam_role_policy" "ecs_task_ssm" { // ECS EXECのため
   name = "ssm"
