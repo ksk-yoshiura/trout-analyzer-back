@@ -85,7 +85,7 @@ jobs:
         ecspresso run --config config_$ENV_NAME.yaml \
           --latest-task-definition \
           --watch-container=golang \
-          --overrides='{"containerOverrides":[{"name":"nginx","command":["nginx","-v"]},{"name":"golang","command":["chmod","+x","prod_sql.sh","./prod_sql.sh"]}]}'
+          --overrides='{"containerOverrides":[{"name":"nginx","command":["nginx","-v"]},{"name":"golang","command":["chmod","+x","./prod_sql.sh","./prod_sql.sh"]}]}'
       working-directory: ./ecspresso
 
     - name: Deploy to ecs
