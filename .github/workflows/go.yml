@@ -88,7 +88,6 @@ jobs:
           --overrides='{"containerOverrides":[{"name":"nginx","command":["nginx","-v"]},{"name":"golang","command":["go","version"]}]}'
       working-directory: ./ecspresso
 
-
     - name: Migrate database main
       run: |
         chmod +x ./prod_sql.sh
