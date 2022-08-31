@@ -91,7 +91,7 @@ jobs:
     - name: Migrate database main
       run: |
         chmod +x ./prod_sql.sh
-        ./prod_sql.sh
+        export $(cat ./backend/.env.prod | grep -v "#" | xargs);  ./prod_sql.sh
 
     - name: Deploy to ecs
       run: ecspresso deploy --config config_$ENV_NAME.yaml
