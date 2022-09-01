@@ -7,7 +7,7 @@ RUN go mod tidy
 # Airをインストール TODO:devではいらない
 RUN go install github.com/cosmtrek/air@v1.27.3
 # migration
-RUN go install github.com/golang-migrate/migrate/cmd/migrate
+RUN go install github.com/golang-migrate/migrate
 # ポート設定
 EXPOSE 3000
 # 実行
