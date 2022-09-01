@@ -21,6 +21,7 @@ func getDBConfig() string {
 
 func executeInitialize() error {
 	CONNECT := getDBConfig()
+	fmt.Printf("result: %s", CONNECT)
 	out, err := exec.Command("migrate", "-path", "migration/db/migration", "-database", CONNECT, "1", "up").Output()
 
 	if err != nil {
