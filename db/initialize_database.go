@@ -20,10 +20,10 @@ func getDBConfig() string {
 }
 
 func executeInitialize() error {
-	CONNECT := getDBConfig()
-	fmt.Printf("result: %s", CONNECT)
-	out, err := exec.Command("migrate", "-path", "migration/db/migration", "-database", CONNECT, "1", "up").Output()
+	// CONNECT := getDBConfig()
+	// out, err := exec.Command("migrate", "-path", "migration/db/migration", "-database", CONNECT, "1", "up").Output()
 
+	out, err := exec.Command("ls", "-al").Output()
 	if err != nil {
 		return err
 	}
