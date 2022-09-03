@@ -33,7 +33,6 @@ import (
 // }
 
 func getDBConfig() string {
-	// 読み込み
 	err := godotenv.Load("./backend/.env.prod")
 
 	if err != nil {
