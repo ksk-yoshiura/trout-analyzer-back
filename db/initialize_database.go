@@ -56,10 +56,8 @@ func getDBConfig() string {
 
 func executeInitialize() {
 	CONNECT := getDBConfig()
-	db, err := sql.Open("mysql", CONNECT)
-	defer db.Close()
-
 	fmt.Println(CONNECT)
+	db, err := sql.Open("mysql", CONNECT)
 	// out, err := exec.Command("initialize_db_sql.sh").Output()
 	// out, err := exec.Command("migrate", "-version").Output()
 	if err != nil {
