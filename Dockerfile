@@ -6,6 +6,8 @@ COPY . /app
 RUN go mod tidy
 # # Airをインストール
 # RUN go install github.com/cosmtrek/air@v1.27.3
+# godotenv
+RUN go get github.com/joho/godotenv
 # SDK
 RUN go get github.com/aws/aws-sdk-go
 # ポート設定
