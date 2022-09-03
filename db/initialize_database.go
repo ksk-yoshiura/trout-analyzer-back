@@ -13,6 +13,7 @@ import (
 )
 
 func getDatabasePassword() string {
+
 	sess, err := session.NewSessionWithOptions(session.Options{
 		Config:  aws.Config{Region: aws.String("ap-northeast-1")},
 		Profile: "default",
