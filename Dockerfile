@@ -7,7 +7,7 @@ RUN go mod tidy
 # Airをインストール
 RUN go install github.com/cosmtrek/air@v1.27.3
 # SDK
-# RUN go get github.com/aws/aws-sdk-go
+RUN go install github.com/aws/aws-sdk-go
 # ポート設定
 EXPOSE 3000
 # 実行

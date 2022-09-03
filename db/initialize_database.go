@@ -1,8 +1,6 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -56,21 +54,21 @@ func getDBConfig() string {
 }
 
 func executeInitialize() {
-	CONNECT := getDBConfig()
-	fmt.Println(CONNECT)
-	db, err := sql.Open("mysql", CONNECT)
-	// out, err := exec.Command("migrate", "-version").Output()
-	if err != nil {
-		log.Fatal(err)
-	}
+	// CONNECT := getDBConfig()
+	// fmt.Println(CONNECT)
+	// db, err := sql.Open("mysql", CONNECT)
+	// // out, err := exec.Command("migrate", "-version").Output()
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
-	err = db.Ping()
+	// err = db.Ping()
 
-	if err != nil {
-		fmt.Println("データベース接続失敗")
-	} else {
-		fmt.Println("データベース接続成功")
-	}
+	// if err != nil {
+	// 	fmt.Println("データベース接続失敗")
+	// } else {
+	// 	fmt.Println("データベース接続成功")
+	// }
 }
 
 func main() {
