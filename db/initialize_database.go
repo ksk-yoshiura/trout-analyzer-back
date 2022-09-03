@@ -54,7 +54,8 @@ func getDBConfig() string {
 }
 
 func executeInitialize() {
-	CONNECT := getDBConfig()
+	CONNECT := "testetse"
+
 	fmt.Println(CONNECT)
 
 	// db, err := sql.Open("mysql", CONNECT)
@@ -70,6 +71,7 @@ func executeInitialize() {
 	// } else {
 	// 	fmt.Println("データベース接続成功")
 	// }
+
 }
 
 func main() {
