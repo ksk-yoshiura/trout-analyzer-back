@@ -45,7 +45,6 @@ func executeInitialize() {
 
 	if err != nil {
 		fmt.Println("データベース接続失敗")
-		return
 	} else {
 		fmt.Println("データベース接続成功")
 	}
