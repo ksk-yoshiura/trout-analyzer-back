@@ -50,6 +50,7 @@ import (
 func executeInitialize() {
 	CONNECT := "testtest"
 	fmt.Println(CONNECT)
+
 	// db, err := sql.Open("mysql", CONNECT)
 
 	// if err != nil {
