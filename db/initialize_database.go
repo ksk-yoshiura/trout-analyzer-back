@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/exec"
@@ -73,9 +74,10 @@ func executeInitialize() {
 
 func main() {
 
-	out := exec.Command("ls", "-l").Run()
-	if out != nil {
-		log.Fatal(out)
+	out, err := exec.Command("ls", "-l").Output()
+	if err != nil {
+		log.Fatal(err)
 	}
+	fmt.Printf("result: %s", out)
 	executeInitialize()
 }
