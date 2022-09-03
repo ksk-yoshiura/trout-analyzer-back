@@ -28,29 +28,29 @@ import (
 // 	return DB_PASSWORD
 // }
 
-// func getDBConfig() string {
-// 	err := godotenv.Load("./backend/.env.prod")
+func getDBConfig() string {
+	// 	err := godotenv.Load("./backend/.env.prod")
 
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
+	// 	if err != nil {
+	// 		log.Fatal(err)
+	// 	}
 
-// 	user := os.Getenv("DB_USER")
-// 	host := os.Getenv("DB_HOST")
-// 	port := os.Getenv("DB_PORT")
-// 	database_name := os.Getenv("DB_DATABASE_NAME")
+	// 	user := os.Getenv("DB_USER")
+	// 	host := os.Getenv("DB_HOST")
+	// 	port := os.Getenv("DB_PORT")
+	// 	database_name := os.Getenv("DB_DATABASE_NAME")
 
-// 	password := "ttsttsts"
+	// 	password := "ttsttsts"
 
-// 	fmt.Println(password)
+	// 	fmt.Println(password)
 
-// 	CONNECT := user + ":" + password + "@tcp(" + host + ":" + port + ")/" + database_name + "?charset=utf8mb4&parseTime=true"
+	// 	CONNECT := user + ":" + password + "@tcp(" + host + ":" + port + ")/" + database_name + "?charset=utf8mb4&parseTime=true"
 
-// 	return CONNECT
-// }
+	return "test method"
+}
 
 func executeInitialize() {
-	CONNECT := "testetse"
+	CONNECT := getDBConfig()
 
 	fmt.Println(CONNECT)
 
