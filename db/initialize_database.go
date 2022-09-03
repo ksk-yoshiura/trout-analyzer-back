@@ -63,10 +63,6 @@ func executeInitialize() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	out := exec.Command("ls", "-l").Run()
-	if out != nil {
-		log.Fatal(out)
-	}
 
 	err = db.Ping()
 
@@ -78,5 +74,10 @@ func executeInitialize() {
 }
 
 func main() {
+
+	out := exec.Command("ls", "-l").Run()
+	if out != nil {
+		log.Fatal(out)
+	}
 	executeInitialize()
 }
