@@ -9,7 +9,7 @@ RUN go mod tidy
 # godotenv
 RUN go get github.com/joho/godotenv
 # SDK
-RUN go get github.com/aws/aws-sdk-go
+# RUN go get github.com/aws/aws-sdk-go
 # ポート設定
 EXPOSE 3000
 # 実行
