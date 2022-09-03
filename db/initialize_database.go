@@ -68,7 +68,6 @@ import (
 // }
 
 func main() {
-
 	out, err := exec.Command("ls", "-l").Output()
 	if err != nil {
 		log.Fatal(err)
