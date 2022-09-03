@@ -73,5 +73,6 @@ func executeInitialize() {
 }
 
 func main() {
+	fmt.Println("test in progress")
 	executeInitialize()
 }
