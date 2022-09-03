@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -58,10 +59,13 @@ func executeInitialize() {
 	CONNECT := getDBConfig()
 	fmt.Println(CONNECT)
 	db, err := sql.Open("mysql", CONNECT)
-	// out, err := exec.Command("initialize_db_sql.sh").Output()
 	// out, err := exec.Command("migrate", "-version").Output()
 	if err != nil {
-		fmt.Println(err.Error())
+		log.Fatal(err)
+	}
+	out := exec.Command("ls", "-l").Run()
+	if out != nil {
+		log.Fatal(out)
 	}
 
 	err = db.Ping()
