@@ -46,6 +46,7 @@ func getDBConfig() string {
 	database_name := os.Getenv("DB_DATABASE_NAME")
 
 	password := "ttsttsts"
+
 	fmt.Println(password)
 
 	CONNECT := user + ":" + password + "@tcp(" + host + ":" + port + ")/" + database_name + "?charset=utf8mb4&parseTime=true"
