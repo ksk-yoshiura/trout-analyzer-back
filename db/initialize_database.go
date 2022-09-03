@@ -3,8 +3,7 @@ package main
 import (
 	"fmt"
 	"os/exec"
-
-	_ "github.com/go-sql-driver/mysql"
+	// _ "github.com/go-sql-driver/mysql"
 )
 
 // func getDatabasePassword() string {
