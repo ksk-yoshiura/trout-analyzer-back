@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/joho/godotenv"
 	// _ "github.com/go-sql-driver/mysql"
@@ -56,7 +55,7 @@ func getDBConfig() string {
 	err := godotenv.Load("./backend/.env.prod")
 
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
 
 	// 	user := os.Getenv("DB_USER")
