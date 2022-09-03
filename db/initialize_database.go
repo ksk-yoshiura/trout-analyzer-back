@@ -2,11 +2,21 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
-	"os/exec"
+
+	"database/sql"
+
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 )
 
 func getDBConfig() string {
+	// 読み込み
+	err := godotenv.Load("./backend/.env.prod")
+	if err != nil {
+		log.Fatal(err)
+	}
 	user := os.Getenv("DB_USER")
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")
@@ -19,16 +29,26 @@ func getDBConfig() string {
 	return CONNECT
 }
 
-func executeInitialize() error {
-	// CONNECT := getDBConfig()
-	// out, err := exec.Command("migrate", "-path", "migration/db/migration", "-database", CONNECT, "1", "up").Output()
+func executeInitialize() {
+	CONNECT := getDBConfig()
+	db, err := sql.Open("mysql", CONNECT)
+	defer db.Close()
 
-	out, err := exec.Command("ls", "-al").Output()
+	fmt.Println(CONNECT)
+	// out, err := exec.Command("initialize_db_sql.sh").Output()
+	// out, err := exec.Command("migrate", "-version").Output()
 	if err != nil {
-		return err
+		fmt.Println(err.Error())
 	}
-	fmt.Printf("result: %s", out)
-	return nil
+
+	err = db.Ping()
+
+	if err != nil {
+		fmt.Println("データベース接続失敗")
+		return
+	} else {
+		fmt.Println("データベース接続成功")
+	}
 }
 
 func main() {
