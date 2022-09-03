@@ -4,8 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
-
-	_ "github.com/go-sql-driver/mysql"
+	// _ "github.com/go-sql-driver/mysql"
 )
 
 // func getDatabasePassword() string {
