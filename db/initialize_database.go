@@ -31,27 +31,6 @@ import (
 // 	return DB_PASSWORD
 // }
 
-func getDBConfig() string {
-	err := godotenv.Load("./backend/.env.prod")
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// 	user := os.Getenv("DB_USER")
-	// 	host := os.Getenv("DB_HOST")
-	// 	port := os.Getenv("DB_PORT")
-	// 	database_name := os.Getenv("DB_DATABASE_NAME")
-
-	// 	password := "ttsttsts"
-
-	// 	fmt.Println(password)
-
-	// 	CONNECT := user + ":" + password + "@tcp(" + host + ":" + port + ")/" + database_name + "?charset=utf8mb4&parseTime=true"
-
-	return "test method"
-}
-
 func executeInitialize() {
 	CONNECT := getDBConfig()
 
@@ -71,6 +50,27 @@ func executeInitialize() {
 	// 	fmt.Println("データベース接続成功")
 	// }
 
+}
+
+func getDBConfig() string {
+	err := godotenv.Load("./backend/.env.prod")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// 	user := os.Getenv("DB_USER")
+	// 	host := os.Getenv("DB_HOST")
+	// 	port := os.Getenv("DB_PORT")
+	// 	database_name := os.Getenv("DB_DATABASE_NAME")
+
+	// 	password := "ttsttsts"
+
+	// 	fmt.Println(password)
+
+	// 	CONNECT := user + ":" + password + "@tcp(" + host + ":" + port + ")/" + database_name + "?charset=utf8mb4&parseTime=true"
+
+	return "test method"
 }
 
 func main() {
