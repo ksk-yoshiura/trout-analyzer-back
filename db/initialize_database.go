@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os/exec"
 	// _ "github.com/go-sql-driver/mysql"
 )
@@ -68,10 +67,10 @@ import (
 
 func main() {
 	fmt.Println("test")
-	err := exec.Command("ls", "-l").Run()
+	out, err := exec.Command("ls", "-l").Output()
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
 	}
-	// fmt.Printf("result: %s", out)
+	fmt.Printf("result: %s", out)
 	// executeInitialize()
 }
