@@ -29,7 +29,6 @@ func getDatabasePassword() string {
 	// }
 
 	DB_PASSWORD := "test" // *res.Parameter.Value
-
 	return DB_PASSWORD
 }
 
