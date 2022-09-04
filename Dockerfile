@@ -4,12 +4,12 @@ WORKDIR /app
 COPY . /app
 # 必要なパッケージをインストール
 RUN go mod tidy
-# # Airをインストール
+# Airをインストール
 RUN go install github.com/cosmtrek/air@v1.27.3
 # godotenv
-RUN go install github.com/joho/godotenv
+RUN go install github.com/joho/godotenv@latest
 # SDK
-RUN go install github.com/aws/aws-sdk-go
+RUN go install github.com/aws/aws-sdk-go@latest
 # ポート設定
 EXPOSE 3000
 # 実行
