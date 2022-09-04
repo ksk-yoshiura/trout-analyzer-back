@@ -4,10 +4,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
 
-	// _ "github.com/aws/aws-sdk-go/aws"
-	// _ "github.com/aws/aws-sdk-go/aws/session"
-	// _ "github.com/aws/aws-sdk-go/service/ssm"
 	"github.com/joho/godotenv"
 	// _ "github.com/go-sql-driver/mysql"
 )
@@ -78,6 +76,8 @@ func executeInitialize() {
 }
 
 func main() {
+	out, _ := exec.Command("CAT", "go.mod").Output()
+	fmt.Printf("result : %s", out)
 	fmt.Println("test in progress")
 	executeInitialize()
 }
