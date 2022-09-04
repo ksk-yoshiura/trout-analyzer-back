@@ -7,9 +7,9 @@ RUN go mod tidy
 # Airをインストール
 RUN go install github.com/cosmtrek/air@v1.27.3
 # godotenv
-RUN go get github.com/joho/godotenv@latest
+RUN go install github.com/joho/godotenv@v1.4.0
 # SDK
-RUN go get github.com/aws/aws-sdk-go@latest
+RUN go install github.com/aws/aws-sdk-go@v1.44.91
 # ポート設定
 EXPOSE 3000
 # 実行
