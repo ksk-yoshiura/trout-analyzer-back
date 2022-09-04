@@ -5,26 +5,26 @@ import (
 	"log"
 	"os"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/ssm"
+	_ "github.com/aws/aws-sdk-go/aws"
+	_ "github.com/aws/aws-sdk-go/aws/session"
+	_ "github.com/aws/aws-sdk-go/service/ssm"
 	"github.com/joho/godotenv"
 	// _ "github.com/go-sql-driver/mysql"
 )
 
 func getDatabasePassword() string {
 
-	sess, err := session.NewSessionWithOptions(session.Options{
-		Config:  aws.Config{Region: aws.String("ap-northeast-1")},
-		Profile: "default",
-	})
-	if err != nil {
-		fmt.Println(err)
+	// sess, err := session.NewSessionWithOptions(session.Options{
+	// 	Config:  aws.Config{Region: aws.String("ap-northeast-1")},
+	// 	Profile: "default",
+	// })
+	// if err != nil {
+	// 	fmt.Println(err)
 
-		// log.Fatal(err)
-	}
-	svc := ssm.New(sess)
-	fmt.Println(svc)
+	// 	// log.Fatal(err)
+	// }
+	// svc := ssm.New(sess)
+	// fmt.Println(svc)
 
 	// res, err := svc.GetParameter(&ssm.GetParameterInput{
 	// 	Name:           aws.String("/tranaza/DB_PASSWORD"),
