@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"os"
@@ -8,6 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ssm"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
 )
 
@@ -21,7 +23,6 @@ func getDatabasePassword() string {
 		log.Fatal(err)
 	}
 	svc := ssm.New(sess)
-	fmt.Println(svc)
 
 	res, err := svc.GetParameter(&ssm.GetParameterInput{
 		Name:           aws.String("/tranaza/DB_PASSWORD"),
@@ -59,19 +60,19 @@ func executeInitialize() {
 
 	fmt.Println(CONNECT)
 
-	// db, err := sql.Open("mysql", CONNECT)
+	db, err := sql.Open("mysql", CONNECT)
 
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	// err = db.Ping()
+	err = db.Ping()
 
-	// if err != nil {
-	// 	fmt.Println("データベース接続失敗")
-	// } else {
-	// 	fmt.Println("データベース接続成功")
-	// }
+	if err != nil {
+		fmt.Println("データベース接続失敗")
+	} else {
+		fmt.Println("データベース接続成功")
+	}
 
 }
 
