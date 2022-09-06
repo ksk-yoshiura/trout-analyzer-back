@@ -88,11 +88,6 @@ jobs:
           --overrides='{"containerOverrides":[{"name":"nginx","command":["nginx","-v"]},{"name":"golang","command":["go","version"]}]}'
       working-directory: ./ecspresso
 
-    - name: Check AWS CLI
-      run: |
-        chmod +x ./initialize_db_sql.sh
-        ./initialize_db_sql.sh
-
     - name: Deploy to ecs
       run: ecspresso deploy --config config_$ENV_NAME.yaml
       working-directory: ./ecspresso
