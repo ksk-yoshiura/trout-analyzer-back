@@ -46,7 +46,8 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: ${{ env.SERVICE_NAME }}-${{ env.ENV_NAME }}-golang
       run: |
-        docker build . \
+        docker build \
+          --cache-from=$ECR_REGISTRY/$ECR_REPOSITORY:latest --build-arg BUILD_INLINE_CACHE=1 . \
           -f Dockerfile \
           -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
           -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -64,7 +65,8 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: ${{ env.SERVICE_NAME }}-${{ env.ENV_NAME }}-nginx
       run: |
-        docker build . \
+        docker build \
+          --cache-from=$ECR_REGISTRY/$ECR_REPOSITORY:latest --build-arg BUILD_INLINE_CACHE=1 . \
           -f nginx/Dockerfile \
           -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
           -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
