@@ -13,7 +13,7 @@ RUN go install github.com/aws/aws-sdk-go
 # mysqlドライバ
 RUN go install github.com/go-sql-driver/mysql
 
-
+### EXEC ECSでAWSコマンドを使うのに必須
 # 前提パッケージのインストール
 RUN apt-get update && apt-get install -y less vim curl unzip sudo
 # aws cli v2 のインストール
