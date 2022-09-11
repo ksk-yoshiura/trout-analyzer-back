@@ -28,18 +28,6 @@ DROP TABLE IF EXISTS hit_patterns;
 
 DROP TABLE IF EXISTS tackles;
 
-CREATE TABLE tackles (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `user_id` int(255) NOT NULL,
-  `rod_id` int(255) NOT NULL,
-  `reel_id` int(255) NOT NULL,
-  `line_id` int(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `deleted_at` timestamp DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
 -- ロッドテーブル --
 
 DROP TABLE IF EXISTS rods;
