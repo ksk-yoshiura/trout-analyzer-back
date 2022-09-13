@@ -30,6 +30,10 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution" {
   policy_arn = data.aws_iam_policy.ecs_task_execution.arn
 }
 
+
+
+
+
 resource "aws_iam_role" "ecs_task" {
   name = "${local.name_prefix}-${local.service_name}-ecs-task"
 
@@ -78,6 +82,13 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_ssm" {
   role       = aws_iam_role.ecs_task_execution.name
   policy_arn = aws_iam_policy.ssm.arn
 }
+
+// AWS SDK GOでGetParameterするため
+resource "aws_iam_role_policy_attachment" "ecs_task_ssm" {
+  role       = aws_iam_role.ecs_task.name
+  policy_arn = aws_iam_policy.ssm.arn
+}
+
 
 resource "aws_iam_role_policy" "ecs_task_ssm" { // ECS EXECのため
   name = "ssm"
