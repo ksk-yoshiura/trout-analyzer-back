@@ -87,7 +87,7 @@ jobs:
         ecspresso run --config config_$ENV_NAME.yaml \
           --latest-task-definition \
           --watch-container=golang \
-          --overrides='{"containerOverrides":[{"name":"nginx","command":["nginx","-v"]},{"name":"golang","command":["go","run", "db/initialize_database.go"]}]}'
+          --overrides='{"containerOverrides":[{"name":"nginx","command":["nginx","-v"]},{"name":"golang","command":["go","version"]}]}'
       working-directory: ./ecspresso
 
     - name: Deploy to ecs
