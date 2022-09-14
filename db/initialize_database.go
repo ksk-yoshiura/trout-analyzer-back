@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -70,8 +71,14 @@ func executeInitialize() {
 
 	if err != nil {
 		fmt.Println("データベース接続失敗")
+		log.Fatal(err)
+	}
+
+	output, err := exec.Command("migrate", "-path", "db/migrations", "-database", CONNECT, "up", "1").Output()
+	if err != nil {
+		log.Fatal(err)
 	} else {
-		fmt.Println("データベース接続成功")
+		fmt.Printf("result: %s", output)
 	}
 
 }
