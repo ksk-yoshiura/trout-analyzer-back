@@ -13,7 +13,7 @@ RUN go install github.com/aws/aws-sdk-go
 # mysqlドライバ
 RUN go install github.com/go-sql-driver/mysql
 # migration
-RUN go install github.com/golang-migrate/migrate/cmd/migrate
+RUN go install github.com/golang-migrate/migrate/v4/cmd/migrate@latest
 
 
 ### EXEC ECSでAWSコマンドを使うのに必須
