@@ -14,8 +14,6 @@ RUN go install github.com/aws/aws-sdk-go
 RUN go install github.com/go-sql-driver/mysql
 # migration
 RUN go install github.com/golang-migrate/migrate/v4/cmd/migrate@latest
-RUN go get github.com/golang-migrate/migrate/v4/database/mysql
-
 
 # ### EXEC ECSでAWSコマンドを使うのに必須
 # # 前提パッケージのインストール
