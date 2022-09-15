@@ -73,9 +73,10 @@ func executeInitialize() {
 		fmt.Println("データベース接続失敗")
 		log.Fatal(err)
 	}
+	defer db.Close()
 
 	MIGRATION_CONNECT := "mysql://" + CONNECT
-	output, err := exec.Command("migrate", "-path", "db/migrations", "-database", MIGRATION_CONNECT, "up", "1").Output()
+	output, err := exec.Command("migrate", "-path", "db/migration", "-database", MIGRATION_CONNECT, "up", "1").Output()
 	if err != nil {
 		log.Fatal(err)
 	} else {
