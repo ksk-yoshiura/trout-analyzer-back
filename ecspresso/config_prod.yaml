@@ -3,7 +3,7 @@ cluster: tranaza-prod-tranaza
 service: tranaza-prod-tranaza
 service_definition: ecs-service-def.json
 task_definition: ecs-task-def.json
-timeout: 14m0s
+timeout: 16m0s
 plugins: 
   - name: tfstate
     config:
