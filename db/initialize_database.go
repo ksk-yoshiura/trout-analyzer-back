@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"os/exec"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ssm"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/golang-migrate/migrate"
 	_ "github.com/golang-migrate/migrate/v4/database/mysql"
 	"github.com/joho/godotenv"
 )
@@ -57,6 +57,24 @@ func getDBConfig() string {
 	return CONNECT
 }
 
+func RunMigrations() {
+	CONNECT := getDBConfig()
+	MIGRATION_CONNECT := "mysql://" + CONNECT
+	m, err := migrate.New(
+		"file://schema",
+		MIGRATION_CONNECT,
+	)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Executing migrations
+	if err := m.Up(); err != nil {
+		log.Fatal(err)
+	}
+}
+
 func executeInitialize() {
 	CONNECT := getDBConfig()
 
@@ -76,14 +94,8 @@ func executeInitialize() {
 	}
 	defer db.Close()
 
-	MIGRATION_CONNECT := "mysql://" + CONNECT
-	output, err := exec.Command("migrate", "-path", "db/migration", "-database", MIGRATION_CONNECT, "up", "1").Output()
-	if err != nil {
-		fmt.Printf("cmd: %s", output)
-		log.Fatal(err)
-	} else {
-		fmt.Printf("result: %s", output)
-	}
+	// マイグレーション実行
+	RunMigrations()
 
 }
 
