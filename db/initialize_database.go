@@ -79,6 +79,7 @@ func executeInitialize() {
 	MIGRATION_CONNECT := "mysql://" + CONNECT
 	output, err := exec.Command("migrate", "-path", "db/migration", "-database", MIGRATION_CONNECT, "up", "1").Output()
 	if err != nil {
+		fmt.Printf("cmd: %s", output)
 		log.Fatal(err)
 	} else {
 		fmt.Printf("result: %s", output)
