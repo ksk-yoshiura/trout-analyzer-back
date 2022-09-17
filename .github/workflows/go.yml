@@ -90,6 +90,12 @@ jobs:
           --overrides='{"containerOverrides":[{"name":"nginx","command":["nginx","-v"]},{"name":"golang","command":["go","version"]}]}'
       working-directory: ./ecspresso
 
+    - name: Install golang-migrate CLI
+        run: |
+          curl -L https://packagecloud.io/golang-migrate/migrate/gpgkey | sudo apt-key add -
+          echo "deb https://packagecloud.io/golang-migrate/migrate/ubuntu/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/migrate.list
+          sudo apt-get update
+          sudo apt-get install -y migrate
     - name: Run Migration
       run: migrate -version
 
