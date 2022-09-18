@@ -10,7 +10,7 @@ RUN go mod tidy
 # godotenv
 # RUN go install github.com/joho/godotenv
 # # SDK
-# RUN go install github.com/aws/aws-sdk-go
+RUN go install github.com/aws/aws-sdk-go
 # # mysqlドライバ
 # RUN go install github.com/go-sql-driver/mysql
 # migration
