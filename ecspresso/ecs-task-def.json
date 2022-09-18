@@ -67,10 +67,10 @@
       "volumesFrom": []
     }
   ],
-  "cpu": "256",
+  "cpu": "512",
   "executionRoleArn": "{{ tfstate `data.aws_iam_role.ecs_task_execution.arn` }}",
   "family": "{{ must_env `SERVICE_NAME` }}-{{ must_env `ENV_NAME` }}-{{ must_env `SERVICE_NAME` }}",
-  "memory": "512",
+  "memory": "1024",
   "networkMode": "awsvpc",
   "placementConstraints": [],
   "requiresCompatibilities": [
