@@ -26,7 +26,7 @@ func newRouter() *echo.Echo {
 	e.Use(middleware.Recover())
 	// CORS対策
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"https://tranaza.com"},
+		AllowOrigins: []string{"http://localhost:3000"},
 		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
 	}))
 
