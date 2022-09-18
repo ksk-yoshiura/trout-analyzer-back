@@ -9,8 +9,8 @@ RUN go install github.com/cosmtrek/air@v1.27.3
 
 # godotenv
 RUN go install github.com/joho/godotenv
-# SDK
-RUN go install github.com/aws/aws-sdk-go
+# # SDK
+# RUN go install github.com/aws/aws-sdk-go
 # # mysqlドライバ
 # RUN go install github.com/go-sql-driver/mysql
 # migration
