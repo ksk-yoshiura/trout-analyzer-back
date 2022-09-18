@@ -5,10 +5,10 @@ COPY . /app
 # 必要なパッケージをインストール
 RUN go mod tidy
 # Airをインストール
-RUN go install github.com/cosmtrek/air@v1.27.3
+# RUN go install github.com/cosmtrek/air@v1.27.3
 
 # godotenv
-RUN go install github.com/joho/godotenv
+# RUN go install github.com/joho/godotenv
 # # SDK
 # RUN go install github.com/aws/aws-sdk-go
 # # mysqlドライバ
