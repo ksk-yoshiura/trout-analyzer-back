@@ -16,7 +16,10 @@ var DB *gorm.DB
 
 func getDatabasePassword() string {
 	sess, err := session.NewSessionWithOptions(session.Options{
-		Config:  aws.Config{Region: aws.String("ap-northeast-1")},
+		Config: aws.Config{
+			Region:                        aws.String("ap-northeast-1"),
+			CredentialsChainVerboseErrors: aws.Bool(true),
+		},
 		Profile: "default",
 	})
 	if err != nil {
@@ -49,13 +52,18 @@ func GetDBConn() *gorm.DB {
 
 func GetDBConfig() string {
 	// 読み込み
-	err := godotenv.Load("./backend/.env.prod")
-	if err != nil {
-		log.Fatal(err)
+	err := godotenv.Load()
+	if err != nil { // 本番環境には.envは置いていない
+		godotenv.Load("./backend/.env.prod")
+	}
+	var password string
+
+	password = os.Getenv("DB_PASSWORD")
+	if len(password) == 0 { // 本番環境ではパスワードをssmで取得
+		password = getDatabasePassword()
 	}
 
 	user := os.Getenv("DB_USER")
-	password := getDatabasePassword()
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")
 	database_name := os.Getenv("DB_DATABASE_NAME")
