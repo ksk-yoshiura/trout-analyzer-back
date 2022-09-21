@@ -95,10 +95,10 @@ func Login(c echo.Context) error {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	t, err := token.SignedString(signingKey)
-	fmt.Println(t)
 	if err != nil {
 		return err
 	}
+	fmt.Println(t)
 
 	return c.JSON(http.StatusOK, map[string]string{
 		"token": t,
