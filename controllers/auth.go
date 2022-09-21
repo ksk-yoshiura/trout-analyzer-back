@@ -77,6 +77,7 @@ func Login(c echo.Context) error {
 	// パスワードチェック
 	match := CheckPasswordHash(user.Password, hash)
 
+	fmt.Println(match)
 	if user.ID == 0 || !match {
 		return &echo.HTTPError{
 			Code:    http.StatusUnauthorized,
@@ -94,6 +95,7 @@ func Login(c echo.Context) error {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	t, err := token.SignedString(signingKey)
+	fmt.Println(t)
 	if err != nil {
 		return err
 	}
