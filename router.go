@@ -31,7 +31,7 @@ func newRouter() *echo.Echo {
 	}))
 
 	// 確認用
-	e.GET("/", hello)
+	e.GET("/hello", hello)
 
 	// サインアップ
 	e.POST("/sign_up", controllers.Signup)
@@ -175,5 +175,5 @@ func newRouter() *echo.Echo {
 }
 
 func hello(c echo.Context) error { // 確認用
-	return c.String(http.StatusOK, "Hello, World!")
+	return c.JSON(http.StatusOK, "Hello, World!")
 }
