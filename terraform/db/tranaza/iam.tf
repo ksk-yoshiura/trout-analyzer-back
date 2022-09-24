@@ -22,6 +22,6 @@ data "aws_iam_policy" "rds_enhanced_monitoring_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "rds_monitoring_role" {
-  role = aws_iam_role.rds_monitoring_role.name
+  role       = aws_iam_role.rds_monitoring_role.name
   policy_arn = data.aws_iam_policy.rds_enhanced_monitoring_role.arn
 }

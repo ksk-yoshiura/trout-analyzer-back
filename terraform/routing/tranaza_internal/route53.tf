@@ -8,9 +8,9 @@ resource "aws_route53_zone" "this" {
 
 resource "aws_route53_record" "db_name" {
   zone_id = aws_route53_zone.this.zone_id
-  name = "db.${aws_route53_zone.this.name}"
-  type = "CNAME"
-  ttl = 300
+  name    = "db.${aws_route53_zone.this.name}"
+  type    = "CNAME"
+  ttl     = 300
 
   records = [
     data.terraform_remote_state.db_tranaza.outputs.db_instance_this_address
