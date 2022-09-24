@@ -77,7 +77,6 @@ func Login(c echo.Context) error {
 	// パスワードチェック
 	match := CheckPasswordHash(user.Password, hash)
 
-	fmt.Println(match)
 	if user.ID == 0 || !match {
 		return &echo.HTTPError{
 			Code:    http.StatusUnauthorized,
@@ -98,7 +97,6 @@ func Login(c echo.Context) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(t)
 
 	return c.JSON(http.StatusOK, map[string]string{
 		"token": t,
