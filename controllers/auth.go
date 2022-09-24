@@ -121,7 +121,6 @@ func ResetPassword(c echo.Context) error {
 	// パスワードチェック
 	match := CheckPasswordHash(user.Password, hash)
 
-	fmt.Println(u.Password)
 	if u.ID == 0 || !match {
 		return &echo.HTTPError{
 			Code:    http.StatusUnauthorized,
