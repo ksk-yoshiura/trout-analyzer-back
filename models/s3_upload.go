@@ -69,7 +69,6 @@ func UploadToS3(image Image, image_file string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(decode)
 
 	// ファイル名
 	file_names := []string{
