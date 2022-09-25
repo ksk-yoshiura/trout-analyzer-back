@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"log"
+	"os"
 	"strings"
 	"time"
 
@@ -13,20 +14,22 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
+	"github.com/joho/godotenv"
 )
 
 type Image struct {
 	Image string `json:"image"`
 }
 
-const (
-	S3_REGION   = "ap-northeast-1"
-	S3_BUCKET   = "trout-analyzer-upload"
-	S3_ENDPOINT = "http://minio:9000"
-)
-
 /** セッションを返す */
 func createSession() *session.Session {
+	// 読み込み
+	err := godotenv.Load()
+	if err != nil { // 本番環境には.envは置いていない
+		godotenv.Load("./backend/.env.prod")
+	}
+	S3_REGION := os.Getenv("S3_REGION")
+	S3_ENDPOINT := os.Getenv("S3_ENDPOINT")
 	// 特に設定しなくても環境変数にセットしたクレデンシャル情報を利用して接続してくれる
 	cfg := aws.Config{
 		Region:           aws.String(S3_REGION),
@@ -48,6 +51,12 @@ func CreateImageName() string {
 
 /** S3にアップロード */
 func UploadToS3(image Image, image_file string) {
+	// 読み込み
+	err := godotenv.Load()
+	if err != nil { // 本番環境には.envは置いていない
+		godotenv.Load("./backend/.env.prod")
+	}
+	S3_BUCKET := os.Getenv("S3_BUCKET")
 	// セッション作成
 	sess := createSession()
 
