@@ -31,7 +31,7 @@ func newRouter() *echo.Echo {
 	}))
 
 	// 確認用
-	e.GET("/hello", hello)
+	e.GET("/", hello)
 
 	// サインアップ
 	e.POST("/sign_up", controllers.Signup)
