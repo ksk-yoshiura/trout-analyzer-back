@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -57,6 +58,7 @@ func UploadToS3(image Image, image_file string) {
 		godotenv.Load("./backend/.env.prod")
 	}
 	S3_BUCKET := os.Getenv("S3_BUCKET")
+	fmt.Println(S3_BUCKET)
 	// セッション作成
 	sess := createSession()
 
@@ -67,6 +69,7 @@ func UploadToS3(image Image, image_file string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(decode)
 
 	// ファイル名
 	file_names := []string{
@@ -83,6 +86,7 @@ func UploadToS3(image Image, image_file string) {
 			Body:   bytes.NewReader(decode),
 		})
 		if err != nil {
+			fmt.Println(err)
 			log.Fatal(err)
 		}
 	}
