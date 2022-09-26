@@ -30,7 +30,7 @@ func createSession() *session.Session {
 		godotenv.Load("./backend/.env.prod")
 	}
 	S3_REGION := os.Getenv("S3_REGION")
-	S3_ENDPOINT := os.Getenv("S3_ENDPOINT")
+	// S3_ENDPOINT := os.Getenv("S3_ENDPOINT")
 	// 特に設定しなくても環境変数にセットしたクレデンシャル情報を利用して接続してくれる
 	cfg := aws.Config{
 		Region: aws.String(S3_REGION),
