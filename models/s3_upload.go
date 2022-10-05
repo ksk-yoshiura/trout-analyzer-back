@@ -33,9 +33,9 @@ func createSession() *session.Session {
 	S3_ENDPOINT := os.Getenv("S3_ENDPOINT")
 	// 特に設定しなくても環境変数にセットしたクレデンシャル情報を利用して接続してくれる
 	cfg := aws.Config{
-		Region:   aws.String(S3_REGION),
-		Endpoint: aws.String(S3_ENDPOINT), // コンテナ内からアクセスする場合はホストをサービス名で指定
-		// S3ForcePathStyle: aws.Bool(true),          // ローカルで動かす場合は必須
+		Region:           aws.String(S3_REGION),
+		Endpoint:         aws.String(S3_ENDPOINT), // コンテナ内からアクセスする場合はホストをサービス名で指定
+		S3ForcePathStyle: aws.Bool(true),          // ローカルで動かす場合は必須
 	}
 	return session.Must(session.NewSession(&cfg))
 }
