@@ -14,6 +14,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/joho/godotenv"
 )
@@ -50,8 +51,23 @@ func CreateImageName() string {
 	return hex.EncodeToString(sha256[:])
 }
 
+/** バケット一覧取得 */
+func checkBucket() {
+	// セッション作成
+	sess := createSession()
+	svc := s3.New(sess)
+
+	result, _ := svc.ListBuckets(nil)
+	fmt.Println("Buckets:")
+
+	for _, b := range result.Buckets {
+		fmt.Printf("* %s created on %s\n", aws.StringValue(b.Name), aws.TimeValue(b.CreationDate))
+	}
+}
+
 /** S3にアップロード */
 func UploadToS3(image Image, image_file string) {
+	checkBucket()
 	// 読み込み
 	err := godotenv.Load()
 	if err != nil { // 本番環境には.envは置いていない
