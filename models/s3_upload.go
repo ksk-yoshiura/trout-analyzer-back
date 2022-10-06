@@ -57,7 +57,10 @@ func checkBucket() {
 	sess := createSession()
 	svc := s3.New(sess)
 
-	result, _ := svc.ListBuckets(nil)
+	result, err := svc.ListBuckets(nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println("Buckets:")
 
 	for _, b := range result.Buckets {
@@ -74,7 +77,7 @@ func UploadToS3(image Image, image_file string) {
 		godotenv.Load("./backend/.env.prod")
 	}
 	S3_BUCKET := os.Getenv("S3_BUCKET")
-	fmt.Println(S3_BUCKET)
+	fmt.Printf("bucket :%s", err)
 	// セッション作成
 	sess := createSession()
 
