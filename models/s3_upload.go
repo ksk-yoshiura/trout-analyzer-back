@@ -61,8 +61,8 @@ func checkBucket() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Buckets error:%s", err)
-	fmt.Printf("Buckets result:%s", result)
+	fmt.Printf("Buckets error: %s\n", err)
+	fmt.Printf("Buckets result: %s\n", result)
 
 	for _, b := range result.Buckets {
 		fmt.Printf("* %s created on %s\n", aws.StringValue(b.Name), aws.TimeValue(b.CreationDate))
@@ -78,7 +78,7 @@ func UploadToS3(image Image, image_file string) {
 		godotenv.Load("./backend/.env.prod")
 	}
 	S3_BUCKET := os.Getenv("S3_BUCKET")
-	fmt.Printf("bucket :%s", err)
+	fmt.Printf("env file :%s \n", err)
 	// セッション作成
 	sess := createSession()
 
