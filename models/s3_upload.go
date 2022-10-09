@@ -61,7 +61,8 @@ func checkBucket() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Buckets:")
+	fmt.Printf("Buckets error:%s", err)
+	fmt.Printf("Buckets result:%s", result)
 
 	for _, b := range result.Buckets {
 		fmt.Printf("* %s created on %s\n", aws.StringValue(b.Name), aws.TimeValue(b.CreationDate))
