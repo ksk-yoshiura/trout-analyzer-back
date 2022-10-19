@@ -40,3 +40,10 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private[each.key].id
   subnet_id      = aws_subnet.private[each.key].id
 }
+
+// 画像アップロード用S3
+resource "aws_vpc_endpoint_route_table_association" "public_s3" {
+  for_each       = var.azs
+  route_table_id = aws_route_table.private[each.key].id
+  vpc_endpoint_id = aws_vpc_endpoint.s3_endpoint.id
+}
