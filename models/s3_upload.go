@@ -75,12 +75,14 @@ func UploadToS3(image Image, image_file string) {
 	}
 
 	// Uploaderを作成し、ローカルファイルをアップロード
+	acl := "public-read" // アクセス可能
 	uploader := s3manager.NewUploader(sess)
 	for _, file_name := range file_names {
 		_, err = uploader.Upload(&s3manager.UploadInput{
 			Bucket: aws.String(S3_BUCKET),
 			Key:    aws.String(file_name),
 			Body:   bytes.NewReader(decode),
+			ACL:    &acl,
 		})
 		if err != nil {
 			log.Fatal(err)
