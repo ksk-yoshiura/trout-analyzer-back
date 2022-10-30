@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"encoding/hex"
-	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -35,7 +34,7 @@ func createSession() *session.Session {
 	cfg := aws.Config{
 		Region: aws.String(S3_REGION),
 		// Endpoint:         aws.String(S3_ENDPOINT), // コンテナ内からアクセスする場合はホストをサービス名で指定。本番では無しでもいける
-		// S3ForcePathStyle: aws.Bool(true),          // ローカルで動かす場合は必須。本番では無しでもいける
+		// S3ForcePathStyle: aws.Bool(true), // ローカルで動かす場合は必須。本番では無しでもいける
 	}
 	return session.Must(session.NewSession(&cfg))
 }
@@ -58,7 +57,6 @@ func UploadToS3(image Image, image_file string) {
 		godotenv.Load("./backend/.env.prod")
 	}
 	S3_BUCKET := os.Getenv("S3_BUCKET")
-	fmt.Printf("env file :%s \n", err)
 	// セッション作成
 	sess := createSession()
 
@@ -85,7 +83,6 @@ func UploadToS3(image Image, image_file string) {
 			Body:   bytes.NewReader(decode),
 		})
 		if err != nil {
-			fmt.Printf("when upload :%s", err)
 			log.Fatal(err)
 		}
 	}
