@@ -14,7 +14,6 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/joho/godotenv"
 )
@@ -35,8 +34,8 @@ func createSession() *session.Session {
 	// 特に設定しなくても環境変数にセットしたクレデンシャル情報を利用して接続してくれる
 	cfg := aws.Config{
 		Region: aws.String(S3_REGION),
-		// Endpoint:         aws.String(S3_ENDPOINT), // コンテナ内からアクセスする場合はホストをサービス名で指定
-		// S3ForcePathStyle: aws.Bool(true),          // ローカルで動かす場合は必須
+		// Endpoint:         aws.String(S3_ENDPOINT), // コンテナ内からアクセスする場合はホストをサービス名で指定。本番では無しでもいける
+		// S3ForcePathStyle: aws.Bool(true),          // ローカルで動かす場合は必須。本番では無しでもいける
 	}
 	return session.Must(session.NewSession(&cfg))
 }
@@ -51,28 +50,8 @@ func CreateImageName() string {
 	return hex.EncodeToString(sha256[:])
 }
 
-/** バケット一覧取得 */
-func checkBucket() {
-	// セッション作成
-	sess := createSession()
-	svc := s3.New(sess)
-
-	result, err := svc.ListBuckets(nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("Buckets error: %s\n", err)
-	fmt.Printf("Buckets result: %s\n", result)
-
-	for _, b := range result.Buckets {
-		fmt.Println("inside loop")
-		fmt.Printf("* %s created on %s\n", aws.StringValue(b.Name), aws.TimeValue(b.CreationDate))
-	}
-}
-
 /** S3にアップロード */
 func UploadToS3(image Image, image_file string) {
-	checkBucket()
 	// 読み込み
 	err := godotenv.Load()
 	if err != nil { // 本番環境には.envは置いていない
