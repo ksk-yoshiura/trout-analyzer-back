@@ -102,8 +102,9 @@ resource "aws_iam_role_policy" "ecs_task_ssm" { // ECS EXECのため
             "ssmmessages:CreateDataChannel",
             "ssmmessages:OpenControlChannel",
             "ssmmessages:OpenDataChannel",
-            "s3:GetObject",
-            "s3:ListBucket",
+            "s3:*", // なぜかこれでアップロードできるようになった。なんで？？
+            "iam:GetGroup",
+            "ec2:*",
           ],
           "Resource" : "*"
         }
