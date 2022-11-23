@@ -26,12 +26,12 @@ resource "aws_s3_bucket" "public_image" { // 画像ファイル
     }
   }
 
-  # cors_rule {
-  #   allowed_origins = ["https://tranaza.com"] 
-  #   allowed_methods = ["GET"]
-  #   allowed_headers = ["*"]
-  #   max_age_seconds = 3000
-  # }
+  cors_rule {
+    allowed_origins = ["https://tranaza.com"] 
+    allowed_methods = ["GET"]
+    allowed_headers = ["*"]
+    max_age_seconds = 3000
+  }
 
   tags = {
     Name = "${local.name_prefix}-${local.service_name}-s3-image-uploade"
