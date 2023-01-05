@@ -25,16 +25,28 @@ type Image struct {
 func createSession() *session.Session {
 	// 読み込み
 	err := godotenv.Load()
+	var S3_ENDPOINT string
 	if err != nil { // 本番環境には.envは置いていない
 		godotenv.Load("./backend/.env.prod")
+	} else {
+		S3_ENDPOINT = os.Getenv("S3_ENDPOINT")
 	}
 	S3_REGION := os.Getenv("S3_REGION")
-	// S3_ENDPOINT := os.Getenv("S3_ENDPOINT")
 	// 特に設定しなくても環境変数にセットしたクレデンシャル情報を利用して接続してくれる
-	cfg := aws.Config{
-		Region: aws.String(S3_REGION),
-		// Endpoint:         aws.String(S3_ENDPOINT), // コンテナ内からアクセスする場合はホストをサービス名で指定。本番では無しでもいける
-		// S3ForcePathStyle: aws.Bool(true), // ローカルで動かす場合は必須。本番では無しでもいける
+	var cfg aws.Config
+	if err != nil { // 本番
+		cfg = aws.Config{
+			Region: aws.String(S3_REGION),
+			// Endpoint:         aws.String(S3_ENDPOINT), // コンテナ内からアクセスする場合はホストをサービス名で指定。本番では無しでもいける
+			S3ForcePathStyle: aws.Bool(true), // ローカルで動かす場合は必須。本番では無しでもいける
+		}
+	} else { // 開発環境
+		cfg = aws.Config{
+			Region:           aws.String(S3_REGION),
+			Endpoint:         aws.String(S3_ENDPOINT), // コンテナ内からアクセスする場合はホストをサービス名で指定。本番では無しでもいける
+			S3ForcePathStyle: aws.Bool(true),          // ローカルで動かす場合は必須。本番では無しでもいける
+		}
+
 	}
 	return session.Must(session.NewSession(&cfg))
 }
