@@ -15,7 +15,7 @@ type Field struct {
 	Name          string     `json:"name"`
 	UserId        int        `json:"user_id"`
 	Address       string     `json:"address"`
-	LastVisitedAt time.Time  `json:"last_visited_at"`
+	LastVisitedAt time.Time  `json:"lastVisitedAt"`
 }
 
 /**
