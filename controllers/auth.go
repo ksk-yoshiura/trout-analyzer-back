@@ -64,6 +64,7 @@ func Signup(c echo.Context) error {
  * ログイン
  */
 func Login(c echo.Context) error {
+	// 入力レコード
 	u := models.User{}
 	if err := c.Bind(&u); err != nil {
 		return err
@@ -71,12 +72,10 @@ func Login(c echo.Context) error {
 
 	// メールアドレスからユーザ-レコード取得
 	user := models.FindUser(models.User{Email: u.Email})
-	// ユーザーパスワード
-	hash, _ := HashPassword(user.Password)
 	// パスワードチェック
-	match := CheckPasswordHash(hash, user.Password)
+	match := CheckPasswordHash(user.Password, u.Password)
 
-	if user.ID == 0 || !match {
+	if user.ID == 0 || !match { // 既存ユーザーおよびパスワードが合致するか
 		return &echo.HTTPError{
 			Code:    http.StatusUnauthorized,
 			Message: "invalid email or password",
