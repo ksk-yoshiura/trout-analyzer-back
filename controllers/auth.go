@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -75,7 +74,7 @@ func Login(c echo.Context) error {
 	// ユーザーパスワード
 	hash, _ := HashPassword(user.Password)
 	// パスワードチェック
-	match := CheckPasswordHash(user.Password, hash)
+	match := CheckPasswordHash(hash, user.Password)
 
 	if user.ID == 0 || !match {
 		return &echo.HTTPError{
@@ -108,29 +107,41 @@ func Login(c echo.Context) error {
  */
 func ResetPassword(c echo.Context) error {
 
-	current_password := c.FormValue("password")
-	fmt.Println(c.Request())
+	// データセット
+	n := models.NewPassword{}
+	if err := c.Bind(&n); err != nil {
+		return err
+	}
+	current_password := n.Password
 
 	// ユーザーIDからユーザ-レコード取得
 	uid := userIDFromToken(c)
 	u := models.User{}
 	user := models.GetUser(u, uid)
-
-	// 現在のパスワード
-	hash, _ := HashPassword(current_password)
 	// パスワードチェック
-	match := CheckPasswordHash(user.Password, hash)
+	match := CheckPasswordHash(user.Password, current_password)
 
-	if u.ID == 0 || !match {
+	if user.ID == 0 || !match { // 現在のパスワードが一致するか
 		return &echo.HTTPError{
 			Code:    http.StatusUnauthorized,
 			Message: "invalid password",
 		}
 	}
-	new_password := c.FormValue("newPassword")
-
+	// 新規パスワード
+	new_password := n.NewPassword
 	// ユーザーパスワード暗号化
 	new_hash, _ := HashPassword(new_password)
+
+	// 確認パスワード
+	confirm_password := n.ConfirmPassword
+
+	if new_password != confirm_password {
+		return &echo.HTTPError{
+			Code:    http.StatusUnauthorized,
+			Message: "new password should match with the password confirm",
+		}
+	}
+
 	user.Password = new_hash
 	models.UpdateUser(user, uid)
 
@@ -158,7 +169,7 @@ func HashPassword(password string) (string, error) {
 /**
  * パスワードチェック
  */
-func CheckPasswordHash(password, hash string) bool {
+func CheckPasswordHash(hash, password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
 	return err == nil
 }

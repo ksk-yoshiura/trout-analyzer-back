@@ -43,7 +43,7 @@ func newRouter() *echo.Echo {
 	api.Use(middleware.JWTWithConfig(controllers.Config))
 
 	// パスワード再設定
-	// api.POST("/reset_password", controllers.ResetPassword)
+	api.POST("/reset_password", controllers.ResetPassword)
 	// ユーザコントローラー
 	usersController := controllers.NewUsersController()
 

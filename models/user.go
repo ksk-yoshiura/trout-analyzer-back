@@ -16,6 +16,12 @@ type User struct {
 	GroupId   int    `json:"groupId"`
 }
 
+type NewPassword struct {
+	Password        string `json:"password"`
+	NewPassword     string `json:"new_password"`
+	ConfirmPassword string `json:"confirm_password"`
+}
+
 /**
   ログイン時ユーザを検索
 */
