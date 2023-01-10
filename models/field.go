@@ -59,17 +59,36 @@ func GetField(field Field, field_id int, uid int) Field {
 /**
   フィールド更新
 */
-func UpdateField(f Field, field_id int) error {
-	var field Field
+func UpdateField(field Field, field_id int, image Image) error {
+	// フィールド画像モデル
+	var field_image FieldImage
 	db := database.GetDBConn()
-	// ログインユーザは自分のフィールドしか見れない
-	db.Where("user_id = ?", f.UserId).First(&field, field_id)
 
-	result := db.Model(&field).Updates(Field{
-		Name:    f.Name,
-		UserId:  f.UserId,
-		Address: f.Address,
-	}).Error
+	result := db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Where("user_id = ? AND id = ?", field.UserId, field_id).First(&field, field_id).Updates(&field).Error; err != nil {
+			// エラーの場合ロールバックされる
+			return err
+		}
+
+		if (Image{}) != image { // 画像データがセットされている場合
+			// 画像データにフィールドIDをセット
+			field_image.FieldId = field.ID
+			file_name := CreateImageName()
+			image_path := "/field_image/" + strconv.Itoa(field.UserId) + "/" + file_name
+			field_image.ImageFile = image_path
+
+			if err := tx.Where("user_id = ? AND id = ?", field.UserId, field_id).Updates(&field_image).Error; err != nil {
+				// エラーの場合ロールバックされる
+				return err
+			}
+
+			// S3に画像アップロード
+			UploadToS3(image, image_path)
+
+		}
+		// nilが返却されるとトランザクション内の全処理がコミットされる
+		return nil
+	})
 	return result
 }
 

@@ -76,12 +76,18 @@ func (uc *FieldsController) Update(c echo.Context) error {
 		return err
 	}
 
+	// 画像
+	image := models.Image{}
+	if err := c.Bind(&image); err != nil {
+		return err
+	}
+
 	// トークンからユーザID取得
 	uid := userIDFromToken(c)
 	field.UserId = uid
 
 	// 更新
-	result := models.UpdateField(field, field_id)
+	result := models.UpdateField(field, field_id, image)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
