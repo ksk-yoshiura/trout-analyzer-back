@@ -65,7 +65,7 @@ func UpdateField(field Field, field_id int, image Image) error {
 	db := database.GetDBConn()
 
 	result := db.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Where("user_id = ? AND id = ?", field.UserId, field_id).First(&field, field_id).Updates(&field).Error; err != nil {
+		if err := tx.Where("user_id = ? AND id = ?", field.UserId, field_id).Updates(&field).Error; err != nil {
 			// エラーの場合ロールバックされる
 			return err
 		}
@@ -77,7 +77,7 @@ func UpdateField(field Field, field_id int, image Image) error {
 			image_path := "/field_image/" + strconv.Itoa(field.UserId) + "/" + file_name
 			field_image.ImageFile = image_path
 
-			if err := tx.Where("user_id = ? AND id = ?", field.UserId, field_id).Updates(&field_image).Error; err != nil {
+			if err := tx.Where("field_id = ?", field_id).Updates(&field_image).Error; err != nil {
 				// エラーの場合ロールバックされる
 				return err
 			}
