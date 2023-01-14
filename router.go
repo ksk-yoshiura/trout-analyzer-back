@@ -122,7 +122,7 @@ func newRouter() *echo.Echo {
 	// ヒットパターンコントローラー
 	hitPatternsController := controllers.NewHitPatternsController()
 
-	api.GET("/patterns/list/:record_id", hitPatternsController.Index)
+	api.GET("/patterns/:record_id/list", hitPatternsController.Index)
 	api.GET("/patterns/:id", hitPatternsController.Show)
 	api.PUT("/patterns/:id", hitPatternsController.Update)
 	api.POST("/patterns", hitPatternsController.Create)
@@ -131,9 +131,9 @@ func newRouter() *echo.Echo {
 	// パターン分析コントローラー
 	PatternAnalysisController := controllers.NewPatternAnalysisController()
 
-	api.GET("/pattern/analysis/color_weather/:record_id/:result", PatternAnalysisController.GetColorWeatherRelation)
-	api.GET("/pattern/analysis/color_depth/:record_id/:result", PatternAnalysisController.GetColorDepthRelation)
-	api.GET("/pattern/analysis/color_type/:record_id/:result", PatternAnalysisController.GetColorLureTypeRelation)
+	api.GET("/pattern/:record_id/analysis/color_weather/:result", PatternAnalysisController.GetColorWeatherRelation)
+	api.GET("/pattern/:record_id/analysis/color_depth/:result", PatternAnalysisController.GetColorDepthRelation)
+	api.GET("/pattern/:record_id/analysis/color_type/:result", PatternAnalysisController.GetColorLureTypeRelation)
 
 	// ルアータイプコントローラー
 	LureTypesController := controllers.NewLureTypesController()
