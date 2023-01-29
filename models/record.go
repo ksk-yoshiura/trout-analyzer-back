@@ -33,7 +33,7 @@ func GetAllRecords(records []Record, uid int) []Record {
 	db := database.GetDBConn()
 
 	// ログインユーザは自分のレコードしか見れない
-	db.Preload("Field.FieldImage").Find(&records)
+	db.Preload("Field.FieldImage").Where("user_id = ?", uid).Find(&records)
 	return records
 }
 
