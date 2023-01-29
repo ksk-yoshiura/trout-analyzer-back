@@ -235,7 +235,7 @@ CREATE TABLE lure_images (
 CREATE TABLE colors (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) DEFAULT NULL,
-  `code` text DEFAULT NULL,
+  `code` VARCHAR(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `deleted_at` timestamp DEFAULT NULL,
