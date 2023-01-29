@@ -68,7 +68,7 @@ func GetColorWeatherAnalysis(result_param string, uid int, record_id int) []Colo
 		ORDER BY color_code ASC, result_type ASC, weather_id ASC
 		`
 
-	db.Debug().Raw(sql, uid, record_id, pattern_weather, result_param).Scan(&result)
+	db.Raw(sql, uid, record_id, pattern_weather, result_param).Scan(&result)
 	return result
 }
 
@@ -109,7 +109,7 @@ func GetColorDepthAnalysis(result_param string, uid int, record_id int) []ColorD
 		ORDER BY color_code ASC, result_type ASC, depth_id ASC
 		`
 
-	db.Debug().Raw(sql, uid, record_id, pattern_depth, result_param).Scan(&result)
+	db.Raw(sql, uid, record_id, pattern_depth, result_param).Scan(&result)
 	return result
 }
 
@@ -150,6 +150,6 @@ func GetColorLureTypeAnalysis(result_param string, uid int, record_id int) []Col
 		ORDER BY color_code ASC, result_type ASC, lure_type_id ASC
 		`
 
-	db.Debug().Raw(sql, uid, record_id, result_param).Scan(&result)
+	db.Raw(sql, uid, record_id, result_param).Scan(&result)
 	return result
 }
