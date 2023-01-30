@@ -59,19 +59,36 @@ func GetRod(rod Rod, rod_id int, uid int) Rod {
 /**
   ロッド更新
 */
-func UpdateRod(r Rod, rod_id int) error {
-	var rod Rod
+func UpdateRod(rod Rod, rod_id int, image Image) error {
+	// ロッド画像モデル
+	var rod_image RodImage
 	db := database.GetDBConn()
-	// ログインユーザは自分のロッドしか見れない
-	db.Where("user_id = ?", r.UserId).First(&rod, rod_id)
 
-	result := db.Model(&rod).Updates(Rod{
-		Name:        r.Name,
-		UserId:      r.UserId,
-		Hardness:    r.Hardness,
-		Length:      r.Length,
-		CompanyName: r.CompanyName,
-	}).Error
+	result := db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Where("user_id = ? AND id = ?", rod.UserId, rod_id).Updates(&rod).Error; err != nil {
+			// エラーの場合ロールバックされる
+			return err
+		}
+
+		if (Image{}) != image { // 画像データがセットされている場合
+			// 画像データにロッドIDをセット
+			rod_image.RodId = rod.ID
+			file_name := CreateImageName()
+			image_path := "/rod_image/" + strconv.Itoa(rod.UserId) + "/" + file_name
+			rod_image.ImageFile = image_path
+
+			if err := tx.Where("rod_id = ?", rod_id).Updates(&rod_image).Error; err != nil {
+				// エラーの場合ロールバックされる
+				return err
+			}
+
+			// S3に画像アップロード
+			UploadToS3(image, image_path)
+
+		}
+		// nilが返却されるとトランザクション内の全処理がコミットされる
+		return nil
+	})
 	return result
 }
 
