@@ -3,6 +3,7 @@ package models
 import (
 	"trout-analyzer-back/database"
 
+	validation "github.com/go-ozzo/ozzo-validation"
 	"gorm.io/gorm"
 )
 
@@ -20,6 +21,23 @@ type NewPassword struct {
 	Password        string `json:"password"`
 	NewPassword     string `json:"new_password"`
 	ConfirmPassword string `json:"confirm_password"`
+}
+
+/**
+バリデーション
+*/
+func (user User) Validate() error {
+	return validation.ValidateStruct(&user,
+		validation.Field(
+			&user.Email,
+			validation.Required.Error("Email is required"),
+		),
+		validation.Field(
+			&user.Password,
+			validation.RuneLength(8, 80).Error("Password should be more than 8 letters"),
+			validation.Required.Error("Password is required"),
+		),
+	)
 }
 
 /**
