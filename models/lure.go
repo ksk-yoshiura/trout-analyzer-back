@@ -79,20 +79,36 @@ func GetLure(lure Lure, lure_id int, uid int) Lure {
 /**
   ルアー更新
 */
-func UpdateLure(l Lure, lure_id int, uid int) error {
-	var lure Lure
+func UpdateLure(lure Lure, lure_id int, image Image) error {
+	// ルアー画像モデル
+	var lure_image LureImage
 	db := database.GetDBConn()
-	// ログインユーザは自分のルアーしか見れない
-	db.Where("user_id = ?", uid).First(&lure, lure_id)
 
-	result := db.Model(&lure).Updates(Lure{
-		Name:        l.Name,
-		UserId:      l.UserId,
-		LureTypeId:  l.LureTypeId,
-		CompanyName: l.CompanyName,
-		ColorId:     l.ColorId,
-		Weight:      l.Weight,
-	}).Error
+	result := db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Where("user_id = ? AND id = ?", lure.UserId, lure_id).Updates(&lure).Error; err != nil {
+			// エラーの場合ロールバックされる
+			return err
+		}
+
+		if (Image{}) != image { // 画像データがセットされている場合
+			// 画像データにルアーIDをセット
+			lure_image.LureId = lure.ID
+			file_name := CreateImageName()
+			image_path := "/lure_image/" + strconv.Itoa(lure.UserId) + "/" + file_name
+			lure_image.ImageFile = image_path
+
+			if err := tx.Where("lure_id = ?", lure_id).Updates(&lure_image).Error; err != nil {
+				// エラーの場合ロールバックされる
+				return err
+			}
+
+			// S3に画像アップロード
+			UploadToS3(image, image_path)
+
+		}
+		// nilが返却されるとトランザクション内の全処理がコミットされる
+		return nil
+	})
 	return result
 }
 
