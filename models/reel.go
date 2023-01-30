@@ -60,18 +60,36 @@ func GetReel(reel Reel, reel_id int, uid int) Reel {
 /**
   リール更新
 */
-func UpdateReel(r Reel, reel_id int) error {
-	var reel Reel
+func UpdateReel(reel Reel, reel_id int, image Image) error {
+	// リール画像モデル
+	var reel_image ReelImage
 	db := database.GetDBConn()
-	db.First(&reel, reel_id)
 
-	result := db.Model(&reel).Updates(Reel{
-		Name:        r.Name,
-		UserId:      r.UserId,
-		TypeNumber:  r.TypeNumber,
-		Gear:        r.Gear,
-		CompanyName: r.CompanyName,
-	}).Error
+	result := db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Where("user_id = ? AND id = ?", reel.UserId, reel_id).Updates(&reel).Error; err != nil {
+			// エラーの場合ロールバックされる
+			return err
+		}
+
+		if (Image{}) != image { // 画像データがセットされている場合
+			// 画像データにリールIDをセット
+			reel_image.ReelId = reel.ID
+			file_name := CreateImageName()
+			image_path := "/reel_image/" + strconv.Itoa(reel.UserId) + "/" + file_name
+			reel_image.ImageFile = image_path
+
+			if err := tx.Where("reel_id = ?", reel_id).Updates(&reel_image).Error; err != nil {
+				// エラーの場合ロールバックされる
+				return err
+			}
+
+			// S3に画像アップロード
+			UploadToS3(image, image_path)
+
+		}
+		// nilが返却されるとトランザクション内の全処理がコミットされる
+		return nil
+	})
 	return result
 }
 

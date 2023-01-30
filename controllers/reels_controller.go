@@ -83,12 +83,18 @@ func (uc *ReelsController) Update(c echo.Context) error {
 		return err
 	}
 
+	// 画像
+	image := models.Image{}
+	if err := c.Bind(&image); err != nil {
+		return err
+	}
+
 	// トークンからユーザID取得
 	uid := userIDFromToken(c)
 	reel.UserId = uid
 
 	// 更新
-	result := models.UpdateReel(reel, reel_id)
+	result := models.UpdateReel(reel, reel_id, image)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
