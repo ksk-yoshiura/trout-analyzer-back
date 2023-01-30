@@ -74,6 +74,15 @@ func (uc *FishingLinesController) Update(c echo.Context) error {
 		return err
 	}
 
+	// バリデーション
+	if err := c.Validate(fishing_line); err != nil {
+		errs := err.(validation.Errors)
+		for k, err := range errs {
+			c.Logger().Error(k + ": " + err.Error())
+		}
+		return err
+	}
+
 	// トークンからユーザID取得
 	uid := userIDFromToken(c)
 	fishing_line.UserId = uid

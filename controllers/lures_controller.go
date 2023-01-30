@@ -85,6 +85,15 @@ func (uc *LuresController) Update(c echo.Context) error {
 		return err
 	}
 
+	// バリデーション
+	if err := c.Validate(lure); err != nil {
+		errs := err.(validation.Errors)
+		for k, err := range errs {
+			c.Logger().Error(k + ": " + err.Error())
+		}
+		return err
+	}
+
 	// トークンからユーザID取得
 	uid := userIDFromToken(c)
 	lure.UserId = uid

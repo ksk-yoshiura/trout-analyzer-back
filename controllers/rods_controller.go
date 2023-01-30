@@ -74,6 +74,15 @@ func (uc *RodsController) Update(c echo.Context) error {
 		return err
 	}
 
+	// バリデーション
+	if err := c.Validate(rod); err != nil {
+		errs := err.(validation.Errors)
+		for k, err := range errs {
+			c.Logger().Error(k + ": " + err.Error())
+		}
+		return err
+	}
+
 	// トークンからユーザID取得
 	uid := userIDFromToken(c)
 	rod.UserId = uid

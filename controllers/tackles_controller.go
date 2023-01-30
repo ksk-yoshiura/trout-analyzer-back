@@ -67,8 +67,18 @@ func (uc *TacklesController) Update(c echo.Context) error {
 		return echo.ErrNotFound
 	}
 
+	// データセット
 	tackle := models.Tackle{}
 	if err := c.Bind(&tackle); err != nil {
+		return err
+	}
+
+	// バリデーション
+	if err := c.Validate(tackle); err != nil {
+		errs := err.(validation.Errors)
+		for k, err := range errs {
+			c.Logger().Error(k + ": " + err.Error())
+		}
 		return err
 	}
 

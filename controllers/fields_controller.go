@@ -76,6 +76,15 @@ func (uc *FieldsController) Update(c echo.Context) error {
 		return err
 	}
 
+	// バリデーション
+	if err := c.Validate(field); err != nil {
+		errs := err.(validation.Errors)
+		for k, err := range errs {
+			c.Logger().Error(k + ": " + err.Error())
+		}
+		return err
+	}
+
 	// 画像
 	image := models.Image{}
 	if err := c.Bind(&image); err != nil {
