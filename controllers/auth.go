@@ -9,6 +9,7 @@ import (
 	"trout-analyzer-back/models"
 
 	jwt "github.com/dgrijalva/jwt-go"
+	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
@@ -36,11 +37,13 @@ func Signup(c echo.Context) error {
 		return err
 	}
 
-	if user.Email == "" || user.Password == "" {
-		return &echo.HTTPError{
-			Code:    http.StatusBadRequest,
-			Message: "invalid email or password",
+	// バリデーション
+	if err := c.Validate(user); err != nil {
+		errs := err.(validation.Errors)
+		for k, err := range errs {
+			c.Logger().Error(k + ": " + err.Error())
 		}
+		return err
 	}
 
 	if u := models.FindUser(models.User{Email: user.Email}); u.ID != 0 {
