@@ -59,19 +59,36 @@ func GetLine(fishing_line FishingLine, line_id int, uid int) FishingLine {
 /**
   ライン更新
 */
-func UpdateLine(f FishingLine, line_id int) error {
-	var fishing_line FishingLine
+func UpdateLine(fishing_line FishingLine, line_id int, image Image) error {
+	// ライン画像モデル
+	var fishing_line_image LineImage
 	db := database.GetDBConn()
 
-	db.First(&fishing_line, line_id)
+	result := db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Where("user_id = ? AND id = ?", fishing_line.UserId, line_id).Updates(&fishing_line).Error; err != nil {
+			// エラーの場合ロールバックされる
+			return err
+		}
 
-	result := db.Model(&fishing_line).Updates(FishingLine{
-		Name:        f.Name,
-		UserId:      f.UserId,
-		LineTypeId:  f.LineTypeId,
-		Thickness:   f.Thickness,
-		CompanyName: f.CompanyName,
-	}).Error
+		if (Image{}) != image { // 画像データがセットされている場合
+			// 画像データにラインIDをセット
+			fishing_line_image.LineId = fishing_line.ID
+			file_name := CreateImageName()
+			image_path := "/fishing_line_image/" + strconv.Itoa(fishing_line.UserId) + "/" + file_name
+			fishing_line_image.ImageFile = image_path
+
+			if err := tx.Where("line_id = ?", line_id).Updates(&fishing_line_image).Error; err != nil {
+				// エラーの場合ロールバックされる
+				return err
+			}
+
+			// S3に画像アップロード
+			UploadToS3(image, image_path)
+
+		}
+		// nilが返却されるとトランザクション内の全処理がコミットされる
+		return nil
+	})
 	return result
 }
 

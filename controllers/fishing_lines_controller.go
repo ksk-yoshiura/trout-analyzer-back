@@ -83,11 +83,17 @@ func (uc *FishingLinesController) Update(c echo.Context) error {
 		return err
 	}
 
+	// 画像
+	image := models.Image{}
+	if err := c.Bind(&image); err != nil {
+		return err
+	}
+
 	// トークンからユーザID取得
 	uid := userIDFromToken(c)
 	fishing_line.UserId = uid
 
-	result := models.UpdateLine(fishing_line, line_id)
+	result := models.UpdateLine(fishing_line, line_id, image)
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,
