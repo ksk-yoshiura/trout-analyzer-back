@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -75,10 +76,9 @@ func Login(c echo.Context) error {
 
 	// メールアドレスからユーザ-レコード取得
 	user := models.FindUser(models.User{Email: u.Email})
-	hashedPassword := "$2a$10$LOzS79niq4E.hu8aib4GeuXVSII9OsYB.ReF/.BjqItfhaSnzWba6"
-	inputPassword := "mypassword1234!"
+	fmt.Printf("Email2: %s", user.Email)
 	// パスワードチェック
-	match := CheckPasswordHash(hashedPassword, inputPassword)
+	match := CheckPasswordHash(user.Password, u.Password)
 
 	if user.ID == 0 || !match { // 既存ユーザーおよびパスワードが合致するか
 		return &echo.HTTPError{
@@ -148,7 +148,6 @@ func ResetPassword(c echo.Context) error {
 
 	user.Password = new_hash
 	models.UpdateUser(user, uid)
-
 	return c.JSON(http.StatusCreated, u)
 }
 
@@ -166,7 +165,7 @@ func userIDFromToken(c echo.Context) int {
  * パスワードハッシュ化
  */
 func HashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
 	return string(bytes), err
 }
 
