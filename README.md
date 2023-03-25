@@ -5,6 +5,8 @@
 正式名称をTranazaに決めました。
 このリポジトリにはSPAのバックエンド（Golang）とIaC（Terraform）が含まれています。  
 実際にアプリとして使用する場合、trout-analyzer-frontを同時に起動させる必要があります。
+フロントエンド  
+https://github.com/ksk-yoshiura/trout-analyzer-front  
 
 ## 背景
 管理釣り場でルアーによるトラウト釣りに近年ハマり、ちょうど個人アプリを作りたいと持っていたところでしたので、自分の腕を向上させるアプリを作れないかと思い、本アプリの作製を開始しました。管理釣り場におけるトラウト釣りが他と大きく異なるところは魚のいる場所を探す必要がないという点です。つまり適切なルアーを選択し、いい感じに動かせる技術が釣果への大きなウェイトを占めています。したがって、選択したルアーおよびルアーと相性のいい道具（竿、リール、ライン）、天候、釣果（釣れたのか、反応がないのかなど）を記録できて、各項目の相関がグラフで表示できれば、次の釣行への対策が練りやすいのではと考えました。
@@ -24,6 +26,24 @@
 ## 起動方法
 - git cloneします。
 - ルート配下に.envを設置して、.envにはDB、minio（S3）、AWS（minio用）を記載してください。
+```
+DB_USER=root
+DB_PASSWORD=pass
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE_NAME=trout_analyzer
+
+S3_ENDPOINT=http://minio:9000
+S3_BUCKET=trout-analyzer-upload
+S3_REGION=ap-northeast-1
+
+AWS_ACCESS_KEY_ID=minio
+AWS_SECRET_ACCESS_KEY=minio123
+AWS_DEFAULT_REGION=ap-northeast-1
+AWS_BUCKET=develop
+AWS_PATH_STYLE_ENDPOINT=true
+
+```
 - ` cd trout-analyzer-back `で移動してください。
 - `docker-compose up -d`で起動してください。
 - ホットリロードは、`docker-compose exec app bash`後に` air `を打つと動作します。  
