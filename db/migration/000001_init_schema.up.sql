@@ -260,7 +260,7 @@ INSERT INTO pattern_conditions
 (`id`, `type_num`, `type_name`, `created_at`, `updated_at`, `deleted_at`) 
 VALUES 
 (null, 1, "caught",  "2021-12-01 00:00:00", "2021-12-01 00:00:00", null),
-(null, 1, "bite", "2021-12-01 00:00:00", "2021-12-01 00:00:00", null),
+(null, 1, "bit", "2021-12-01 00:00:00", "2021-12-01 00:00:00", null),
 (null, 1, "chased", "2021-12-01 00:00:00", "2021-12-01 00:00:00", null),
 (null, 1, "no reaction", "2021-12-01 00:00:00", "2021-12-01 00:00:00", null),
 (null, 2, "super fast",  "2021-12-01 00:00:00", "2021-12-01 00:00:00", null),
