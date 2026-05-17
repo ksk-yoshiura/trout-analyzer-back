@@ -70,7 +70,7 @@ func (uc *TacklesController) Update(c echo.Context) error {
 	// データセット
 	tackle := models.Tackle{}
 	if err := c.Bind(&tackle); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// バリデーション
@@ -103,7 +103,7 @@ func (uc *TacklesController) Create(c echo.Context) error {
 	// データセット
 	tackle := models.Tackle{}
 	if err := c.Bind(&tackle); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// バリデーション

@@ -82,7 +82,7 @@ func (uc *LuresController) Update(c echo.Context) error {
 	// データセット
 	lure := models.Lure{}
 	if err := c.Bind(&lure); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// バリデーション
@@ -97,7 +97,7 @@ func (uc *LuresController) Update(c echo.Context) error {
 	// 画像
 	image := models.Image{}
 	if err := c.Bind(&image); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// トークンからユーザID取得
@@ -121,7 +121,7 @@ func (uc *LuresController) Create(c echo.Context) error {
 	// データセット
 	lure := models.Lure{}
 	if err := c.Bind(&lure); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// バリデーション
@@ -136,7 +136,7 @@ func (uc *LuresController) Create(c echo.Context) error {
 	// 画像
 	image := models.Image{}
 	if err := c.Bind(&image); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// トークンからユーザID取得

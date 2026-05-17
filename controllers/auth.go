@@ -3,30 +3,69 @@ package controllers
 import (
 	"fmt"
 	"net/http"
+	"os"
+	"strings"
+	"sync"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
 
 	"trout-analyzer-back/models"
 
-	jwt "github.com/dgrijalva/jwt-go"
 	validation "github.com/go-ozzo/ozzo-validation"
+	jwt "github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
 )
 
 type jwtCustomClaims struct {
 	UID   int    `json:"uid"`
 	Email string `json:"email"`
 
-	jwt.StandardClaims
+	jwt.RegisteredClaims
 }
 
-var signingKey = []byte("secret")
+var (
+	signingKey     []byte
+	signingKeyOnce sync.Once
+)
 
-var Config = middleware.JWTConfig{
-	Claims:     &jwtCustomClaims{},
-	SigningKey: signingKey,
+func getSigningKey() []byte {
+	signingKeyOnce.Do(func() {
+		key := os.Getenv("JWT_SECRET")
+		if key == "" {
+			panic("JWT_SECRET environment variable is not set")
+		}
+		signingKey = []byte(key)
+	})
+	return signingKey
+}
+
+// JWTMiddleware はリクエストのAuthorizationヘッダーからJWTトークンを検証するミドルウェア
+func JWTMiddleware() echo.MiddlewareFunc {
+	return func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			authHeader := c.Request().Header.Get("Authorization")
+			if authHeader == "" {
+				return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "missing authorization header"}
+			}
+			parts := strings.SplitN(authHeader, " ", 2)
+			if len(parts) != 2 || parts[0] != "Bearer" {
+				return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "invalid authorization header format"}
+			}
+			claims := &jwtCustomClaims{}
+			token, err := jwt.ParseWithClaims(parts[1], claims, func(token *jwt.Token) (any, error) {
+				if token.Method != jwt.SigningMethodHS256 {
+					return nil, &echo.HTTPError{Code: http.StatusUnauthorized, Message: "unexpected signing method"}
+				}
+				return getSigningKey(), nil
+			})
+			if err != nil || !token.Valid {
+				return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "invalid or expired token"}
+			}
+			c.Set("user", token)
+			return next(c)
+		}
+	}
 }
 
 /**
@@ -35,7 +74,7 @@ var Config = middleware.JWTConfig{
 func Signup(c echo.Context) error {
 	user := models.User{}
 	if err := c.Bind(&user); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// バリデーション
@@ -71,7 +110,7 @@ func Login(c echo.Context) error {
 	// 入力レコード
 	u := models.User{}
 	if err := c.Bind(&u); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// メールアドレスからユーザ-レコード取得
@@ -88,15 +127,15 @@ func Login(c echo.Context) error {
 	}
 
 	claims := &jwtCustomClaims{
-		int(user.ID),
-		user.Email,
-		jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(time.Hour * 72).Unix(),
+		UID:   int(user.ID),
+		Email: user.Email,
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 72)),
 		},
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	t, err := token.SignedString(signingKey)
+	t, err := token.SignedString(getSigningKey())
 	if err != nil {
 		return err
 	}
@@ -114,7 +153,7 @@ func ResetPassword(c echo.Context) error {
 	// データセット
 	n := models.NewPassword{}
 	if err := c.Bind(&n); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	current_password := n.Password
 

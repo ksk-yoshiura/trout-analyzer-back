@@ -73,7 +73,7 @@ func (uc *FieldsController) Update(c echo.Context) error {
 	// データセット
 	field := models.Field{}
 	if err := c.Bind(&field); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// バリデーション
@@ -88,7 +88,7 @@ func (uc *FieldsController) Update(c echo.Context) error {
 	// 画像
 	image := models.Image{}
 	if err := c.Bind(&image); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// トークンからユーザID取得
@@ -112,7 +112,7 @@ func (uc *FieldsController) Create(c echo.Context) error {
 	// データセット
 	field := models.Field{}
 	if err := c.Bind(&field); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// バリデーション
@@ -127,7 +127,7 @@ func (uc *FieldsController) Create(c echo.Context) error {
 	// 画像
 	image := models.Image{}
 	if err := c.Bind(&image); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// トークンからユーザID取得
