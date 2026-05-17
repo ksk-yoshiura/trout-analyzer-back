@@ -20,7 +20,7 @@ https://github.com/ksk-yoshiura/trout-analyzer-front
 
 
 ## 使用技術
-- Golang 1.16
+- Golang 1.26
 - Tarraform 1.2.4
 
 ## 起動方法

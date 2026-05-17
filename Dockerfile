@@ -1,4 +1,4 @@
-FROM golang:1.16.3-buster
+FROM golang:1.26.3-bookworm
 # コンテナの作業ディレクトリにローカルのファイルをコピー
 WORKDIR /app
 COPY . /app
