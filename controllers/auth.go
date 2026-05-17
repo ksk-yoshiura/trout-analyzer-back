@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -22,7 +23,15 @@ type jwtCustomClaims struct {
 	jwt.StandardClaims
 }
 
-var signingKey = []byte("secret")
+var signingKey = getSigningKey()
+
+func getSigningKey() []byte {
+	key := os.Getenv("JWT_SECRET")
+	if key == "" {
+		panic("JWT_SECRET environment variable is not set")
+	}
+	return []byte(key)
+}
 
 var Config = middleware.JWTConfig{
 	Claims:     &jwtCustomClaims{},
