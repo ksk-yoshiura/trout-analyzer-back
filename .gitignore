@@ -5,6 +5,9 @@
 *.so
 *.dylib
 
+# Built binary
+trout-analyzer-back
+
 # Test binary, built with `go test -c`
 *.test
 
