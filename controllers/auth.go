@@ -46,7 +46,7 @@ func JWTMiddleware() echo.MiddlewareFunc {
 				return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "invalid authorization header format"}
 			}
 			claims := &jwtCustomClaims{}
-			token, err := jwt.ParseWithClaims(parts[1], claims, func(token *jwt.Token) (interface{}, error) {
+			token, err := jwt.ParseWithClaims(parts[1], claims, func(token *jwt.Token) (any, error) {
 				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 					return nil, &echo.HTTPError{Code: http.StatusUnauthorized, Message: "unexpected signing method"}
 				}
