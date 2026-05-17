@@ -2,13 +2,14 @@ package main
 
 import (
 	"net/http"
+	"os"
+	"strings"
 
 	"trout-analyzer-back/module"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 
-	// "github.com/x-color/simple-webapp/handler"
 	"trout-analyzer-back/controllers"
 )
 
@@ -25,8 +26,12 @@ func newRouter() *echo.Echo {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	// CORS対策
+	allowOrigins := []string{"http://localhost:3000"}
+	if origins := os.Getenv("ALLOWED_ORIGINS"); origins != "" {
+		allowOrigins = strings.Split(origins, ",")
+	}
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"http://localhost:3000"},
+		AllowOrigins: allowOrigins,
 		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
 	}))
 
@@ -40,20 +45,16 @@ func newRouter() *echo.Echo {
 
 	// /api 下はJWTの認証が必要
 	api := e.Group("/api")
-	api.Use(middleware.JWTWithConfig(controllers.Config))
+	api.Use(controllers.JWTMiddleware())
 
 	// パスワード再設定
 	api.POST("/reset_password", controllers.ResetPassword)
 	// ユーザコントローラー
 	usersController := controllers.NewUsersController()
 
-	// 確認用
-	e.GET("/users", usersController.Index)
-	// api.GET("/users", usersController.Index)
-	api.GET("/users", usersController.Show)
+	api.GET("/users", usersController.Index)
+	api.GET("/users/me", usersController.Show)
 	api.PUT("/users", usersController.Update)
-	api.POST("/users", usersController.Create)
-	api.POST("/users/:id", usersController.Delete)
 
 	// ルアーコントローラー
 	luresController := controllers.NewLuresController()

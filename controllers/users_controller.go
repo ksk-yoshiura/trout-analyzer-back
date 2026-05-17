@@ -52,7 +52,7 @@ func (uc *UsersController) Show(c echo.Context) error {
 func (uc *UsersController) Update(c echo.Context) error {
 	user := models.User{}
 	if err := c.Bind(&user); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 	uid := userIDFromToken(c)
 
@@ -71,7 +71,7 @@ func (uc *UsersController) Update(c echo.Context) error {
 func (uc *UsersController) Create(c echo.Context) error {
 	user := models.User{}
 	if err := c.Bind(&user); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	result := models.CreateUser(user)

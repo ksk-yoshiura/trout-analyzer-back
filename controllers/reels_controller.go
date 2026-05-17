@@ -71,7 +71,7 @@ func (uc *ReelsController) Update(c echo.Context) error {
 	// データセット
 	reel := models.Reel{}
 	if err := c.Bind(&reel); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// バリデーション
@@ -86,7 +86,7 @@ func (uc *ReelsController) Update(c echo.Context) error {
 	// 画像
 	image := models.Image{}
 	if err := c.Bind(&image); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// トークンからユーザID取得
@@ -110,7 +110,7 @@ func (uc *ReelsController) Create(c echo.Context) error {
 	// データセット
 	reel := models.Reel{}
 	if err := c.Bind(&reel); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// バリデーション
@@ -125,7 +125,7 @@ func (uc *ReelsController) Create(c echo.Context) error {
 	// 画像
 	image := models.Image{}
 	if err := c.Bind(&image); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// トークンからユーザID取得

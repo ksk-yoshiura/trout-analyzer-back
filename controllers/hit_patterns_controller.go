@@ -75,7 +75,7 @@ func (uc *HitPatternsController) Update(c echo.Context) error {
 	// データセット
 	hit_pattern := models.HitPattern{}
 	if err := c.Bind(&hit_pattern); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// トークンからユーザID取得
@@ -99,7 +99,7 @@ func (uc *HitPatternsController) Create(c echo.Context) error {
 	// データセット
 	hit_pattern := models.HitPattern{}
 	if err := c.Bind(&hit_pattern); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// トークンからユーザID取得

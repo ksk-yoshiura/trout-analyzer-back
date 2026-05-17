@@ -70,7 +70,7 @@ func (uc *RecordsController) Update(c echo.Context) error {
 	// データセット
 	record := models.Record{}
 	if err := c.Bind(&record); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// トークンからユーザID取得
@@ -94,7 +94,7 @@ func (uc *RecordsController) Create(c echo.Context) error {
 	// データセット
 	record := models.Record{}
 	if err := c.Bind(&record); err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
 	// トークンからユーザID取得
