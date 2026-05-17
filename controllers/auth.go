@@ -11,8 +11,8 @@ import (
 
 	"trout-analyzer-back/models"
 
-	jwt "github.com/golang-jwt/jwt/v5"
 	validation "github.com/go-ozzo/ozzo-validation"
+	jwt "github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo"
 )
 
