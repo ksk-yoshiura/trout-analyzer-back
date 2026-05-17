@@ -29,18 +29,14 @@ func TestUserValidate(t *testing.T) {
 }
 
 func TestFindUser(t *testing.T) {
-	t.Run("success CreateUser()", func(t *testing.T) {
+	t.Run("success FindUser()", func(t *testing.T) {
 		u := models.User{Email: "nakata@example.com"}
 		user := models.FindUser(u)
 
-		if user == nil {
-			t.Errorf("failed CreateUser()")
-		}
-
-		assert.Equal(t, u.Password, user.Password)
+		assert.NotEqual(t, models.User{}, user, "failed FindUser()")
 		assert.Equal(t, u.Email, user.Email)
 
-		t.Logf("user: %p", user)
+		t.Logf("user: %+v", user)
 		t.Logf("user.Password: %s", user.Password)
 		t.Logf("user.Email: %s", user.Email)
 	})
@@ -53,17 +49,15 @@ func TestCreateUser(t *testing.T) {
 		u := models.User{}
 		u.Password = "password"
 		u.Email = "nakata@example.com"
-		user := models.CreateUser(u)
+		err := models.CreateUser(u)
 
-		if user == nil {
-			t.Errorf("failed CreateUser()")
-		}
+		assert.NoError(t, err, "failed CreateUser()")
 
-		assert.Equal(t, u.Password, user.Password)
-		assert.Equal(t, u.Email, user.Email)
+		created := models.FindUser(models.User{Email: u.Email})
+		assert.NotEqual(t, models.User{}, created, "failed CreateUser()")
+		assert.Equal(t, u.Email, created.Email)
 
-		t.Logf("user: %p", user)
-		t.Logf("user.Password: %s", user.Password)
-		t.Logf("user.Email: %s", user.Email)
+		t.Logf("user: %+v", created)
+		t.Logf("user.Email: %s", created.Email)
 	})
 }
