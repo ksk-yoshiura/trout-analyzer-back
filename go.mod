@@ -1,6 +1,6 @@
 module trout-analyzer-back
 
-go 1.16
+go 1.26
 
 require (
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
@@ -14,6 +14,7 @@ require (
 	github.com/joho/godotenv v1.4.0
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/gommon v0.3.1 // indirect
+	github.com/stretchr/testify v1.8.1
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
 	gorm.io/driver/mysql v1.3.4
 	gorm.io/gorm v1.23.5
