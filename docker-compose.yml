@@ -4,6 +4,8 @@ services:
     build: .
     ports:
       - "3000"
+    env_file:
+      - .env
     volumes:
       - .:/app
     depends_on:

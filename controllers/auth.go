@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"sync"
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
@@ -23,14 +24,20 @@ type jwtCustomClaims struct {
 	jwt.RegisteredClaims
 }
 
-var signingKey = getSigningKey()
+var (
+	signingKey     []byte
+	signingKeyOnce sync.Once
+)
 
 func getSigningKey() []byte {
-	key := os.Getenv("JWT_SECRET")
-	if key == "" {
-		panic("JWT_SECRET environment variable is not set")
-	}
-	return []byte(key)
+	signingKeyOnce.Do(func() {
+		key := os.Getenv("JWT_SECRET")
+		if key == "" {
+			panic("JWT_SECRET environment variable is not set")
+		}
+		signingKey = []byte(key)
+	})
+	return signingKey
 }
 
 // JWTMiddleware はリクエストのAuthorizationヘッダーからJWTトークンを検証するミドルウェア
@@ -50,7 +57,7 @@ func JWTMiddleware() echo.MiddlewareFunc {
 				if token.Method != jwt.SigningMethodHS256 {
 					return nil, &echo.HTTPError{Code: http.StatusUnauthorized, Message: "unexpected signing method"}
 				}
-				return signingKey, nil
+				return getSigningKey(), nil
 			})
 			if err != nil || !token.Valid {
 				return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "invalid or expired token"}
@@ -128,7 +135,7 @@ func Login(c echo.Context) error {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	t, err := token.SignedString(signingKey)
+	t, err := token.SignedString(getSigningKey())
 	if err != nil {
 		return err
 	}
