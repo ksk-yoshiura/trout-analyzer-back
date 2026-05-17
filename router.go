@@ -28,7 +28,13 @@ func newRouter() *echo.Echo {
 	// CORS対策
 	allowOrigins := []string{"http://localhost:3000"}
 	if origins := os.Getenv("ALLOWED_ORIGINS"); origins != "" {
-		allowOrigins = strings.Split(origins, ",")
+		parsedOrigins := strings.Split(origins, ",")
+		allowOrigins = make([]string, 0, len(parsedOrigins))
+		for _, origin := range parsedOrigins {
+			if trimmed := strings.TrimSpace(origin); trimmed != "" {
+				allowOrigins = append(allowOrigins, trimmed)
+			}
+		}
 	}
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: allowOrigins,
@@ -52,7 +58,6 @@ func newRouter() *echo.Echo {
 	// ユーザコントローラー
 	usersController := controllers.NewUsersController()
 
-	api.GET("/users", usersController.Index)
 	api.GET("/users/me", usersController.Show)
 	api.PUT("/users", usersController.Update)
 

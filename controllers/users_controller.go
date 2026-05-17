@@ -38,6 +38,7 @@ func (uc *UsersController) Show(c echo.Context) error {
 	user := models.User{}
 	uid := userIDFromToken(c)
 	result := models.GetUser(user, uid)
+	result.Password = ""
 
 	return c.JSON(http.StatusOK, newResponse(
 		http.StatusOK,

@@ -47,7 +47,7 @@ func JWTMiddleware() echo.MiddlewareFunc {
 			}
 			claims := &jwtCustomClaims{}
 			token, err := jwt.ParseWithClaims(parts[1], claims, func(token *jwt.Token) (any, error) {
-				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+				if token.Method != jwt.SigningMethodHS256 {
 					return nil, &echo.HTTPError{Code: http.StatusUnauthorized, Message: "unexpected signing method"}
 				}
 				return signingKey, nil
