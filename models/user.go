@@ -7,6 +7,15 @@ import (
 	"gorm.io/gorm"
 )
 
+type UserInterface interface {
+	FindUser(user User) User
+	GetAllUsers(users []User) []User
+	GetUser(user User, uid int) User
+	UpdateUser(u User, uid int) error
+	CreateUser(user User) error
+	DeleteUser(user User, uid int) error
+}
+
 type User struct {
 	gorm.Model
 	Email     string `json:"mailaddress"`
