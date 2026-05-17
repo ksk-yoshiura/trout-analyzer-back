@@ -29,6 +29,9 @@ func TestUserValidate(t *testing.T) {
 }
 
 func TestFindUser(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping this test")
+	}
 	t.Run("success FindUser()", func(t *testing.T) {
 		u := models.User{Email: "nakata@example.com"}
 		user := models.FindUser(u)
@@ -44,6 +47,9 @@ func TestFindUser(t *testing.T) {
 }
 
 func TestCreateUser(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping this test")
+	}
 
 	t.Run("success CreateUser()", func(t *testing.T) {
 		u := models.User{}
